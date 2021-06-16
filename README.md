@@ -1,8 +1,4 @@
-# urWGS-private
-
-<p align="center">
-<img src="./img/pipeline.png" alt="Ultra-rapid whole genome sequencing pipeline" width="720p"></img>
-</p>
+# Ultra-Rapid Whole Genome Sequencing pipeline
 
 ## Base calling and Alignment
 
