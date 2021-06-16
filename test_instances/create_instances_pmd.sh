@@ -6,7 +6,7 @@ if [ $# -eq 1 ]; then
 	SCRIPT_DIR=$(dirname $(readlink -f $0))/..
 
 	parallel -j $NUM_PMD \
-		 ${SCRIPT_DIR}/instance_types/seq_pmd_v3_instance.sh ::: \
+		 ${SCRIPT_DIR}/instance_types/seq_pmd_instance.sh ::: \
 		 pmd-${SAMPLE_LOW}-2 :::+ \
 		 chr17
 	exit 0
