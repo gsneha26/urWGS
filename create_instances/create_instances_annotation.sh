@@ -6,7 +6,7 @@ if [ $# -eq 1 ]; then
 	SCRIPT_DIR=$(dirname $(readlink -f $0))/..
 
 	parallel -j 1 \
-		 ${SCRIPT_DIR}/instance_types/annotation_v3_instance.sh ::: \
+		 ${SCRIPT_DIR}/instance_types/annotation_instance.sh ::: \
 		 annotation-${SAMPLE_LOW}-1
 	exit 0
 else

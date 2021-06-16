@@ -7,7 +7,7 @@ if [ $# -eq 1 ]; then
 
 	if [ "$GENDER" == "F" ];then
 		parallel -j $NUM_PMD \
-			${SCRIPT_DIR}/instance_types/seq_pmd_v3_instance.sh ::: \
+			${SCRIPT_DIR}/instance_types/seq_pmd_instance.sh ::: \
 			pmpd-${SAMPLE_LOW}-{1..14} :::+ \
 			chr1 \
 			chr2 \
@@ -25,7 +25,7 @@ if [ $# -eq 1 ]; then
 			chr16:chr17 
 	elif [ "$GENDER" == "M" ];then
 		parallel -j $NUM_PMD \
-			${SCRIPT_DIR}/instance_types/seq_pmd_v3_instance.sh ::: \
+			${SCRIPT_DIR}/instance_types/seq_pmd_instance.sh ::: \
 			pmpd-${SAMPLE_LOW}-{1..14} :::+ \
 			chr1 \
 			chr2 \

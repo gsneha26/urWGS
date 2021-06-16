@@ -12,7 +12,7 @@ gcloud compute instances create $1 \
 		echo "2" > /data/sniffles_annotation_status.txt 
 		gsutil cp gs://ultra_rapid_nicu/scripts/sample.config /data/
 		mkdir /data/scripts/
-		gsutil -m cp -r gs://ultra_rapid_nicu/scripts/annotation_v3/* /data/scripts/
+		gsutil -m cp -r gs://ultra_rapid_nicu/scripts/annotation/* /data/scripts/
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ultra_rapid_nicu/GRCh37.fa /data/
 		chmod +x /data/scripts/*.sh
 		chmod a+w -R /data/
