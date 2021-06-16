@@ -1,0 +1,1 @@
+##FILTER=<ID=ShortHomopolymer,Description="Variant in short homopoloymer 4bp-6bp region">

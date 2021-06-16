@@ -1,0 +1,1 @@
+##FILTER=<ID=Homopolymer,Description="Variant in long homopolymer region">
