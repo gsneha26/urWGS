@@ -1,13 +1,17 @@
 #!/bin/bash
 
-export INPUT_FOLDER=no_sample/*_$1_*/fast5
-export OUTPUT_FOLDER=/data/simulation_test_v2/sim1/
+RUNTIME=$2
+
+INPUT_FOLDER=/data/hg002_test/HG002_No_BC/no_sample/*_${1}
+OUTPUT_FOLDER=/data/hg002_simulation/HG002_No_BC/no_sample/*_${1}
+NUM_FAST5=$(ls $INPUT_FOLDER/ | wc -l)
+PERIOD=$(python -c "print (int(${RUNTIME}/${NUM_FAST5})-5)")
 
 mkdir -p $OUTPUT_FOLDER
-cd /data/simulation_test/Fast_001/
+cd $INPUT_FOLDER
 
-for i in $INPUT_FOLDER/*;
+for i in $(ls *.fast5);
 do
-	cp --parents $i $OUTPUT_FOLDER/
-	sleep 200s
+        cp --parents $i $OUTPUT_FOLDER/
+        sleep ${PERIOD}s
 done

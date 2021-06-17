@@ -1,5 +1,20 @@
 # Ultra-Rapid Whole Genome Sequencing pipeline
 
+## host instance
+Pre-requisites:
+* Ubuntu OS (tested on Ubuntu 18.04.5 LTS)
+* GNU parallel
+```
+$ sudo apt-get --yes install parallel
+```
+* Google Cloud SDK ([Instructions](https://cloud.google.com/sdk/docs/install))
+* Clone the urWGS repository
+```
+$ git clone https://github.com/gsneha26/urWGS-private
+
+```
+
+
 ## Base calling and Alignment
 ### Software:
 * Guppy v4.2.2 (Commercial software from Oxford Nanopore Technologies)
