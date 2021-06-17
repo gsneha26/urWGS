@@ -5,16 +5,16 @@ Pre-requisites:
 * Ubuntu OS (tested on Ubuntu 18.04.5 LTS)
 * GNU parallel
 ```
-$ sudo apt-get --yes install parallel
+sudo apt-get update
+sudo apt-get --yes install parallel
 ```
 * Google Cloud SDK ([Instructions](https://cloud.google.com/sdk/docs/install))
-* Clone the urWGS repository
+* urWGS repository
 ```
-$ git clone https://github.com/gsneha26/urWGS-private
-
+git clone https://github.com/gsneha26/urWGS-private
+cd urWGS-private/
+export PROJECT_DIR=$(pwd)
 ```
-
-
 ## Base calling and Alignment
 ### Software:
 * Guppy v4.2.2 (Commercial software from Oxford Nanopore Technologies)
