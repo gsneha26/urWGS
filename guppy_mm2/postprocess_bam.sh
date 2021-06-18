@@ -62,8 +62,6 @@ if [ ${PP_EXIT} -gt 0 ]; then
 
 else
 
-	#FC=$(gcloud compute instances describe $(hostname) --zone=us-west1-a --format=value"(metadata[FC])")
-	#gcloud pubsub topics publish ${PUBSUB_TOPIC} --message="COMPLETE" --attribute=STAGE=postprocess,FC=$FC 
 	add_guppy_mm2_update "Parallel chr-wise bam upload jobs exited successfully in $NUM_ATTEMPT attempt/s" $EMAIL_FILE
 	email_guppy_mm2_update "POSTPROCESS STATUS: Job successful" $EMAIL_FILE $EMAIL_SUB 
 	echo "1" > $POSTPROCESS_STATUS_FILE
