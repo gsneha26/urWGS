@@ -10,4 +10,3 @@ gsutil -m rsync -r $CHR_FOLDER/ ${PMD_LOG_BUCKET}/$1_folder/
 
 echo "1" > $CHR_FOLDER/$1_pmd_status.txt
 gsutil cp  $CHR_FOLDER/$1_pmd_status.txt ${PMD_STATUS_BUCKET}/
-#gcloud pubsub topics publish ${PUBSUB_TOPIC} --message="COMPLETE" --attribute=STAGE=pmd,CHR=$1
