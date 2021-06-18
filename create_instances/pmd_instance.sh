@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gcloud compute instances create $1 \
-        --zone us-central1-c \
+        --zone us-west1-a \
         --source-instance-template pmpb-template \
 	--create-disk=boot=yes,image=pmpb-image-v5,size=100GB \
 	--local-ssd=interface=NVME \

@@ -166,8 +166,6 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 		if [ $UPLOAD_STATUS -eq 1 ] && [ $BASECALLING_STATUS -eq 2 ]; then
 			echo "1" > $BASECALLING_STATUS_FILE
-			#FC=$(gcloud compute instances describe $(hostname) --zone=us-west1-a --format=value"(metadata[FC])")
-			#gcloud pubsub topics publish ${PUBSUB_TOPIC} --message="COMPLETE" --attribute=STAGE=guppy,FC=$FC 
 		fi
 		
 		add_guppy_mm2_update "No fast5 files to basecall; exiting job for batch $CURRTIME and deleting $BATCH_FOLDER" $EMAIL_FILE
