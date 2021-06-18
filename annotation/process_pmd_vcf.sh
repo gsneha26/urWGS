@@ -72,6 +72,3 @@ tabix -p vcf ${INPUT_PREFIX}.annotated.vcf.gz
 
 gsutil cp ${INPUT_PREFIX}.annotated.vcf.gz* ${FINAL_OUTPUT_BUCKET}/ 
 gsutil cp ${INPUT_VCF} ${FINAL_OUTPUT_BUCKET}/ 
-
-gsutil cp ${INPUT_PREFIX}.annotated.vcf.gz* ${CURATION_OUTPUT_BUCKET}/
-gsutil cp ${INPUT_VCF} ${CURATION_OUTPUT_BUCKET}/

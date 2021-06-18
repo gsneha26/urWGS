@@ -59,5 +59,4 @@ sudo docker run -it \
 for file in $FINAL_VCF chr-arm-karyotype.tsv sv-annotated.tsv sv-report.html; 
 do
 	gsutil cp $file ${FINAL_OUTPUT_BUCKET}/
-	gsutil cp $file ${CURATION_OUTPUT_BUCKET}/
 done
