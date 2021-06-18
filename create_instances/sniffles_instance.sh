@@ -3,7 +3,7 @@
 gcloud compute instances create $1 \
         --zone us-west1-a \
         --source-instance-template sniffles-template \
-	--create-disk=boot=yes,image=sniffles-image-v3,size=100GB \
+	--create-disk=boot=yes,image=sniffles-image,size=100GB \
 	--local-ssd=interface=NVME \
         --metadata CHR=$2,THREADS=$3,STAGE=SNIFFLES,startup-script='#!/bin/bash
                 mount_1nvme.sh

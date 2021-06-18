@@ -5,7 +5,7 @@ if [ $# -eq 1 ]; then
 
 	gsutil mb ${BUCKET}
 
-	parallel -j ${NUM_GUPPY} ${PROJECT_DIR}/instance_types/guppy_mm2_instance.sh ::: \
+	parallel -j ${NUM_GUPPY} ${PROJECT_DIR}/create_instances/guppy_mm2_instance.sh ::: \
 		${GUPPY_NAME_LIST} :::+ \
 		${GUPPY_FC_LIST}
 	exit 0
