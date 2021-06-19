@@ -7,14 +7,16 @@ HG002_SOURCE_BUCKET=gs://ur_wgs_public_data/HG002_raw_data
 mkdir -p $HG002_SRC_DIR
 mkdir -p $HG002_DST_DIR
 
-gsutil -m rsync -r \
+time gsutil -m rsync -r \
 	-x ".*[1-6][A-B].*$|.*[1-6][D-H].*$" \
 	$HG002_SOURCE_BUCKET/ \
 	$HG002_SRC_DIR/
 
+rsync -av -f"+ */" -f"- *" $HG002_SRC_DIR/ $HG002_DST_DIR/
+
+
 echo "Started sequencing at "$(date +%T)
 time parallel -j 6 \
-	--dry-run \
 	$HOME/urWGS-private/prom_simulation/simulate_fc.sh ::: \
 	$HG002_SRC_DIR ::: \
 	$HG002_DST_DIR ::: \
