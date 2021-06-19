@@ -16,7 +16,7 @@ gsutil -m rsync -r \
 echo "Started sequencing at "$(date +%T)
 time parallel -j 6 \
 	--dry-run \
-	/data/scripts/prom_simulation/simulate_fc.sh ::: \
+	$HOME/urWGS-private/prom_simulation/simulate_fc.sh ::: \
 	{1..6}{C} ::: \
 	$HG002_SRC_DIR ::: \
 	$HG002_DEST_DIR ::: \
