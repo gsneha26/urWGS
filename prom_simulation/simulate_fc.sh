@@ -7,7 +7,6 @@ RUNTIME=$4
 NUM_FAST5=$(ls $INPUT_FOLDER/ | wc -l)
 PERIOD=$(python -c "print (int(${RUNTIME}/${NUM_FAST5})-5)")
 
-mkdir -p $OUTPUT_FOLDER
 cd $INPUT_FOLDER
 
 for i in $(ls *.fast5);
