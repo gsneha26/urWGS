@@ -16,8 +16,8 @@ echo "Started sequencing at "$(date +%T)
 time parallel -j 6 \
 	--dry-run \
 	$HOME/urWGS-private/prom_simulation/simulate_fc.sh ::: \
-	{1..6}C ::: \
 	$HG002_SRC_DIR ::: \
 	$HG002_DST_DIR ::: \
+	{1..6}C ::: \
 	5400
 #time parallel -j 48 /data/scripts/prom_simulation/simulate_fc.sh ::: {1..6}{A..H}

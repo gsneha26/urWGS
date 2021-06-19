@@ -10,3 +10,4 @@ gcloud compute instances create host-instance2 \
 #		sudo mkdir -p /data
 #		sudo mount -o discard,defaults /dev/nvme0n1 /data
 #		sudo chmod a+w /data'
+#		git clone https://github.com/gsneha26/urWGS-private.git
