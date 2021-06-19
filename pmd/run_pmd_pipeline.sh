@@ -18,7 +18,7 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 	for ch in $chr_args; do
 		email_vc_update "Starting Preprocess for $ch" $ch "PEPPER-Margin-DeepVariant" 
 	done
-	time parallel -j 2 /data/scripts/preprocess_chr.sh ::: ${chr_args} ::: $BAM_MERGE
+	time parallel -j 2 $PROJECT_DIR/preprocess_chr.sh ::: ${chr_args} ::: $BAM_MERGE
 	EXIT_CODE=$?
 	if [ $EXIT_CODE -eq 0 ]; then
 		for ch in $chr_args; do
@@ -31,15 +31,15 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 	fi
 
 	for ch in $chr_args; do
-		time /data/scripts/run_pepper_margin.sh $ch 2> /data/${ch}_folder/run_$ch.log
+		time $PROJECT_DIR/run_pepper_margin.sh $ch 2> /data/${ch}_folder/run_$ch.log
 		if [ $DV == "google" ]; then
 			if [ $ROWS == "YES" ]; then
-				time /data/scripts/run_google_dv_rows.sh $ch 2>> /data/${ch}_folder/run_$ch.log
+				time $PROJECT_DIR/run_google_dv_rows.sh $ch 2>> /data/${ch}_folder/run_$ch.log
 			else
-				time /data/scripts/run_google_dv.sh $ch 2>> /data/${ch}_folder/run_$ch.log
+				time $PROJECT_DIR/run_google_dv.sh $ch 2>> /data/${ch}_folder/run_$ch.log
 			fi
 		elif [ $DV == "parabricks" ]; then
-			time /data/scripts/run_parabricks_dv.sh $ch 2>> /data/${ch}_folder/run_$ch.log
+			time $PROJECT_DIR/run_parabricks_dv.sh $ch 2>> /data/${ch}_folder/run_$ch.log
 		fi
 		EXIT_CODE=$?
 		if [ $EXIT_CODE -eq 0 ]; then
@@ -49,7 +49,7 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 		fi
 	done
 
-	time parallel -j 2 /data/scripts/postprocess_chr.sh ::: $chr_args
+	time parallel -j 2 $PROJECT_DIR/postprocess_chr.sh ::: $chr_args
 	EXIT_CODE=$?
 	if [ ${EXIT_CODE} -eq 0 ]; then
 		for ch in $chr_args; do

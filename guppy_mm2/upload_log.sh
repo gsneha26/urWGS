@@ -30,14 +30,14 @@ echo "==== BAM FOLDER ====" >> $LOG_FOLDER/summary.log
 du -sh /data/chr_bam/ >> $LOG_FOLDER/summary.log
 echo "" >> $LOG_FOLDER/summary.log
 echo "==== PROCESS STATUS ====" >> $LOG_FOLDER/summary.log
-SERVICE="/bin/bash /data/scripts/run_basecalling.sh"
+SERVICE="/bin/bash $PROJECT_DIR/run_basecalling.sh"
 if pgrep -f "$SERVICE" >/dev/null
 then
         echo "Basecalling is running" >> $LOG_FOLDER/summary.log
 else	
 	echo "Basecalling is not running" >> $LOG_FOLDER/summary.log
 fi
-SERVICE="/bin/bash /data/scripts/run_alignment.sh"
+SERVICE="/bin/bash $PROJECT_DIR/run_alignment.sh"
 if pgrep -f "$SERVICE" >/dev/null
 then
         echo "Alignment is running" >> $LOG_FOLDER/summary.log

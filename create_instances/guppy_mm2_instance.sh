@@ -7,12 +7,17 @@ gcloud compute instances create $1 \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
-	--local-ssd=interface=NVME \
         --metadata FC=$2,STAGE=GUPPY_MM2,startup-script='#!/bin/bash
-                mount_nvme.sh 4
+		sudo apt update && sudo apt -y install mdadm --no-install-recommends
+		DEVICES=$(ls  /dev/nvme0n*)
+		sudo mdadm --create /dev/md0 --level=0 --raid-devices=3 $DEVICES
+		sudo mkfs.ext4 -F /dev/md0
+		sudo mkdir -p /data
+		sudo mount /dev/md0 /data
+		sudo chmod a+w /data
 		nvidia-smi -pm 1
 		echo "2" > /data/postprocess_status.txt
-                gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ultra_rapid_nicu/GRCh37.mmi /data/
+                gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/GRCh37.mmi /data/
 		gsutil cp gs://ultra_rapid_nicu/scripts/sample.config /data/
                 mkdir /data/scripts
                 gsutil -m cp gs://ultra_rapid_nicu/scripts/guppy_mm2/* /data/scripts/

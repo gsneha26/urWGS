@@ -6,7 +6,10 @@ gcloud compute instances create $1 \
 	--create-disk=boot=yes,image=sniffles-image,size=100GB \
 	--local-ssd=interface=NVME \
         --metadata CHR=$2,THREADS=$3,STAGE=SNIFFLES,startup-script='#!/bin/bash
-                mount_1nvme.sh
+		sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/nvme0n1
+		sudo mkdir -p /data
+		sudo mount -o discard,defaults /dev/nvme0n1 /data
+		sudo chmod a+w /data
 		echo "2" > /data/sniffles_status.txt 
 		gsutil cp gs://ultra_rapid_nicu/scripts/sample.config /data/
 		mkdir /data/scripts/

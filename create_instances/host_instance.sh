@@ -5,14 +5,11 @@ gcloud compute instances create $1 \
         --source-instance-template annotation-template \
 	--create-disk=boot=yes,image=annotation-image-v5,size=100GB \
 	--local-ssd=interface=NVME \
-        --metadata STAGE=ANNOTATION,startup-script='#!/bin/bash
+        --metadata startup-script='#!/bin/bash
 		sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/nvme0n1
 		sudo mkdir -p /data
 		sudo mount -o discard,defaults /dev/nvme0n1 /data
 		sudo chmod a+w /data
-		echo "2" > /data/download_status.txt 
-		echo "2" > /data/pmd_annotation_status.txt 
-		echo "2" > /data/sniffles_annotation_status.txt 
 		gsutil cp gs://ultra_rapid_nicu/scripts/sample.config /data/
 		mkdir /data/scripts/
 		gsutil -m cp -r gs://ultra_rapid_nicu/scripts/annotation/* /data/scripts/
