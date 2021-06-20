@@ -1,14 +1,30 @@
 # Ultra-Rapid Whole Genome Sequencing pipeline
 
 ## host instance
-Pre-requisites:
-* Ubuntu OS (tested on Ubuntu 18.04.5 LTS)
-* GNU parallel
+* Start an instance with Ubuntu18.04 and SSD with NVME interface:
+```
+gcloud compute instances create host-instance1 \
+        --zone us-west1-a \
+	--create-disk=boot=yes,image=ubuntu-1804-bionic,size=100GB \
+        --local-ssd=interface=NVME \
+        --local-ssd=interface=NVME
+```
+* Mount the local ssd
+```
+sudo apt update && sudo apt -y install mdadm --no-install-recommends
+DEVICES=$(ls  /dev/nvme0n*)
+sudo mdadm --create /dev/md0 --level=0 --raid-devices=3 $DEVICES
+sudo mkfs.ext4 -F /dev/md0
+sudo mkdir -p /data
+sudo mount /dev/md0 /data
+sudo chmod a+w /data
+```
+* Install pre-requisites:
 ```
 sudo apt-get update
-sudo apt-get --yes install parallel
+sudo apt-get --yes install git parallel rsync
 ```
-* Google Cloud SDK ([Instructions](https://cloud.google.com/sdk/docs/install))
+* Google Cloud SDK ([Instructions for a non-GCP instance](https://cloud.google.com/sdk/docs/install))
 * urWGS repository
 ```
 git clone https://github.com/gsneha26/urWGS-private
