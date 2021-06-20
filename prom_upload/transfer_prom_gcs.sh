@@ -1,38 +1,39 @@
 #!/bin/bash
 
-SAMPLE=Fast_110
-DATA_FOLDER=/data/Rapid_Nicu/${SAMPLE}/
-BUCKET_NAME=gs://ultra_rapid_prom_data/prom/${SAMPLE}/
-UPLOAD_STATUS_FILE=/data/upload_status.txt
-
-EXCLUDE=\(
-INT1=180 #3 minutes
-INT2=540 #9 minutes
-CURTIME=$(date +%s)
-TIMEDIFF1=$(expr $CURTIME - $INT1)
-TIMEDIFF2=$(expr $CURTIME - $INT2)
 1>&2 echo "current "$(date)
-n=0
-for i in `find ${DATA_FOLDER} -name "*.fast5"`;
+FAST5_FOLDER=/data/prom/HG002/
+FAST5_BUCKET=gs://ultra_rapid_prom_data/prom/${SAMPLE}/
+UPLOAD_STATUS_FILE=/data/upload_status.txt
+UPLOAD_STATUS_BUCKET=gs://ultra_rapid_prom_data/prom
+
+MIN_BUFFER=180 #3 minutes
+MAX_BUFFER=540 #9 minutes
+CURTIME=$(date +%s)
+MAX_TIME=$(expr $CURTIME - $MIN_BUFFER)
+MIN_TIME=$(expr $CURTIME - $MAX_BUFFER)
+
+NFAST5=0
+INCLUDE=\(
+for i in $(find ${FAST5_FOLDER} -name "*.fast5");
 do
-	FILE=${i#"${DATA_FOLDER}"}
+	FILE=${i#"${FAST5_FOLDER}"}
 	FILETIME=$(stat $i -c %Y)
-	if [ $FILETIME -lt $TIMEDIFF1 ]; then
-		if [ $FILETIME -gt $TIMEDIFF2 ]; then
-			EXCLUDE=${EXCLUDE}\|$FILE
-			n=$((n+1))
+	if [ $FILETIME -lt $MAX_TIME ]; then
+		if [ $FILETIME -gt $MIN_TIME ]; then
+			INCLUDE=${INCLUDE}\|$FILE
+			NFAST5=$((NFAST5+1))
 		fi
 	fi
 done
-EXCLUDE=${EXCLUDE}\|\)
+INCLUDE=${INCLUDE}\|\)
 
-1>&2 echo $n
-1>&2 echo $EXCLUDE
-if [ $n -gt 0 ]; then
+1>&2 echo $NFAST5
+1>&2 echo $INCLUDE
+if [ $NFAST5 -gt 0 ]; then
 	echo "2" > $UPLOAD_STATUS_FILE
-	echo "gsutil -m rsync -r -x '(?!${EXCLUDE}$)' ${DATA_FOLDER} ${BUCKET_NAME}" | sh -ex
+	echo "gsutil -m rsync -r -x '(?!${INCLUDE}$)' ${FAST5_FOLDER} ${FAST5_BUCKET}" | sh -ex
 else
 	echo "1" > $UPLOAD_STATUS_FILE
 fi
-gsutil cp $UPLOAD_STATUS_FILE gs://ultra_rapid_prom_data/prom/
-1>&2 echo "completed"
+
+gsutil cp $UPLOAD_STATUS_FILE $UPLOAD_STATUS_BUCKET/ 
