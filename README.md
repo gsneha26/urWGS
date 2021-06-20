@@ -1,11 +1,12 @@
 # Ultra-Rapid Whole Genome Sequencing pipeline
 
-## host instance
+### host instance
 * Start an instance with Ubuntu18.04 and SSD with NVME interface:
 ```
 gcloud compute instances create host-instance1 \
         --zone us-west1-a \
-	--create-disk=boot=yes,image=ubuntu-1804-bionic,size=100GB \
+	--machine-type='n1-standard-16' \
+	--create-disk=boot=yes,image-project='ubuntu-os-cloud',image='ubuntu-1804-bionic-v20210604',size=100GB \
         --local-ssd=interface=NVME \
         --local-ssd=interface=NVME
 ```
