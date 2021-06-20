@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PERIOD=$1
 HG002_SRC_DIR=/data/tmp/HG002/
 HG002_DST_DIR=/data/prom/HG002/
 HG002_SOURCE_BUCKET=gs://ur_wgs_public_data/HG002_raw_data
@@ -23,15 +24,15 @@ echo "Started sequencing at "$(date +%T)
 # based on the total number of files in each folder,
 # can vary from flowcell to flowcell
 time parallel -j 6 \
-	$HOME/urWGS-private/prom_simulation/simulate_flowcell.sh ::: \
+	$PROJECT_DIR/prom_simulation/simulate_flowcell.sh ::: \
 	$HG002_SRC_DIR ::: \
 	$HG002_DST_DIR ::: \
 	{1..6}C ::: \
-	5400
+	$PERIOD
 
 # in case we want to simulate all 48 flow cells
 #time parallel -j 48 /data/scripts/prom_simulation/simulate_flowcell.sh ::: \
-	$HG002_SRC_DIR ::: \
-	$HG002_DST_DIR ::: \
-	{1..6}{A..H} ::: \
-	5400
+#       $HG002_SRC_DIR ::: \
+#       $HG002_DST_DIR ::: \
+#       {1..6}{A..H} ::: \
+#       $PERIOD

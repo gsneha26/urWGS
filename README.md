@@ -32,6 +32,10 @@ git clone https://github.com/gsneha26/urWGS-private
 cd urWGS-private/
 export PROJECT_DIR=$(pwd)
 ```
+* Start a simulation for a giveb duration
+```
+$PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
+```
 ## Base calling and Alignment
 ### Software:
 * Guppy v4.2.2 (Commercial software from Oxford Nanopore Technologies)

@@ -5,7 +5,7 @@ OUTPUT_FOLDER=$2/no_sample/*_${3}
 RUNTIME=$4
 
 NUM_FAST5=$(ls $INPUT_FOLDER/ | wc -l)
-PERIOD=$(python3 -c "print (int(${RUNTIME}/${NUM_FAST5})-5)")
+PERIOD=$(python3 -c "print (abs(int(${RUNTIME}/${NUM_FAST5})))")
 
 cd $INPUT_FOLDER
 
