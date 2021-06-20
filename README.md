@@ -1,6 +1,6 @@
 # Ultra-Rapid Whole Genome Sequencing pipeline
 
-### host instance
+#### Running an HG002 PromethION simulation on host instance
 * Start an instance with Ubuntu18.04 and SSD with NVME interface:
 ```
 gcloud compute instances create host-instance1 \
@@ -25,12 +25,16 @@ sudo chmod a+w /data
 sudo apt-get update
 sudo apt-get --yes install git parallel rsync
 ```
-* Google Cloud SDK ([Instructions for a non-GCP instance](https://cloud.google.com/sdk/docs/install))
-* urWGS repository
+* Install Google Cloud SDK ([Instructions for a non-GCP instance](https://cloud.google.com/sdk/docs/install))
+* Clone urWGS repository
 ```
 git clone https://github.com/gsneha26/urWGS-private
 cd urWGS-private/
 export PROJECT_DIR=$(pwd)
+```
+* Add cron job 
+```
+echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> $HOME/upload_stdout.log 2>> $HOME/upload_stderr.log" | crontab -u $USER -
 ```
 * Start a simulation for a giveb duration
 ```
