@@ -36,7 +36,7 @@ export PROJECT_DIR=$(pwd)
 ```
 echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> $HOME/upload_stdout.log 2>> $HOME/upload_stderr.log" | crontab -u $USER -
 ```
-* Start a simulation for a given duration [simulation_duration_in_seconds=5400 for the example in the paper]
+* Start a simulation for a given duration [`simulation_duration_in_seconds`=5400 for the example in the paper]
 ```
 $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 ```
