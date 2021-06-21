@@ -2,11 +2,6 @@
 
 source /data/sample.config
 
-#FILTER_SNIFFLES=$(echo "attributes.CHR=\""$2"\" AND attributes.STAGE=\"sniffles\"")
-#gcloud pubsub subscriptions create ${1}_sub_sniffles \
-#	--topic=${PUBSUB_TOPIC} \
-#	--message-filter="${FILTER_SNIFFLES}"
-
 cd /data
 BAM_FILE=${SAMPLE}_${1}.bam
 VCF_FILE=${SAMPLE}_sniffles_${1}.vcf
@@ -38,7 +33,3 @@ else
 fi
 
 gsutil cp $1_sniffles_status.txt ${SV_STATUS_BUCKET}/
-
-#gcloud pubsub topics publish ${PUBSUB_TOPIC} \
-#	--message="COMPLETE" \
-#	--attribute=STAGE=sniffles,CHR=$1

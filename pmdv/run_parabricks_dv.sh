@@ -17,7 +17,7 @@ fi
 time sudo pbrun deepvariant \
         --ref /data/GRCh37.fa \
         --in-bam $CHR_FOLDER/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN.HEADER_FIXED.SAMTOOLS.haplotagged.bam \
-        --out-variants $CHR_FOLDER/${SAMPLE}_pmd_$1.vcf \
+        --out-variants $CHR_FOLDER/${SAMPLE}_pmdv_$1.vcf \
         --pb-model-file $PB_MODEL_FILE \
         --proposed-variants $CHR_FOLDER/pepper_hp/PEPPER_VARIANT_HP_OUTPUT.vcf.gz \
         --sort-by-haplotypes \
@@ -33,7 +33,7 @@ else
 fi
 
 cd $CHR_FOLDER/
-bgzip ${SAMPLE}_pmd_$1.vcf
+bgzip ${SAMPLE}_pmdv_$1.vcf
 
 1>&2 echo "============================================================================"
 1>&2 echo "current "$(TZ='America/Los_Angeles' date)

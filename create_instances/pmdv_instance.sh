@@ -10,12 +10,12 @@ gcloud compute instances create $1 \
 		sudo mkdir -p /data
 		sudo mount -o discard,defaults /dev/nvme0n1 /data
 		sudo chmod a+w /data
-		echo "2" > /data/pmd_status.txt 
+		echo "2" > /data/pmdv_status.txt 
 		gsutil cp gs://ultra_rapid_nicu/scripts/sample.config /data/
                 mkdir /data/scripts
-                gsutil -m cp gs://ultra_rapid_nicu/scripts/seq_pmd/* /data/scripts/
+                gsutil -m cp gs://ultra_rapid_nicu/scripts/pmdv/* /data/scripts/
 		mkdir /data/pb_model
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/GRCh37.fa /data/
                 chmod +x /data/scripts/*.sh
 		chmod a+w -R /data/
-		echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n*/1 * * * * bash -c /data/scripts/run_pmd_pipeline_wrapper.sh >> /data/stdout.log 2>> /data/stderr.log" | crontab -u gsneha -'
+		echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n*/1 * * * * bash -c /data/scripts/run_pmdv_pipeline_wrapper.sh >> /data/stdout.log 2>> /data/stderr.log" | crontab -u gsneha -'

@@ -28,10 +28,6 @@ if [ $2 == "YES" ]; then
 	gsutil -o "GSUtil:parallel_composite_upload_threshold=750M" -m cp ${SAMPLE}_$1.bam* ${CHR_BAM_BUCKET}/
 	echo "1" > $CHR_FOLDER/$1_status.txt
 	gsutil cp  $CHR_FOLDER/$1_status.txt ${BAM_STATUS_BUCKET}/
-#	FILTER_PMD=$(echo "attributes.CHR=\""$1"\" AND attributes.STAGE=\"pmd\"")
-#	gcloud pubsub subscriptions create ${1}_sub_pmd \
-#		--topic=${PUBSUB_TOPIC} \
-#		--message-filter="${FILTER_PMD}"
 
 elif [ $2 == "NO" ]; then
 

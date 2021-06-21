@@ -5,7 +5,7 @@ if [ $# -eq 1 ]; then
 
 	if [ "$GENDER" == "F" ];then
 		parallel -j $NUM_PMD \
-			${PROJECT_DIR}/create_instances/seq_pmd_instance.sh ::: \
+			${PROJECT_DIR}/create_instances/pmdv_instance.sh ::: \
 			pmpd-${SAMPLE_LOW}-{1..14} :::+ \
 			chr1 \
 			chr2 \
@@ -23,7 +23,7 @@ if [ $# -eq 1 ]; then
 			chr16:chr17 
 	elif [ "$GENDER" == "M" ];then
 		parallel -j $NUM_PMD \
-			${PROJECT_DIR}/create_instances/seq_pmd_instance.sh ::: \
+			${PROJECT_DIR}/create_instances/pmdv_instance.sh ::: \
 			pmpd-${SAMPLE_LOW}-{1..14} :::+ \
 			chr1 \
 			chr2 \
@@ -44,6 +44,6 @@ if [ $# -eq 1 ]; then
 else
 	1>&2 echo "Error: Provided $# arguments" 
 	1>&2 echo "Need 1 input arguments"
-	1>&2 echo "Usage: create_instances_seq_pmd.sh CONFIG_FILE"
+	1>&2 echo "Usage: create_instances_pmdv.sh CONFIG_FILE"
 	exit 1
 fi

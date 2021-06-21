@@ -85,6 +85,8 @@ NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is
 ## Variant Call Annotation
 ### Software:
 * bctools [v1.11](https://github.com/samtools/bcftools/commit/df43fd4781298e961efc951ba33fc4cdcc165a19)
+* tabix
+* bgzip
 
 ### Instance type:
 * Standard N1 instance

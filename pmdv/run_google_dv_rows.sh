@@ -13,7 +13,7 @@ time docker run --ipc=host \
 	--customized_model /opt/dv_models/ont_0317_rows/model.ckpt-170600 \
 	--ref /data/GRCh37_$1.fa \
 	--reads $CHR_FOLDER/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam \
-	--output_vcf ${CHR_FOLDER}/${SAMPLE}_pmd_$1.vcf \
+	--output_vcf ${CHR_FOLDER}/${SAMPLE}_pmdv_$1.vcf \
 	--sample_name ${SAMPLE} \
 	--intermediate_results_dir ${CHR_FOLDER}/dv_intermediate_outputs/ \
 	--num_shards 90  \
@@ -27,7 +27,7 @@ else
 fi
 
 cd $CHR_FOLDER/
-bgzip ${SAMPLE}_pmd_$1.vcf
+bgzip ${SAMPLE}_pmdv_$1.vcf
 
 1>&2 echo "============================================================================"
 1>&2 echo "current "$(TZ='America/Los_Angeles' date)

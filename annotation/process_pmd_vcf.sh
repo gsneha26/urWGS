@@ -2,9 +2,9 @@
 
 set -x
 source /data/sample.config
-PMD_ANNOTATION_FOLDER=/data/pmd_annotation
-VCF_FOLDER=${PMD_ANNOTATION_FOLDER}/pmd_output
-INPUT_VCF=${SAMPLE}_pmd.vcf.gz 
+PMD_ANNOTATION_FOLDER=/data/pmdv_annotation
+VCF_FOLDER=${PMD_ANNOTATION_FOLDER}/pmdv_output
+INPUT_VCF=${SAMPLE}_pmdv.vcf.gz 
 INPUT_PREFIX=${INPUT_VCF%.vcf.gz}
 
 mkdir -p $PMD_ANNOTATION_FOLDER
