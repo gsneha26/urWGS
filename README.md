@@ -70,7 +70,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 * 4 x NVIDIA Tesla P100
 * 1 x Local SSD Scratch Disk
 
-NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is commercially licensed and not available for testing this pipeline.
+NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is commercially licensed and not available as a part of this repository for testing this pipeline.
 
 ## Structural Variant Calling
 ### Software:
