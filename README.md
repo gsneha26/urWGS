@@ -10,17 +10,7 @@ gcloud compute instances create host-instance1 \
         --local-ssd=interface=NVME \
         --local-ssd=interface=NVME
 ```
-* Log into the instance and mount the local ssd
-```
-sudo apt update && sudo apt -y install mdadm --no-install-recommends
-DEVICES=$(ls  /dev/nvme0n*)
-sudo mdadm --create /dev/md0 --level=0 --raid-devices=2 $DEVICES
-sudo mkfs.ext4 -F /dev/md0
-sudo mkdir -p /data
-sudo mount /dev/md0 /data
-sudo chmod a+w /data
-```
-* Install pre-requisites:
+* Log into the instance and install pre-requisites:
 ```
 sudo apt-get update
 sudo apt-get --yes install git parallel rsync
@@ -31,6 +21,10 @@ sudo apt-get --yes install git parallel rsync
 git clone https://github.com/gsneha26/urWGS-private
 cd urWGS-private/
 export PROJECT_DIR=$(pwd)
+```
+* Mount the local ssd
+```
+$PROJECT_DIR/setup/mount_nvme.sh 2
 ```
 * Add cron job 
 ```
