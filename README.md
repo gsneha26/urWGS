@@ -61,6 +61,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
   * none model (Docker - kishwars/pepper_deepvariant:test-v0.5)
   * rows model (Docker - kishwars/pepper_deepvariant:test-v0.5-rows)
 * samtools [v1.11](https://github.com/samtools/samtools/commit/d58fc8a16729f25407da6729c440a51140396f4c)
+* bgzip
 
 ### Instance type:
 * Standard N1 instance
@@ -68,6 +69,8 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 * 360 GB RAM
 * 4 x NVIDIA Tesla P100
 * 1 x Local SSD Scratch Disk
+
+NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is commercially licensed and not available for testing this pipeline.
 
 ## Structural Variant Calling
 ### Software:

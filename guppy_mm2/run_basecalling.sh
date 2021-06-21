@@ -12,21 +12,20 @@ BATCH=batch_$CURRTIME
 #################### Initialize folder and file names ###########################
 
 FAST5_FOLDER=/data/input_folder
+BATCH_FOLDER=/data/output_folder/$BATCH
 UPLOAD_STATUS_FILE=/data/upload_status.txt
 BASECALLING_STATUS_FILE=/data/basecalling_status.txt
-READS_PER_FAST5=10000
 
 mkdir -p $FAST5_FOLDER
-
-BATCH_FOLDER=/data/output_folder/$BATCH
 mkdir -p $BATCH_FOLDER
-EMAIL_FILE=${BATCH_FOLDER}/${BATCH}_basecalling.log
 
-echo "" > $EMAIL_FILE 
+LOG_FILE=${BATCH_FOLDER}/${BATCH}_basecalling.log
+
+echo "" > $LOG_FILE 
 1>&2 echo "New batch number: $CURRTIME"
-echo "=========== Basecalling logs for batch_$CURRTIME ============" >> $EMAIL_FILE 
+echo "=========== Basecalling logs for batch_$CURRTIME ============" >> $LOG_FILE 
 
-add_guppy_mm2_update "Created batch folder: $BATCH_FOLDER" $EMAIL_FILE
+add_guppy_mm2_update "Created batch folder: $BATCH_FOLDER" $LOG_FILE
 
 FAST5_LIST=${BATCH_FOLDER}/${BATCH}_fast5.lst
 FASTQ_FOLDER=${BATCH_FOLDER}/guppy_output/
@@ -45,25 +44,25 @@ DWNLD_EXIT=1
 
 while [ $DWNLD_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
-	add_guppy_mm2_update "Starting fast5 download" $EMAIL_FILE
+	add_guppy_mm2_update "Starting fast5 download" $LOG_FILE
 
 	time gsutil -m rsync -r -x ".*[1-6][B-H].*$" $FAST5_BUCKET/ $FAST5_FOLDER/
 
 	DWNLD_EXIT=$?
 	NUM_ATTEMPT=$(((NUM_ATTEMPT)+1))
 
-	gsutil cp gs://ultra_rapid_prom_data/prom/upload_status.txt /data/
+	gsutil cp $FAST5_STATUS_BUCKET /data/
 done
 
 if [ $DWNLD_EXIT -gt 0 ]; then
 
-	add_guppy_mm2_update "Download failed more than 5 times, exiting job for batch $CURRTIME" $EMAIL_FILE
-	email_guppy_mm2_update "BASECALLING STATUS: Download fast5 unsuccessful" $EMAIL_FILE $ERROR_EMAIL_SUB 
+	add_guppy_mm2_update "Download failed more than 5 times, exiting job for batch $CURRTIME" $LOG_FILE
+	email_guppy_mm2_update "BASECALLING STATUS: Download fast5 unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 	exit 10
 
 else
 
-	add_guppy_mm2_update "Downloaded fast5 files in $NUM_ATTEMPT attempt/s" $EMAIL_FILE
+	add_guppy_mm2_update "Downloaded fast5 files in $NUM_ATTEMPT attempt/s" $LOG_FILE
 
 fi
 
@@ -78,9 +77,9 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 	rm -rf $FASTQ_FOLDER
 	NUM_FAST5=0
 
-	add_guppy_mm2_update "Starting attempt $NUM_ATTEMPT" $EMAIL_FILE
+	add_guppy_mm2_update "Starting attempt $NUM_ATTEMPT" $LOG_FILE
 
-	add_guppy_mm2_update "Starting fast5 file list generation" $EMAIL_FILE
+	add_guppy_mm2_update "Starting fast5 file list generation" $LOG_FILE
 
 	for i in `find ${FAST5_FOLDER} -name "*.fast5"`;
 	do
@@ -96,14 +95,14 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 	#################### Check if NVIDIA driver works ###########################
 
-		add_guppy_mm2_update "Fast5 file list generated" $EMAIL_FILE
+		add_guppy_mm2_update "Fast5 file list generated" $LOG_FILE
 	
 		CUDA_EXIT=1
 		CUDA_ATTEMPT=0
 
 		while [ ${CUDA_EXIT} -gt 0 ] && [ $CUDA_ATTEMPT -lt 10 ]; do
 
-			add_guppy_mm2_update "Checking if CUDA driver is working (attempt $CUDA_ATTEMPT)" $EMAIL_FILE
+			add_guppy_mm2_update "Checking if CUDA driver is working (attempt $CUDA_ATTEMPT)" $LOG_FILE
 
 			nvidia-smi
 
@@ -115,19 +114,19 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 		if [ ${CUDA_EXIT} -gt 0 ]; then
 			
-			add_guppy_mm2_update "NVIDIA driver (nvidia-smi) exited with non-zero code $CUDA_EXIT even after 5 attempts, exiting job for batch $CURRTIME" $EMAIL_FILE
-			email_guppy_mm2_update "BASECALLING STATUS: NVIDIA driver (nvidia-smi) unsuccessful" $EMAIL_FILE $ERROR_EMAIL_SUB 
+			add_guppy_mm2_update "NVIDIA driver (nvidia-smi) exited with non-zero code $CUDA_EXIT even after 5 attempts, exiting job for batch $CURRTIME" $LOG_FILE
+			email_guppy_mm2_update "BASECALLING STATUS: NVIDIA driver (nvidia-smi) unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 			exit 11
 
 		else
 
-			add_guppy_mm2_update "CUDA driver (nvidia-smi) exited successfully in $CUDA_ATTEMPT attempt/s" $EMAIL_FILE
+			add_guppy_mm2_update "CUDA driver (nvidia-smi) exited successfully in $CUDA_ATTEMPT attempt/s" $LOG_FILE
 
 		fi	
 
 		#################### Basecalling ###########################
 
-		add_guppy_mm2_update "Starting basecalling job for ${NUM_FAST5} fast5 file/s" $EMAIL_FILE
+		add_guppy_mm2_update "Starting basecalling job for ${NUM_FAST5} fast5 file/s" $LOG_FILE
 
 		mkdir -p $FASTQ_FOLDER
 		MAX_READS=$((NUM_FAST5*READS_PER_FAST5))
@@ -155,7 +154,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		fi
 		GUPPY_EXIT=$?
 
-		add_guppy_mm2_update "Guppy basecalling completed with exit code ${GUPPY_EXIT}" $EMAIL_FILE
+		add_guppy_mm2_update "Guppy basecalling completed with exit code ${GUPPY_EXIT}" $LOG_FILE
 		echo "2" > $BASECALLING_STATUS_FILE
 
 	else
@@ -168,8 +167,8 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 			echo "1" > $BASECALLING_STATUS_FILE
 		fi
 		
-		add_guppy_mm2_update "No fast5 files to basecall; exiting job for batch $CURRTIME and deleting $BATCH_FOLDER" $EMAIL_FILE
-		echo "BASECALLING STATUS: No fast5 files to basecall" | cat - $EMAIL_FILE | sponge $EMAIL_FILE
+		add_guppy_mm2_update "No fast5 files to basecall; exiting job for batch $CURRTIME and deleting $BATCH_FOLDER" $LOG_FILE
+		echo "BASECALLING STATUS: No fast5 files to basecall" | cat - $LOG_FILE | sponge $LOG_FILE
 		rm -rf ${BATCH_FOLDER}
 		exit 0
 	fi
@@ -179,16 +178,16 @@ done
 
 if [ $GUPPY_EXIT -gt 0 ]; then
 
-	add_guppy_mm2_update "Guppy basecalling failed more than 5 times, exiting job for batch $CURRTIME" $EMAIL_FILE
-	email_guppy_mm2_update "BASECALLING STATUS: Basecalling unsuccessful" $EMAIL_FILE $ERROR_EMAIL_SUB 
+	add_guppy_mm2_update "Guppy basecalling failed more than 5 times, exiting job for batch $CURRTIME" $LOG_FILE
+	email_guppy_mm2_update "BASECALLING STATUS: Basecalling unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 	exit 12
 
 else
 
-	add_guppy_mm2_update "Guppy basecalling completed successfully in $NUM_ATTEMPT attempt/s" $EMAIL_FILE
+	add_guppy_mm2_update "Guppy basecalling completed successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
 
-	echo "Sequencing summary" >> $EMAIL_FILE
-	awk '{if($10=="TRUE") passed+=$14; total+=$14} END{print passed/total}' ${FASTQ_FOLDER}/sequencing_summary.txt >> $EMAIL_FILE
+	echo "Sequencing summary" >> $LOG_FILE
+	awk '{if($10=="TRUE") passed+=$14; total+=$14} END{print passed/total}' ${FASTQ_FOLDER}/sequencing_summary.txt >> $LOG_FILE
 
 fi
 
@@ -196,20 +195,20 @@ fi
 
 if [ ! -d ${PASS_FASTQ_FOLDER} ]; then
 
-	add_guppy_mm2_update "No pass folder; no alignment required" $EMAIL_FILE 
-	email_guppy_mm2_update "BASECALLING STATUS: Basecalling successful and no minimap2 job to be started" $EMAIL_FILE $EMAIL_SUB 
+	add_guppy_mm2_update "No pass folder; no alignment required" $LOG_FILE 
+	email_guppy_mm2_update "BASECALLING STATUS: Basecalling successful and no minimap2 job to be started" $LOG_FILE $EMAIL_SUB 
 	exit 0
 
 fi
 
 #################### Generate list of minimap2 jobs ###########################
 
-add_guppy_mm2_update "Starting minimap2 command list generation" $EMAIL_FILE
+add_guppy_mm2_update "Starting minimap2 command list generation" $LOG_FILE
 
 if [ $(ls ${PASS_FASTQ_FOLDER}/*.fastq | wc -l) -eq 0 ]; then
 
-	add_guppy_mm2_update "No fastq files in pass folder; no alignment required" $EMAIL_FILE
-	email_guppy_mm2_update "BASECALLING STATUS: Basecalling successful and no minimap2 job to be started" $EMAIL_FILE $EMAIL_SUB 
+	add_guppy_mm2_update "No fastq files in pass folder; no alignment required" $LOG_FILE
+	email_guppy_mm2_update "BASECALLING STATUS: Basecalling successful and no minimap2 job to be started" $LOG_FILE $EMAIL_SUB 
 	exit 0
 
 else
@@ -217,7 +216,7 @@ else
 	mkdir -p ${TMP_FASTQ_FOLDER}/${BATCH}
 	rsync -r ${PASS_FASTQ_FOLDER}/ ${TMP_FASTQ_FOLDER}/${BATCH}/
 
-	add_guppy_mm2_update "Minimap2 task added to the queue" $EMAIL_FILE 
-	email_guppy_mm2_update "BASECALLING STATUS: Basecalling successful and minimap2 job added to the queue" $EMAIL_FILE $EMAIL_SUB
+	add_guppy_mm2_update "Minimap2 task added to the queue" $LOG_FILE 
+	email_guppy_mm2_update "BASECALLING STATUS: Basecalling successful and minimap2 job added to the queue" $LOG_FILE $EMAIL_SUB
 
 fi

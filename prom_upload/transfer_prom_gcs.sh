@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo $PROJECT_DIR
 1>&2 echo "current "$(date)
 FAST5_FOLDER=/data/prom/HG002/
 FAST5_BUCKET=gs://ultra_rapid_prom_data/prom/${SAMPLE}/

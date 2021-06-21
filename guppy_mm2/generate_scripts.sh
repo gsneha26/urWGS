@@ -53,7 +53,7 @@ elif [ $FC = Hh2 ]; then
 fi
 
 if [ $FC = "complete" ]; then
-	sed -i "s/-x \".\*\[1-6\]\[B-H\].\*\$\"//g" /data/scripts/run_basecalling.sh
+	sed -i "s/-x \".\*\[1-6\]\[B-H\].\*\$\"//g" $PROJECT_DIR/guppy_mm2/run_basecalling.sh
 else
-	sed -i "s/\".\*\[1-6\]\[B-H\].\*\$\"/$REPLACEMENT/g" /data/scripts/run_basecalling.sh
+	sed -i "s/\".\*\[1-6\]\[B-H\].\*\$\"/$REPLACEMENT/g" $PROJECT_DIR/guppy_mm2/run_basecalling.sh
 fi

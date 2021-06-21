@@ -3,11 +3,6 @@
 source /data/sample.config
 CHR_FOLDER=/data/$1_folder
 
-EMAIL_REC=goenkasneha26@gmail.com
-EMAIL_SENDER=gsnehaj26@gmail.com
-EMAIL_SUB=${SAMPLE}' PEPPER-Margin-DeepVariant Update for '
-ERROR_EMAIL_SUB='Error: '${SAMPLE}'  PEPPER-Margin-DeepVariant Update for '
-
 1>&2 echo "============================================================================"
 1>&2 echo "current "$(TZ='America/Los_Angeles' date)
 1>&2 echo "============================================================================"
@@ -15,9 +10,9 @@ time docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant make_images \
-	-b /data/$1_folder/${SAMPLE}_$1.bam \
+	-b $CHR_FOLDER/${SAMPLE}_$1.bam \
 	-f /data/GRCh37_$1.fa \
-	-o /data/$1_folder/pepper_snp/images/ \
+	-o $CHR_FOLDER/pepper_snp/images/ \
 	-t 90
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
@@ -32,9 +27,9 @@ time docker run \
 	--gpus all \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant run_inference \
-	-i /data/$1_folder/pepper_snp/images/ \
+	-i $CHR_FOLDER/pepper_snp/images/ \
 	-m /opt/pepper_models/PEPPER_SNP_R941_ONT_V4.pkl \
-	-o /data/$1_folder/pepper_snp/predictions/ \
+	-o $CHR_FOLDER/pepper_snp/predictions/ \
 	-bs 512 \
 	-g \
 	-per_gpu 4 \
@@ -52,11 +47,11 @@ time docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant find_candidates \
-	-i /data/$1_folder/pepper_snp/predictions/ \
-	-b /data/$1_folder/${SAMPLE}_$1.bam \
+	-i $CHR_FOLDER/pepper_snp/predictions/ \
+	-b $CHR_FOLDER/${SAMPLE}_$1.bam \
 	-f /data/GRCh37_$1.fa \
 	-s ${SAMPLE} \
-	-o /data/$1_folder/pepper_snp/ \
+	-o $CHR_FOLDER/pepper_snp/ \
 	-t 90 \
 	--ont
 VC_CODE=$?
@@ -67,7 +62,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-cd /data/$1_folder/pepper_snp/
+cd $CHR_FOLDER/pepper_snp/
 time (bgzip PEPPER_VARIANT_SNP_OUTPUT.vcf
 tabix -p vcf PEPPER_VARIANT_SNP_OUTPUT.vcf.gz)
 VC_CODE=$?
@@ -82,12 +77,12 @@ time docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows margin phase \
-        /data/$1_folder/${SAMPLE}_$1.bam \
+        $CHR_FOLDER/${SAMPLE}_$1.bam \
         /data/GRCh37_$1.fa \
-        /data/$1_folder/pepper_snp/PEPPER_VARIANT_SNP_OUTPUT.vcf.gz \
+        $CHR_FOLDER/pepper_snp/PEPPER_VARIANT_SNP_OUTPUT.vcf.gz \
 	/opt/margin_dir/params/misc/allParams.ont_haplotag.json \
 	-t 90 \
-        -o /data/$1_folder/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN
+        -o $CHR_FOLDER/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "Margin completed for $1" $1 "PEPPER-Margin-DeepVariant" 
@@ -96,7 +91,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-cd /data/$1_folder/margin/
+cd $CHR_FOLDER/margin/
 time samtools index -@90 MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
@@ -110,10 +105,10 @@ time docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant make_images \
-	-b /data/$1_folder/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam \
+	-b $CHR_FOLDER/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam \
 	-f /data/GRCh37_$1.fa \
 	-t 90 \
-	-o /data/$1_folder/pepper_hp/images/ \
+	-o $CHR_FOLDER/pepper_hp/images/ \
 	-hp
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
@@ -128,9 +123,9 @@ time docker run \
 	--gpus all \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant run_inference \
-	-i /data/$1_folder/pepper_hp/images/ \
+	-i $CHR_FOLDER/pepper_hp/images/ \
 	-m /opt/pepper_models/PEPPER_HP_R941_ONT_V4.pkl \
-	-o /data/$1_folder/pepper_hp/predictions/ \
+	-o $CHR_FOLDER/pepper_hp/predictions/ \
 	-bs 512 \
 	-g \
 	-per_gpu 4 \
@@ -149,11 +144,11 @@ time docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant find_candidates \
-	-i /data/$1_folder/pepper_hp/predictions/ \
-	-b /data/$1_folder/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam \
+	-i $CHR_FOLDER/pepper_hp/predictions/ \
+	-b $CHR_FOLDER/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam \
 	-f /data/GRCh37_$1.fa \
 	-s ${SAMPLE} \
-	-o /data/$1_folder/pepper_hp/ \
+	-o $CHR_FOLDER/pepper_hp/ \
 	-t 90 \
 	-hp \
 	--ont
@@ -165,7 +160,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-cd /data/$1_folder/pepper_hp/
+cd $CHR_FOLDER/pepper_hp/
 time (mv *.vcf PEPPER_VARIANT_HP_OUTPUT.vcf
 bgzip PEPPER_VARIANT_HP_OUTPUT.vcf
 tabix -p vcf PEPPER_VARIANT_HP_OUTPUT.vcf.gz)
