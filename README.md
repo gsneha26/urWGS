@@ -26,6 +26,10 @@ export PROJECT_DIR=$(pwd)
 ```
 $PROJECT_DIR/setup/mount_nvme.sh
 ```
+* Create a Google Storage Bucket e.g.
+```
+gsutil mb gs://urwgs_hg002_test
+```
 * Add cron job 
 ```
 echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> $HOME/upload_stdout.log 2>> $HOME/upload_stderr.log" | crontab -u $USER -
