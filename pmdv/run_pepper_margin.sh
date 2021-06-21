@@ -16,9 +16,9 @@ time docker run \
 	-t 90
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_SNP stage1 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_SNP stage1 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_SNP stage1 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_SNP stage1 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -37,9 +37,9 @@ time docker run \
 	-t 90
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_SNP stage2 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_SNP stage2 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_SNP stage2 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_SNP stage2 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -56,9 +56,9 @@ time docker run \
 	--ont
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_SNP stage3 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_SNP stage3 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_SNP stage3 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_SNP stage3 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -67,9 +67,9 @@ time (bgzip PEPPER_VARIANT_SNP_OUTPUT.vcf
 tabix -p vcf PEPPER_VARIANT_SNP_OUTPUT.vcf.gz)
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_SNP vcf processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_SNP vcf processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_SNP vcf processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_SNP vcf processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -85,9 +85,9 @@ time docker run \
         -o $CHR_FOLDER/margin/MARGIN_PHASED.PEPPER_SNP_MARGIN
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "Margin completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "Margin completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "Margin failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "Margin failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -95,9 +95,9 @@ cd $CHR_FOLDER/margin/
 time samtools index -@90 MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "Margin BAM processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "Margin BAM processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "Margin BAM processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "Margin BAM processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -112,9 +112,9 @@ time docker run \
 	-hp
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_HP stage1 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_HP stage1 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_HP stage1 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_HP stage1 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -134,9 +134,9 @@ time docker run \
 	-hp
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_HP stage2 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_HP stage2 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_HP stage2 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_HP stage2 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -154,9 +154,9 @@ time docker run \
 	--ont
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_HP stage3 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_HP stage3 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_HP stage3 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_HP stage3 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 1>&2 echo "============================================================================"
@@ -166,8 +166,8 @@ bgzip PEPPER_VARIANT_HP_OUTPUT.vcf
 tabix -p vcf PEPPER_VARIANT_HP_OUTPUT.vcf.gz)
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "PEPPER_HP vcf processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "PEPPER_HP vcf processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "PEPPER_HP vcf processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "PEPPER_HP vcf processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 

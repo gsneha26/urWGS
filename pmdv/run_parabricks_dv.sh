@@ -9,9 +9,9 @@ time (samtools index -@90 MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam
 samtools addreplacerg -r '@RG\tID:HG002_guppy422_fl1\tLB:HG002_guppy422_fl1\tPL:HG002_guppy422_fl1\tPU:HG002_guppy422_fl1\tSM:HG002' -@31 -o MARGIN_PHASED.PEPPER_SNP_MARGIN.HEADER_FIXED.SAMTOOLS.haplotagged.bam MARGIN_PHASED.PEPPER_SNP_MARGIN.haplotagged.bam)
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "Margin BAM processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "Margin BAM processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "Margin BAM processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "Margin BAM processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 time sudo pbrun deepvariant \
@@ -27,9 +27,9 @@ time sudo pbrun deepvariant \
         --x3
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_small_vc_update "Parabricks DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_vc_update "Parabricks DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_small_vc_update "Parabricks DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_vc_update "Parabricks DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 cd $CHR_FOLDER/

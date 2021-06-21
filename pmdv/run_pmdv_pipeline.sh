@@ -17,18 +17,18 @@ NUM_FILES=$(ls $STATUS_DIR | wc -l)
 
 if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 	for ch in $chr_args; do
-		email_small_vc_update "Starting Preprocess for $ch" $ch "PEPPER-Margin-DeepVariant" 
+		email_vc_update "Starting Preprocess for $ch" $ch "PEPPER-Margin-DeepVariant" 
 	done
 
 	time parallel -j 2 $PROJECT_DIR/pmdv/preprocess_chr.sh ::: ${chr_args} ::: $BAM_MERGE
 	EXIT_CODE=$?
 	if [ $EXIT_CODE -eq 0 ]; then
 		for ch in $chr_args; do
-			email_small_vc_update "Preprocess completed for $ch" $ch "PEPPER-Margin-DeepVariant"
+			email_vc_update "Preprocess completed for $ch" $ch "PEPPER-Margin-DeepVariant"
 		done
 	else
 		for ch in $chr_args; do
-			email_small_vc_update "Preprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
+			email_vc_update "Preprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		done
 	fi
 
@@ -42,7 +42,7 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 			fi
 		elif [ $DV == "parabricks" ]; then
 			if [ $PB_MODEL_FILE == "" ]; then
-				email_small_vc_update "Model file not available for Parabricks" $ch "PEPPER-Margin-DeepVariant"
+				email_vc_update "Model file not available for Parabricks" $ch "PEPPER-Margin-DeepVariant"
 			else
 				time $PROJECT_DIR/pmdv/run_parabricks_dv.sh $ch 2>> /data/${ch}_folder/run_$ch.log
 			fi
@@ -50,9 +50,9 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 
 		EXIT_CODE=$?
 		if [ $EXIT_CODE -eq 0 ]; then
-			email_small_vc_update "PEPPER-Margin-DeepVariant completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
+			email_vc_update "PEPPER-Margin-DeepVariant completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
 		else
-			email_small_vc_update "PEPPER-Margin-DeepVariant failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
+			email_vc_update "PEPPER-Margin-DeepVariant failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		fi
 	done
 
@@ -60,11 +60,11 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMD_STATUS -eq 2 ]; then
 	EXIT_CODE=$?
 	if [ ${EXIT_CODE} -eq 0 ]; then
 		for ch in $chr_args; do
-			email_small_vc_update "Postprocess completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
+			email_vc_update "Postprocess completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
 		done
 	else
 		for ch in $chr_args; do
-			email_small_vc_update "Postprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
+			email_vc_update "Postprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		done
 	fi
 
