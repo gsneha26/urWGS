@@ -1,7 +1,8 @@
 #! /bin/bash
 
+NUM_SSD=$(ls  /dev/nvme0n* | wc -l)
 sudo mkdir -p /data
-if [ $1 -gt 1 ]; then
+if [ $NUM_SSD -gt 1 ]; then
 	sudo apt update && sudo apt -y install mdadm --no-install-recommends
 	DEVICES=$(ls  /dev/nvme0n*)
 	sudo mdadm --create /dev/md0 --level=0 --raid-devices=$1 $DEVICES

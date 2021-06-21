@@ -1,6 +1,8 @@
 #!/bin/bash
 
 source /data/sample.config
+CHR_CONFIG=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CHR])")
+THREAD_CONFIG=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[THREADS])")
 chr_args=$( echo $CHR_CONFIG | sed 's/:/ /g' )
 thread_args=$( echo $THREAD_CONFIG | sed 's/:/ /g' )
 

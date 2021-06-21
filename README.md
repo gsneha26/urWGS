@@ -22,9 +22,9 @@ git clone https://github.com/gsneha26/urWGS-private
 cd urWGS-private/
 export PROJECT_DIR=$(pwd)
 ```
-* Mount the local ssd
+* Mount the local ssd devices
 ```
-$PROJECT_DIR/setup/mount_nvme.sh 2
+$PROJECT_DIR/setup/mount_nvme.sh
 ```
 * Add cron job 
 ```

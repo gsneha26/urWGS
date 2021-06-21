@@ -20,7 +20,7 @@ if [ $2 == "YES" ]; then
 		SAM_EXIT=$?
 		if [ $SAM_EXIT -gt 0 ]; then
 			rm $bam_file
-			email_vc_update "Removing $bam_file" $1 "PEPPER-Margin-DeepVariant"
+			email_small_vc_update "Removing $bam_file" $1 "PEPPER-Margin-DeepVariant"
 		fi
 	done
 	samtools merge -@10 ${SAMPLE}_$1.bam $CHR_FOLDER/*.bam

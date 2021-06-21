@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /data/sample.config
+FC=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[FC])")
 
 REPLAMENT=
 

@@ -21,9 +21,9 @@ time docker run --ipc=host \
 	--postprocess_variants_extra_args "use_multiallelic_model=True"
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-	email_vc_update "Google DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant" 
+	email_small_vc_update "Google DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
-	email_vc_update "Google DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	email_small_vc_update "Google DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
 fi
 
 cd $CHR_FOLDER/
