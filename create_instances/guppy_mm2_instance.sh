@@ -8,6 +8,8 @@ gcloud compute instances create $1 \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
         --metadata FC=$2,STAGE=GUPPY_MM2,startup-script='#!/bin/bash
+		mkdir -p $HOME/urWGS
+		gsutil -m rsync -r gs://ultra_rapid_nicu/urWGS/ $HOME/urWGS 
 		sudo apt update && sudo apt -y install mdadm --no-install-recommends
 		DEVICES=$(ls  /dev/nvme0n*)
 		sudo mdadm --create /dev/md0 --level=0 --raid-devices=3 $DEVICES
