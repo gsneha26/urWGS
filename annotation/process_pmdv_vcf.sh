@@ -43,23 +43,23 @@ tabix -p vcf ${INPUT_VCF}
 
 bedtools subtract -header -A \
 	-a ${INPUT_VCF} \
-	-b /data/scripts/GRCh37_AllHomopolymers_gt6bp_imperfectgt10bp_slop5.bed.gz | bgzip > ${INPUT_PREFIX}.no_long_homopolymer.vcf.gz
+	-b /data/bed_files/GRCh37_AllHomopolymers_gt6bp_imperfectgt10bp_slop5.bed.gz | bgzip > ${INPUT_PREFIX}.no_long_homopolymer.vcf.gz
 
 bedtools subtract -header -A \
 	-a ${INPUT_PREFIX}.no_long_homopolymer.vcf.gz \
-	-b /data/scripts/grch37.4bp_to_6bp_homopolymers_left_pad_1bp.bed | bgzip > ${INPUT_PREFIX}.no_homopolymer.vcf.gz
+	-b /data/bed_files/grch37.4bp_to_6bp_homopolymers_left_pad_1bp.bed | bgzip > ${INPUT_PREFIX}.no_homopolymer.vcf.gz
 
 tabix -p vcf ${INPUT_PREFIX}.no_homopolymer.vcf.gz
 
 bedtools intersect -header -u \
 	-a ${INPUT_VCF} \
-	-b /data/scripts/GRCh37_AllHomopolymers_gt6bp_imperfectgt10bp_slop5.bed.gz | awk -F'\t' -vOFS='\t' '{ if(!($1 ~ /^#/)) $7 = "Homopolymer"}1' | bgzip | bcftools annotate -h /data/scripts/Homopolymer_header.txt --output-type z -o ${INPUT_PREFIX}.long_homopolymer.vcf.gz
+	-b /data/bed_files/GRCh37_AllHomopolymers_gt6bp_imperfectgt10bp_slop5.bed.gz | awk -F'\t' -vOFS='\t' '{ if(!($1 ~ /^#/)) $7 = "Homopolymer"}1' | bgzip | bcftools annotate -h ${PROJECT_FOLDER}/Homopolymer_header.txt --output-type z -o ${INPUT_PREFIX}.long_homopolymer.vcf.gz
 
 tabix -p vcf ${INPUT_PREFIX}.long_homopolymer.vcf.gz
 
 bedtools intersect -header -u \
 	-a ${INPUT_PREFIX}.no_long_homopolymer.vcf.gz \
-	-b /data/scripts/grch37.4bp_to_6bp_homopolymers_left_pad_1bp.bed | awk -F'\t' -vOFS='\t' '{ if(!($1 ~ /^#/)) $7 = "ShortHomopolymer"}1' | bgzip | bcftools annotate -h /data/scripts/ShortHomopolymer_header.txt --output-type z -o ${INPUT_PREFIX}.short_homopolymer.vcf.gz
+	-b /data/bed_files/grch37.4bp_to_6bp_homopolymers_left_pad_1bp.bed | awk -F'\t' -vOFS='\t' '{ if(!($1 ~ /^#/)) $7 = "ShortHomopolymer"}1' | bgzip | bcftools annotate -h ${PROJECT_FOLDER}/ShortHomopolymer_header.txt --output-type z -o ${INPUT_PREFIX}.short_homopolymer.vcf.gz
 
 tabix -p vcf ${INPUT_PREFIX}.short_homopolymer.vcf.gz
 
