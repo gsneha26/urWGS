@@ -5,7 +5,7 @@ gcloud compute instances create $1 \
         --source-instance-template pmpb-template \
 	--create-disk=boot=yes,image=pmpb-image-v5,size=100GB \
 	--local-ssd=interface=NVME \
-        --metadata CHR=$2,STAGE=PMD,startup-script='#!/bin/bash
+        --metadata CHR=$2,startup-script='#!/bin/bash
 		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
 		mkdir -p /data/urWGS

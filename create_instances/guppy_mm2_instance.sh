@@ -7,7 +7,7 @@ gcloud compute instances create $1 \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
-        --metadata FC=$2,STAGE=GUPPY_MM2,startup-script='#!/bin/bash
+        --metadata FC=$2,startup-script='#!/bin/bash
 		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
 		mkdir -p /data/urWGS
