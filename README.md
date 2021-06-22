@@ -64,11 +64,11 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 
 ## Small Variant Calling
 ### Software:
-* PEPPER (Docker - kishwars/pepper_deepvariant:test-v0.5)
-* Margin (Docker - kishwars/pepper_deepvariant:test-v0.5)
-* Google DeepVariant (Docker)
-  * none model (Docker - kishwars/pepper_deepvariant:test-v0.5)
-  * rows model (Docker - kishwars/pepper_deepvariant:test-v0.5-rows)
+* PEPPER (Docker image - `kishwars/pepper_deepvariant:test-v0.5`)
+* Margin (Docker image - `kishwars/pepper_deepvariant:test-v0.5`)
+* Google DeepVariant
+  * none model (Docker image - `kishwars/pepper_deepvariant:test-v0.5`)
+  * rows model (Docker image - `kishwars/pepper_deepvariant:test-v0.5-rows`)
 * samtools [v1.11](https://github.com/samtools/samtools/commit/d58fc8a16729f25407da6729c440a51140396f4c)
 * bgzip
 * docker
