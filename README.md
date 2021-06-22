@@ -28,7 +28,9 @@ $PROJECT_DIR/setup/mount_nvme.sh
 ```
 * Create a Google Storage Bucket with a unique name e.g.
 ```
-gsutil mb gs://urwgs_hg002_test_$(date +%s)
+BUCKET=gs://urwgs_hg002_test_$(date +%s)
+gsutil mb $BUCKET
+sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" /path/to/sample.config
 ```
 * The script will simulate 6 flow cells which corresponds to computation (base calling and alignment) on 2 instances. The instances can be spun off in the following manner:
 ```
