@@ -26,17 +26,20 @@ export PROJECT_DIR=$(pwd)
 ```
 $PROJECT_DIR/setup/mount_nvme.sh
 ```
-* Create a Google Storage Bucket with a unique name e.g.
+* Create the configuration file (e.g. `sample.config` in the folder) 
+* Create a Google Storage Bucket with a unique name and add the configuration file to it e.g.
 ```
 BUCKET=gs://urwgs_hg002_test_$(date +%s)
 gsutil mb $BUCKET
 sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" /path/to/sample.config
+gsutil cp /path/to/sample.config ${BUCKET}/
 ```
 * The script will simulate 6 flow cells which corresponds to computation (base calling and alignment) on 2 instances. The instances can be spun off in the following manner:
 ```
 parallel -j 2 $PROJECT_DIR/create_instances/guppy_mm2_instance.sh ::: \
 	guppy-ch{1..2} :::+ \
-	Ch{1..2}
+	Ch{1..2} ::: \
+	${BUCKET}/sample.config
 ```
 Instance `guppy-ch1` will base call and align the data from flow cells 1C, 2C, 3C and `guppy-ch2` from 4C, 5C, 6C.
 * Add cron job 
