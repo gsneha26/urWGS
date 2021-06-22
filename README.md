@@ -98,6 +98,7 @@ NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is
 
 ## Variant Call Annotation
 ### Software:
+* SV Annotation (Docker image - `quay.io/jmonlong/svnicu:0.5`)
 * bctools [v1.11](https://github.com/samtools/bcftools/commit/df43fd4781298e961efc951ba33fc4cdcc165a19)
 * bedtools
 * tabix
