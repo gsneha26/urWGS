@@ -8,9 +8,12 @@ gcloud compute instances create $1 \
         --metadata startup-script='#!/bin/bash
 		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
-		mkdir -p /data/urWGS
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/GRCh37.fa /data/
+		mkdir -p /data/urWGS
 		gsutil -m rsync -r gs://ultra_rapid_nicu/urWGS/ /data/urWGS/
+		export PROJECT_DIR=/data/urWGS
+		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
+		gsutil cp $CONFIG_FILE_URL /data/
 		echo "2" > /data/download_status.txt 
 		echo "2" > /data/pmdv_annotation_status.txt 
 		echo "2" > /data/sniffles_annotation_status.txt 
