@@ -26,9 +26,9 @@ export PROJECT_DIR=$(pwd)
 ```
 $PROJECT_DIR/setup/mount_nvme.sh
 ```
-* Create a Google Storage Bucket e.g.
+* Create a Google Storage Bucket with a unique name e.g.
 ```
-gsutil mb gs://urwgs_hg002_test
+gsutil mb gs://urwgs_hg002_test_$(date +%s)
 ```
 * Add cron job 
 ```
