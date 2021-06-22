@@ -1,6 +1,6 @@
 # Ultra-Rapid Whole Genome Sequencing pipeline
 
-#### Running an HG002 PromethION simulation on host instance
+#### Demonstration for running an HG002 PromethION simulation on host instance and the corresponding base calling and alignment on instances with configuration specified above.
 * Start an instance with Ubuntu18.04 and SSD with NVME interface:
 ```
 gcloud compute instances create host-instance1 \
@@ -34,7 +34,7 @@ gsutil mb $BUCKET
 sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" /path/to/sample.config
 gsutil cp /path/to/sample.config ${BUCKET}/
 ```
-* The script will simulate 6 flow cells which corresponds to computation (base calling and alignment) on 2 instances. The instances can be spun off in the following manner:
+* The script will simulate 6 flow cells which corresponds to computation (base calling and alignment) on 2 instances. The instances can be started as follows:
 ```
 parallel -j 2 $PROJECT_DIR/create_instances/guppy_mm2_instance.sh ::: \
 	guppy-ch{1..2} :::+ \
