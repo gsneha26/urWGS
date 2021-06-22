@@ -6,7 +6,7 @@ if [ $# -eq 1 ]; then
 	if [ "$GENDER" == "F" ];then
 		parallel -j $NUM_PMD \
 			${PROJECT_DIR}/create_instances/pmdv_instance.sh ::: \
-			pmpd-${SAMPLE_LOW}-{1..14} :::+ \
+			pmdv-${SAMPLE_LOW}-{1..14} :::+ \
 			chr1 \
 			chr2 \
 			chr3 \
@@ -24,7 +24,7 @@ if [ $# -eq 1 ]; then
 	elif [ "$GENDER" == "M" ];then
 		parallel -j $NUM_PMD \
 			${PROJECT_DIR}/create_instances/pmdv_instance.sh ::: \
-			pmpd-${SAMPLE_LOW}-{1..14} :::+ \
+			pmdv-${SAMPLE_LOW}-{1..14} :::+ \
 			chr1 \
 			chr2 \
 			chr3 \
