@@ -36,7 +36,7 @@ parallel -j 2 $PROJECT_DIR/create_instances/guppy_mm2_instance.sh ::: \
 	guppy-ch{1..2} :::+ \
 	Ch{1..2}
 ```
-Instance `guppy-ch1` will base call and align the data from flow cells 1C, 2C, 3C and `guppy-ch2` for 4C, 5C, 6C.
+Instance `guppy-ch1` will base call and align the data from flow cells 1C, 2C, 3C and `guppy-ch2` from 4C, 5C, 6C.
 * Add cron job 
 ```
 echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> $HOME/upload_stdout.log 2>> $HOME/upload_stderr.log" | crontab -u $USER -
