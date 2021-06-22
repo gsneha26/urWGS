@@ -6,14 +6,13 @@ gcloud compute instances create $1 \
 	--create-disk=boot=yes,image=sniffles-image,size=100GB \
 	--local-ssd=interface=NVME \
         --metadata CHR=$2,THREADS=$3,STAGE=SNIFFLES,startup-script='#!/bin/bash
-		sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/nvme0n1
-		sudo mkdir -p /data
-		sudo mount -o discard,defaults /dev/nvme0n1 /data
-		sudo chmod a+w /data
+		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
+		bash -c mount_ssd_nvme.sh 
+		mkdir -p /data/urWGS
+                gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/GRCh37.mmi /data/
+		gsutil -m rsync -r gs://ultra_rapid_nicu/urWGS/ /data/urWGS/
+		export PROJECT_DIR=/data/urWGS
 		echo "2" > /data/sniffles_status.txt 
-		gsutil cp gs://ultra_rapid_nicu/scripts/sample.config /data/
-		mkdir /data/scripts/
-                gsutil -m cp gs://ultra_rapid_nicu/scripts/sniffles/* /data/scripts/
-                chmod +x /data/scripts/*.sh
 		chmod a+w -R /data/
-		echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n*/1 * * * * bash -c /data/scripts/run_sniffles_pipeline_wrapper.sh >> /data/stdout.log 2>> /data/stderr.log" | crontab -u gsneha -'
+		chmod +x $PROJECT_DIR/*/*.sh
+		echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\n*/1 * * * * bash -c $PROJECT_DIR/sniffles/run_sniffles_pipeline_wrapper.sh >> /data/stdout.log 2>> /data/stderr.log" | crontab -u gsneha -'
