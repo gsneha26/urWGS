@@ -8,6 +8,9 @@ gcloud compute instances create $1 \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
         --metadata FC=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
+		echo "$HOME"
+		echo "$USER"
+		echo "$LOGNAME"
 		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
                 gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/GRCh37.mmi /data/
