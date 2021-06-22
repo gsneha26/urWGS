@@ -3,6 +3,8 @@
 set -x
 
 source /data/sample.config
+GENE_LIST=/data/sample_gene_list.txt
+gsutil cp $GENE_LIST_URL $GENE_LIST
 SNIFFLES_ANNOTATION_FOLDER=/data/sniffles_annotation
 VCF_FOLDER=${SNIFFLES_ANNOTATION_FOLDER}/sniffles_output
 BAM_FOLDER=${SNIFFLES_ANNOTATION_FOLDER}/chr_bam
@@ -36,7 +38,7 @@ sudo docker run -it \
 	-u $USER` quay.io/jmonlong/svnicu:0.5 snakemake \
 	--snakefile /scripts/Snakefile \
 	--config ref=/data/GRCh37.fa \
-	gene_list=/data/scripts/gene_lists/${GENE_LIST} \
+	gene_list=${GENE_LIST} \
 	bam_list=${SNIFFLES_ANNOTATION_FOLDER}/bam.list.tsv \
 	vcf_list=${SNIFFLES_ANNOTATION_FOLDER}/vcf.list.txt \
 	sample=${SAMPLE} \
@@ -49,7 +51,7 @@ sudo docker run -it \
 	-u $USER` quay.io/jmonlong/svnicu:0.5 snakemake \
 	--snakefile /scripts/Snakefile \
 	--config ref=/data/GRCh37.fa \
-	gene_list=/data/scripts/gene_lists/${GENE_LIST} \
+	gene_list=${GENE_LIST} \
 	bam_list=${SNIFFLES_ANNOTATION_FOLDER}/bam.list.tsv \
 	vcf_list=${SNIFFLES_ANNOTATION_FOLDER}/vcf.list.txt \
 	sample=${SAMPLE} \

@@ -59,33 +59,6 @@ if [ $SNIFFLES_ANNOTATION_STATUS -eq 2 ] && [ $DOWNLOAD_STATUS -eq 1 ]; then
 
 	1>&2 echo "NUM_FILES: $NUM_FILES"
 
-	#SNIFFLES_STATUS=0
-	#for INST in {1..22} X Y MT;
-	#do
-	#	STATUS=$(gcloud pubsub subscriptions pull chr${INST}_sub_sniffles --format=value"(message.data.decode(base64).decode(utf-8))")
-	#	if [ "$STATUS" == "COMPLETE" ]; then
-	#		SNIFFLES_STATUS=$((SNIFFLES_STATUS+1))
-	#	fi
-	#done
-
-	#if [ ${SNIFFLES_STATUS} -eq 25 ]; then
-
-	#	/data/scripts/process_sniffles_vcf.sh
-
-	#	email_annotation_update "Sniffles Annotation completed"
-	#	echo "Sniffles Annotation completed"
-
-	#	for INST in {1..22} X Y MT;
-	#	do
-	#		gcloud pubsub subscriptions delete chr${INST}_sub_sniffles
-	#	done
-
-	#	echo "1" > $SNIFFLES_ANNOTATION_STATUS_FILE
-	#	SNIFFLES_ANNOTATION_STATUS=1
-	#else
-	#	echo "Not all sniffles vcfs generated"
-	#fi
-
 	if [ ${NUM_FILES} -eq 25 ]; then
 
 		/data/scripts/process_sniffles_vcf.sh

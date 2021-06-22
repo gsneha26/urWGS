@@ -3,7 +3,7 @@
 if [ $# -eq 1 ]; then
 	source $1
 
-	gsutil mb ${BUCKET}
+	gsutil cp $1 ${BUCKET}/
 
 	GUPPY_NAME_LIST=
 	GUPPY_FC_LIST=

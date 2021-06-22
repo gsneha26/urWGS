@@ -3,6 +3,8 @@
 if [ $# -eq 1 ]; then
 	source $1
 
+	gsutil cp $1 ${BUCKET}/
+
 	if [ "$GENDER" == "F" ];then
 		parallel -j $NUM_PMD \
 			${PROJECT_DIR}/create_instances/pmdv_instance.sh ::: \

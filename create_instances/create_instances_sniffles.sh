@@ -3,6 +3,8 @@
 if [ $# -eq 1 ]; then
 	source $1
 
+	gsutil cp $1 ${BUCKET}/
+
 	parallel -j $NUM_SNIFFLES \
 		 ${PROJECT_DIR}/create_instances/sniffles_instance.sh ::: \
 		 sniffles-${SAMPLE_LOW}-{1..2} :::+ \

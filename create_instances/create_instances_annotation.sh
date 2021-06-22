@@ -3,6 +3,8 @@
 if [ $# -eq 1 ]; then
 	source $1
 
+	gsutil cp $1 ${BUCKET}/
+
 	parallel -j 1 \
 		 ${PROJECT_DIR}/create_instances/annotation_instance.sh ::: \
 		 annotation-${SAMPLE_LOW}-1
