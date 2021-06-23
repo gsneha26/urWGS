@@ -6,7 +6,7 @@
 gcloud compute instances create host-instance1 \
         --zone us-west1-a \
 	--machine-type='n1-standard-16' \
-	--create-disk=boot=yes,image-project='ubuntu-os-cloud',image='ubuntu-1804-bionic-v20210604',size=100GB \
+	--create-disk=boot=yes,image-project='ubuntu-os-cloud',image='ubuntu-1604-xenial-v20210429',size=100GB \
         --local-ssd=interface=NVME \
         --local-ssd=interface=NVME
 ```
@@ -62,6 +62,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 * 200 GB RAM
 * 4 x NVIDIA Tesla V100
 * 3 x Local SSD Scratch Disk
+* Ubuntu 16.04 LTS
 
 ## Small Variant Calling
 ### Software:
@@ -78,6 +79,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 * 360 GB RAM
 * 4 x NVIDIA Tesla P100
 * 1 x Local SSD Scratch Disk
+* Ubuntu 16.04 LTS
 
 NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is commercially licensed and not available as a part of this repository for testing this pipeline.
 
@@ -91,6 +93,7 @@ NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is
 * 96 vCPUs
 * 360 GB RAM
 * 1 x Local SSD Scratch Disk
+* Ubuntu 16.04 LTS
 
 ## Variant Call Annotation
 ### Software:
@@ -102,3 +105,4 @@ NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is
 * 64 vCPUs
 * 240 GB RAM
 * 1 x Local SSD Scratch Disk
+* Ubuntu 16.04 LTS

@@ -3,10 +3,10 @@
 gcloud compute instances create $1 \
         --zone us-west1-a \
         --source-instance-template annotation-template \
-	--create-disk=boot=yes,image=annotation-image-v5,size=100GB \
+	--create-disk=boot=yes,image=annotation-image-v1,size=100GB \
 	--local-ssd=interface=NVME \
         --metadata startup-script='#!/bin/bash
-		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
+		gsutil cp gs://ur_wgs_public_data/test_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/test_data/GRCh37.fa /data/
 		mkdir -p /data/bed_files

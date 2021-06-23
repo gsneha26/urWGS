@@ -3,7 +3,7 @@
 PERIOD=$1
 HG002_SRC_DIR=/data/tmp/HG002/
 HG002_DST_DIR=/data/prom/HG002/
-HG002_SOURCE_BUCKET=gs://ur_wgs_public_data/HG002_raw_data
+HG002_SOURCE_BUCKET=gs://ur_wgs_public_data/test_data/HG002_raw_data
 
 mkdir -p $HG002_SRC_DIR
 mkdir -p $HG002_DST_DIR

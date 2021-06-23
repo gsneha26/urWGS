@@ -3,7 +3,7 @@
 gcloud compute instances create $1 \
         --zone us-west1-a \
         --source-instance-template guppy-mm2-template \
-	--create-disk=boot=yes,image=guppy-mm2-image-v4,size=100GB \
+	--create-disk=boot=yes,image=guppy-mm2-image-v1,size=100GB \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
@@ -11,7 +11,7 @@ gcloud compute instances create $1 \
 		echo "$HOME"
 		echo "$USER"
 		echo "$LOGNAME"
-		gsutil cp gs://ur_wgs_public_data/mount_ssd_nvme.sh .
+		gsutil cp gs://ur_wgs_public_data/test_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
                 gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/test_data/GRCh37.mmi /data/
 		mkdir -p /data/urWGS
