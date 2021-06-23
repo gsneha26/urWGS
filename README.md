@@ -54,7 +54,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 ### Software:
 * Guppy v4.2.2 (Commercial software from Oxford Nanopore Technologies)
 * Minimap2 [v2.17-r974](https://github.com/lh3/minimap2/commit/2da649d1d724561d4c2bbe1be9123e2b61bc0029)
-* Utilities: samtools [v1.11](https://github.com/samtools/samtools/commit/d58fc8a16729f25407da6729c440a51140396f4c), CUDA v10.2, GNU parallel
+* Utilities: samtools v1.11, CUDA v10.2, GNU parallel
 
 ### Instance type:
 * Custom N1 instance
@@ -71,7 +71,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 * Google DeepVariant
   * none model (Docker image - `kishwars/pepper_deepvariant:test-v0.5`)
   * rows model (Docker image - `kishwars/pepper_deepvariant:test-v0.5-rows`)
-* Utilities: samtools [v1.11](https://github.com/samtools/samtools/commit/d58fc8a16729f25407da6729c440a51140396f4c), bgzip, docker, GNU parallel
+* Utilities: docker, samtools v1.11, bgzip, GNU parallel
 
 ### Instance type:
 * Standard N1 instance
@@ -98,7 +98,7 @@ NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is
 ## Variant Call Annotation
 ### Software:
 * SV Annotation (Docker image - `quay.io/jmonlong/svnicu:0.5`)
-* Utilities: bctools [v1.11](https://github.com/samtools/bcftools/commit/df43fd4781298e961efc951ba33fc4cdcc165a19), bedtools, tabix, bgzip, docker
+* Utilities: bctools v1.11, bedtools, tabix, bgzip, docker
 
 ### Instance type:
 * Standard N1 instance

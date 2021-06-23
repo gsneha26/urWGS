@@ -2,8 +2,8 @@
 
 gcloud compute instances create $1 \
         --zone us-west1-a \
-        --source-instance-template pmpb-template \
-	--create-disk=boot=yes,image=pmpb-image-v1,size=100GB \
+        --source-instance-template pmdv-template \
+	--create-disk=boot=yes,image=pmdv-image-v1,size=100GB \
 	--local-ssd=interface=NVME \
         --metadata CHR=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
 		gsutil cp gs://ur_wgs_public_data/test_data/mount_ssd_nvme.sh .
