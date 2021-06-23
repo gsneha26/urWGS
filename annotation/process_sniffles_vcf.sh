@@ -31,7 +31,7 @@ echo -e "$CHR\tchr_bam/${SAMPLE}_chr$CHR.bam" >> bam.list.tsv
 done
 
 ## start docker container
-sudo docker run -it \
+sudo sudo docker run -it \
 	-v /data:/data \
 	-w $SNIFFLES_ANNOTATION_FOLDER \
 	-u `id \
@@ -44,7 +44,7 @@ sudo docker run -it \
 	sample=${SAMPLE} \
 	--cores 90
 
-sudo docker run -it \
+sudo sudo docker run -it \
 	-v /data:/data \
 	-w $SNIFFLES_ANNOTATION_FOLDER \
 	-u `id \

@@ -6,7 +6,7 @@ CHR_FOLDER=/data/$1_folder
 1>&2 echo "============================================================================"
 1>&2 echo "current "$(TZ='America/Los_Angeles' date)
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant make_images \
@@ -22,7 +22,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	--gpus all \
 	-v /data:/data \
@@ -43,7 +43,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant find_candidates \
@@ -73,7 +73,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows margin phase \
@@ -101,7 +101,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant make_images \
@@ -118,7 +118,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	--gpus all \
 	-v /data:/data \
@@ -140,7 +140,7 @@ else
 fi
 
 1>&2 echo "============================================================================"
-time docker run \
+time sudo docker run \
 	--ipc=host \
 	-v /data:/data \
 	kishwars/pepper_deepvariant:test-v0.5-rows pepper_variant find_candidates \
