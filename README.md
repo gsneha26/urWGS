@@ -1,6 +1,6 @@
 # Ultra-Rapid whole genome nanopore sequencing pipeline
 
-Attn reviewers: Detailed instructions for running PromethION simulation for a subset of the HG002 data and the associated base calling and alignment is provided [here](./docs/HG002_test_run.md) Since Guppy is a commercially available software from Oxfor Nanopore Technologies, we have created anonymous Google Cloud Platform (GCP) user accounts with access to VM instance resources consisting of Guppy license to test the pipeline. Instructions to start using the GCP resources is available [here](./docs/GCP_instructions_reviewers.md)    
+Attn reviewers: Detailed instructions for running PromethION simulation for a subset of the HG002 data and the associated base calling and alignment is provided [here](./docs/HG002_basecalling_alignment_test_run.md) Since Guppy is a commercially available software from Oxfor Nanopore Technologies, we have created anonymous Google Cloud Platform (GCP) user accounts with access to VM instance resources consisting of Guppy license to test the pipeline. Instructions to start using the GCP resources is available [here](./docs/GCP_instructions_reviewers.md)    
 
 ## Base calling and Alignment
 ### Software:
