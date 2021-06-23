@@ -71,7 +71,7 @@ $PROJECT_DIR/prom_simulation/simulate_prom.sh simulation_duration_in_seconds
 * Google DeepVariant
   * none model (Docker image - `kishwars/pepper_deepvariant:test-v0.5`)
   * rows model (Docker image - `kishwars/pepper_deepvariant:test-v0.5-rows`)
-* Utilities: docker, samtools v1.11, bgzip, GNU parallel
+* Utilities: docker, samtools v1.11, bgzip v1.11, tabix v1.11, GNU parallel
 
 ### Instance type:
 * Standard N1 instance
@@ -98,7 +98,7 @@ NOTE: [Parabricks DeepVariant](https://developer.nvidia.com/clara-parabricks) is
 ## Variant Call Annotation
 ### Software:
 * SV Annotation (Docker image - `quay.io/jmonlong/svnicu:0.5`)
-* Utilities: bctools v1.11, bedtools, tabix, bgzip, docker
+* Utilities: bctools v1.11, bedtools, tabix v1.11, bgzip v1.11, docker
 
 ### Instance type:
 * Standard N1 instance
