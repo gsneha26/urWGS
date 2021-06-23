@@ -1,4 +1,4 @@
-# Ultra-Rapid Whole Genome Sequencing pipeline
+# Ultra-Rapid whole genome nanopore sequencing pipeline
 
 Detailed instructions for running promethION simulation for a subset of the HG002 data is provided [here](./docs/HG002_test_run.md)
 
