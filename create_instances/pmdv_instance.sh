@@ -8,8 +8,8 @@ gcloud compute instances create $1 \
         --metadata CHR=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
 		gsutil cp gs://ur_wgs_public_data/test_data/mount_ssd_nvme.sh .
 		bash -c mount_ssd_nvme.sh 
-		mkdir -p /data/urWGS
-		gsutil -m rsync -r gs://ultra_rapid_nicu/urWGS/ /data/urWGS/
+		cd /data/
+		git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40dfb/urWGS.git
 		export PROJECT_DIR=/data/urWGS
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
 		gsutil cp $CONFIG_FILE_URL /data/

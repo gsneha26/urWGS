@@ -11,8 +11,8 @@ gcloud compute instances create $1 \
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/test_data/GRCh37.fa /data/
 		mkdir -p /data/bed_files
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/small_variant_annotation/* /data/bed_files/
-		mkdir -p /data/urWGS
-		gsutil -m rsync -r gs://ultra_rapid_nicu/urWGS/ /data/urWGS/
+		cd /data/
+		git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40dfb/urWGS.git
 		export PROJECT_DIR=/data/urWGS
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
 		gsutil cp $CONFIG_FILE_URL /data/

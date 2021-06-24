@@ -1,8 +1,10 @@
 #### Demonstration for running an HG002 PromethION simulation on host instance and the corresponding base calling and alignment on instances with configuration specified above.
 * Start an instance with Ubuntu18.04 and SSD with NVME interface:
 ```
-gcloud compute instances create host-instance1 \
-        --zone us-west1-a \
+NAME=host-instance-$(date +%s)
+ZONE=us-west1-a
+gcloud compute instances create $NAME \
+        --zone $ZONE \
 	--machine-type='n1-standard-16' \
 	--create-disk=boot=yes,image-project='ubuntu-os-cloud',image='ubuntu-1604-xenial-v20210429',size=100GB \
         --local-ssd=interface=NVME \
@@ -11,18 +13,18 @@ gcloud compute instances create host-instance1 \
 * Log into the instance and install pre-requisites:
 ```
 sudo apt-get update
-sudo apt-get --yes install git parallel rsync
+sudo apt-get -y install git parallel rsync
 ```
 * Install Google Cloud SDK ([Instructions for a non-GCP instance](https://cloud.google.com/sdk/docs/install))
 * Clone urWGS repository
 ```
-git clone https://github.com/gsneha26/urWGS-private
-cd urWGS-private/
+git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40dfb/urWGS.git
+cd urWGS/
 export PROJECT_DIR=$(pwd)
 ```
 * Mount the local ssd devices
 ```
-$PROJECT_DIR/setup/mount_nvme.sh
+$PROJECT_DIR/setup/mount_ssd_nvme.sh
 ```
 * Create the configuration file (e.g. `sample.config` in the folder) 
 * Create a Google Storage Bucket with a unique name and add the configuration file to it e.g.
