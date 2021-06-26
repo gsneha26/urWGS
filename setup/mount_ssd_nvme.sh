@@ -5,7 +5,7 @@ sudo mkdir -p /data
 if [ $NUM_SSD -gt 1 ]; then
 	sudo apt update && sudo apt -y install mdadm --no-install-recommends
 	DEVICES=$(ls  /dev/nvme0n*)
-	sudo mdadm --create /dev/md0 --level=0 --raid-devices=$1 $DEVICES
+	sudo mdadm --create /dev/md0 --level=0 --raid-devices=$NUM_SSD $DEVICES
 	sudo mkfs.ext4 -F /dev/md0
 	sudo mount -o discard,defaults /dev/md0 /data
 else

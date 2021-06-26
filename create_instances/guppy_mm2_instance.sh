@@ -8,13 +8,12 @@ gcloud compute instances create $1 \
 	--local-ssd=interface=NVME \
 	--local-ssd=interface=NVME \
         --metadata FC=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
-		gsutil cp gs://ur_wgs_public_data/test_data/mount_ssd_nvme.sh .
-		bash -c mount_ssd_nvme.sh 
 		nvidia-smi -pm 1
-                gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/test_data/GRCh37.mmi /data/
-		cd /data/
 		git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40dfb/urWGS.git
+		bash -c urWGS/mount_ssd_nvme.sh
+		mv urWGS /data/
 		export PROJECT_DIR=/data/urWGS
+                gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/test_data/GRCh37.mmi /data/
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
 		gsutil cp $CONFIG_FILE_URL /data/
 		echo "2" > /data/postprocess_status.txt
