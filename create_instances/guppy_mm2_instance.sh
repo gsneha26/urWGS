@@ -16,7 +16,7 @@ gcloud compute instances create $1 \
 		export PROJECT_DIR=/data/urWGS
                 gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/test_data/GRCh37.mmi /data/
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
-		gsutil cp $CONFIG_FILE_URL /data/
+		gsutil cp $CONFIG_FILE_URL /data/sample.config
 		echo "2" > /data/postprocess_status.txt
 		chmod a+w -R /data/
 		chmod +x $PROJECT_DIR/*/*.sh

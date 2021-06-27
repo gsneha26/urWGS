@@ -12,7 +12,7 @@ gcloud compute instances create $1 \
 		mv urWGS /data/
 		export PROJECT_DIR=/data/urWGS
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
-		gsutil cp $CONFIG_FILE_URL /data/
+		gsutil cp $CONFIG_FILE_URL /data/sample.config
 		echo "2" > /data/pmdv_status.txt 
 		chmod a+w -R /data/
 		chmod +x $PROJECT_DIR/*/*.sh

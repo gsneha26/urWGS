@@ -15,7 +15,7 @@ gcloud compute instances create $1 \
 		mkdir -p /data/bed_files
 		gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/small_variant_annotation/* /data/bed_files/
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
-		gsutil cp $CONFIG_FILE_URL /data/
+		gsutil cp $CONFIG_FILE_URL /data/sample.config
 		echo "2" > /data/download_status.txt 
 		echo "2" > /data/pmdv_annotation_status.txt 
 		echo "2" > /data/sniffles_annotation_status.txt 
