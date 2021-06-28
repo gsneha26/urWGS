@@ -4,11 +4,14 @@
 ```
 NAME=host-instance-$(date +%s)
 ```
+
 	* Set zone of the instance
+
 ```
 ZONE=us-west1-a
 ```
 	* Command to start the instance
+
 ```
 gcloud compute instances create $NAME \
         --zone $ZONE \
@@ -19,12 +22,14 @@ gcloud compute instances create $NAME \
         --local-ssd=interface=NVME
 ```
 (It will take a minute or 2 to start)
+
 * Log into the instance
 ```
 gcloud beta compute ssh --zone $ZONE $NAME --project "som-ashley-rapid-nicu-seq"
 ```
 Instructions on the host instance
-*Install pre-requisites:
+
+* Install pre-requisites:
 ```
 sudo apt-get update
 sudo apt-get -y install git parallel rsync
