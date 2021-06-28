@@ -7,6 +7,7 @@ HG002_SOURCE_BUCKET=gs://ur_wgs_public_data/test_data/HG002_raw_data
 
 mkdir -p $HG002_SRC_DIR
 mkdir -p $HG002_DST_DIR
+mkdir -p /data/logs
 
 # download fast5 files for row C of promethION
 time gsutil -m rsync -r \
@@ -24,7 +25,7 @@ echo "Started sequencing at "$(date +%T)
 # based on the total number of files in each folder,
 # can vary from flowcell to flowcell
 time parallel -j 6 \
-	$PROJECT_DIR/prom_simulation/simulate_flowcell.sh ::: \
+	$PROJECT_DIR/simulation/simulate_flowcell.sh ::: \
 	$HG002_SRC_DIR ::: \
 	$HG002_DST_DIR ::: \
 	{1..6}C ::: \
