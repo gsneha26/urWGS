@@ -3,11 +3,11 @@
 1>&2 echo "current "$(date)
 source /data/sample.config
 
-BAM_SRC_BUCKET=gs://ur_wgs_test_data/HG002_chr_bam
+ALIGNMENT_SRC_BUCKET=gs://ur_wgs_test_data/HG002_guppy_minimap2_bam
 
-gsutil -m rsync -r ${BAM_SRC_BUCKET}/ ${CHR_BAM_BUCKET}/
+gsutil -m rsync -r ${ALIGNMENT_SRC_BUCKET}/ ${GUPPY_MM2_OUTPUT_BUCKET}/
 
-STATUS_DIR=/data/chr_bam_status
+STATUS_DIR=/data/guppy_minimap2_status
 mkdir -p $STATUS_DIR/
 
 for inst in {A..H}h{1..2};

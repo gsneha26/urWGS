@@ -6,7 +6,7 @@ gcloud compute instances create $1 \
 	--create-disk=boot=yes,image=annotation-image-v1,size=100GB \
 	--scopes=storage-full,compute-rw,logging-write \
 	--local-ssd=interface=NVME \
-        --metadata startup-script='#!/bin/bash
+        --metadata CONFIG_FILE_URL=$2,startup-script='#!/bin/bash
 		git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40dfb/urWGS.git
 		bash -c ./urWGS/setup/mount_ssd_nvme.sh
 		mv urWGS /data/

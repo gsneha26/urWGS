@@ -9,7 +9,8 @@ if [ $# -eq 1 ]; then
 		 ${PROJECT_DIR}/create_instances/sniffles_instance.sh ::: \
 		 sniffles-${SAMPLE_LOW}-{1..2} :::+ \
 		 chr16:chr4:chr5:chr7:chr8:chr10:chr11:chr14:chr15:chr18:chr19:chr20:chr21 chr1:chr2:chr3:chr6:chr12:chr13:chr9:chr17:chrX:chr22:chrY:chrMT :::+ \
-		 30:20:15:6:6:5:5:2:2:1:1:1:1 21:21:17:13:5:5:5:3:3:1:1:1
+		 30:20:15:6:6:5:5:2:2:1:1:1:1 21:21:17:13:5:5:5:3:3:1:1:1 ::: \
+		 ${BUCKET}/sample.config
 	exit 0
 else
 	1>&2 echo "Error: Provided $# arguments" 

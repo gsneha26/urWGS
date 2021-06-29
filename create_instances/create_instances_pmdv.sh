@@ -22,7 +22,8 @@ if [ $# -eq 1 ]; then
 			chr11:chr14 \
 			chr12:chr15 \
 			chrX:chr21 \
-			chr16:chr17 
+			chr16:chr17 ::: \
+		        ${BUCKET}/sample.config	
 	elif [ "$GENDER" == "M" ];then
 		parallel -j $NUM_PMD \
 			${PROJECT_DIR}/create_instances/pmdv_instance.sh ::: \
@@ -40,7 +41,8 @@ if [ $# -eq 1 ]; then
 			chr11:chr20 \
 			chr12:chr14 \
 			chr13:chr17 \
-			chr16:chr21 
+			chr16:chr21 ::: \
+		        ${BUCKET}/sample.config	
 	fi
 	exit 0
 else

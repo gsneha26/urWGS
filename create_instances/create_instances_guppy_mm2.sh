@@ -26,7 +26,8 @@ if [ $# -eq 1 ]; then
 
 	parallel -j ${NUM_GUPPY} ${PROJECT_DIR}/create_instances/guppy_mm2_instance.sh ::: \
 		${GUPPY_NAME_LIST} :::+ \
-		${GUPPY_FC_LIST}
+		${GUPPY_FC_LIST} ::: \
+		${BUCKET}/sample.config
 	exit 0
 else
 	1>&2 echo "Error: Provided $# arguments" 

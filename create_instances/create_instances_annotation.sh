@@ -5,9 +5,9 @@ if [ $# -eq 1 ]; then
 
 	gsutil cp $1 ${BUCKET}/
 
-	parallel -j 1 \
-		 ${PROJECT_DIR}/create_instances/annotation_instance.sh ::: \
-		 annotation-${SAMPLE_LOW}-1
+	${PROJECT_DIR}/create_instances/annotation_instance.sh \
+		annotation-${SAMPLE_LOW}-1 \
+		${BUCKET}/sample.config
 	exit 0
 else
 	1>&2 echo "Error: Provided $# arguments" 
