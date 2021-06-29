@@ -1,11 +1,9 @@
 #!/bin/bash
 
-echo $PROJECT_DIR
 1>&2 echo "current "$(date)
+source /data/sample.config
 FAST5_FOLDER=/data/prom/HG002/
-FAST5_BUCKET=gs://ultra_rapid_prom_data/prom/${SAMPLE}/
 UPLOAD_STATUS_FILE=/data/upload_status.txt
-UPLOAD_STATUS_BUCKET=gs://ultra_rapid_prom_data/prom
 
 MIN_BUFFER=180 #3 minutes
 MAX_BUFFER=540 #9 minutes
@@ -37,4 +35,4 @@ else
 	echo "1" > $UPLOAD_STATUS_FILE
 fi
 
-gsutil cp $UPLOAD_STATUS_FILE $UPLOAD_STATUS_BUCKET/ 
+gsutil cp $UPLOAD_STATUS_FILE $FAST5_STATUS_BUCKET

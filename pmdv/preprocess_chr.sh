@@ -8,7 +8,7 @@ mkdir -p $CHR_FOLDER/pepper_snp
 mkdir -p $CHR_FOLDER/margin
 mkdir -p $CHR_FOLDER/pepper_hp
 
-gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_public_data/GRCh37_chr_fasta/GRCh37_$1.fa /data/
+gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_$1.fa /data/
 
 if [ $2 == "YES" ]; then
 

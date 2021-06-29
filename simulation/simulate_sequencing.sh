@@ -3,7 +3,7 @@
 PERIOD=$1
 HG002_SRC_DIR=/data/tmp/HG002/
 HG002_DST_DIR=/data/prom/HG002/
-HG002_SOURCE_BUCKET=gs://ur_wgs_public_data/test_data/HG002_raw_data
+HG002_SRC_BUCKET=gs://ur_wgs_test_data/HG002_fast5
 
 mkdir -p $HG002_SRC_DIR
 mkdir -p $HG002_DST_DIR
@@ -12,7 +12,7 @@ mkdir -p /data/logs
 # download fast5 files for row C of promethION
 time gsutil -m rsync -r \
 	-x ".*[1-6][A-B].*$|.*[1-6][D-H].*$" \
-	$HG002_SOURCE_BUCKET/ \
+	$HG002_SRC_BUCKET/ \
 	$HG002_SRC_DIR/
 
 # copy the directory structure to the destination folder 
