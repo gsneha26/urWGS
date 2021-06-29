@@ -19,13 +19,13 @@ mkdir -p $STATUS_DIR
 gsutil rsync ${BAM_STATUS_BUCKET}/ $STATUS_DIR
 
 NUM_FILES=0
-for ch in $chr_args; do
-	if [ $(cat ${STATUS_DIR}/${ch}_status.txt) == "1" ]; then
+for  i in $(ls $STATUS_DIR); do
+	if [ $(cat ${STATUS_DIR}/${ch}_bam_status.txt) == "1" ]; then
 		NUM_FILES=$((NUM_FILES+1))
 	fi
 done
 
-1>&2 echo "NUM_FILES: $NUM_FILES"
+1>&2 echo "SUM OF CHR_BAM STATUS: $NUM_FILES"
 1>&2 echo "SNIFFLES_STATUS: $SNIFFLES_STATUS"
 
 if [ $NUM_FILES -eq $num_chr ] && [ $SNIFFLES_STATUS -eq 2 ]; then

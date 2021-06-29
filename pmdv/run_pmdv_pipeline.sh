@@ -10,18 +10,17 @@ PMDV_STATUS=$(cat $PMDV_STATUS_FILE)
 
 mkdir -p $STATUS_DIR 
 gsutil rsync ${GUPPY_MM2_STATUS_BUCKET}/ $STATUS_DIR
-NUM_FILES=$(ls $STATUS_DIR | wc -l)
-TOTAL_STATUS=0
-for i in $(ls $STATUS_DIR);
-do
-	TOTAL_STATUS=$(( TOTAL_STATUS + $(cat ${STATUS_DIR}/$i) ))
+NUM_FILES=0
+for i in $(ls $STATUS_DIR); do
+        if [ $(cat ${STATUS_DIR}/$i) == "1" ]; then
+                NUM_FILES=$((NUM_FILES+1))
+        fi
 done
 
-1>&2 echo "NUM_FILES: $NUM_FILES"
 1>&2 echo "PMDV_STATUS: $PMDV_STATUS"
-1>&2 echo "SUM OF GUPPY_MINIMAP2 STATUS: $TOTAL_STATUS"
+1>&2 echo "SUM OF GUPPY_MINIMAP2 STATUS: $NUM_FILES"
 
-if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $TOTAL_STATUS -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
+if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 	for ch in $chr_args; do
 		email_vc_update "Starting Preprocess for $ch" $ch "PEPPER-Margin-DeepVariant" 
 	done

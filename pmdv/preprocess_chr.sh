@@ -49,7 +49,7 @@ if [ $BAM_MERGE == "YES" ]; then
 	echo "1" > $CHR_FOLDER/$1_status.txt
 	gsutil cp  $CHR_FOLDER/$1_status.txt ${BAM_STATUS_BUCKET}/
 
-elif [ $BAM_MERGE == "NO" ]; then
+else 
 
 	gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${CHR_BAM_BUCKET}/${SAMPLE}_$1.bam $CHR_FOLDER/ 
 	if [ $? -gt 0 ]; then
