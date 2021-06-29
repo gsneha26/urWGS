@@ -1,18 +1,8 @@
 #### Demonstration for running an HG002 PromethION simulation on host instance and the corresponding base calling and alignment on instances with configuration specified above.
 * Start an instance with Ubuntu16.04 and SSD with NVME interface and permissions to create storage buckets and other instances:
-	* Set name of the instance
 ```
 NAME=host-instance-$(date +%s)
-```
-
-	* Set zone of the instance
-
-```
 ZONE=us-west1-a
-```
-	* Command to start the instance
-
-```
 gcloud compute instances create $NAME \
         --zone $ZONE \
 	--machine-type='n1-standard-16' \
