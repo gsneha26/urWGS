@@ -45,4 +45,4 @@ else
 	echo "Alignment is not running" >> $LOG_FOLDER/summary.log
 fi
 
-time gsutil -m cp -r $LOG_FOLDER/*.log $LOG_BUCKET
+time gsutil -q -m cp -r $LOG_FOLDER/*.log $LOG_BUCKET

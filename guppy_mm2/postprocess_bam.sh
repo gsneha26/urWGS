@@ -48,7 +48,7 @@ while [ $PP_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 	add_guppy_mm2_update "Starting chr-wise bam upload using parallel utility" $LOG_FILE
 
-	parallel --verbose -k -j 9 gsutil -o "GSUtil:parallel_composite_upload_threshold=250M" cp /data/final_bam/chr{1}_*.bam ${GUPPY_MM2_OUTPUT_BUCKET}/chr{1}/ ::: {1..22} X Y MT
+	parallel --verbose -k -j 9 gsutil -q -o "GSUtil:parallel_composite_upload_threshold=250M" cp /data/final_bam/chr{1}_*.bam ${GUPPY_MM2_OUTPUT_BUCKET}/chr{1}/ ::: {1..22} X Y MT
 	PP_EXIT=$?
 
 	NUM_ATTEMPT=$(((NUM_ATTEMPT)+1))
@@ -66,8 +66,8 @@ else
 	add_guppy_mm2_update "Parallel chr-wise bam upload jobs exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
 	email_guppy_mm2_update "POSTPROCESS STATUS: Job successful" $LOG_FILE $EMAIL_SUB 
 	echo "1" > $POSTPROCESS_STATUS_FILE
-	gsutil cp $POSTPROCESS_STATUS_FILE ${GUPPY_MM2_STATUS_BUCKET}/postprocess_${FC}_status.txt
-	gsutil -m rsync -r /data/output_folder/ ${GUPPY_MM2_LOG_BUCKET}/$(hostname)/
+	gsutil -q cp $POSTPROCESS_STATUS_FILE ${GUPPY_MM2_STATUS_BUCKET}/postprocess_${FC}_status.txt
+	gsutil -q -m rsync -r /data/output_folder/ ${GUPPY_MM2_LOG_BUCKET}/$(hostname)/
 	echo "Upload completed" | sudo mail -t goenkasneha26@gmail.com -s $(hostname)' '${SAMPLE}' Upload Update' -aFrom:${EMAIL_SENDER}
 
 fi

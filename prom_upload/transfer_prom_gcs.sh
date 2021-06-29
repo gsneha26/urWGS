@@ -30,9 +30,9 @@ INCLUDE=${INCLUDE}\|\)
 1>&2 echo $INCLUDE
 if [ $NFAST5 -gt 0 ]; then
 	echo "2" > $UPLOAD_STATUS_FILE
-	echo "gsutil -m rsync -r -x '(?!${INCLUDE}$)' ${FAST5_FOLDER} ${FAST5_BUCKET}" | sh -ex
+	echo "gsutil -q -m rsync -r -x '(?!${INCLUDE}$)' ${FAST5_FOLDER} ${FAST5_BUCKET}" | sh -ex
 else
 	echo "1" > $UPLOAD_STATUS_FILE
 fi
 
-gsutil cp $UPLOAD_STATUS_FILE $FAST5_STATUS_BUCKET
+gsutil -q cp $UPLOAD_STATUS_FILE $FAST5_STATUS_BUCKET

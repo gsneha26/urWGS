@@ -46,12 +46,12 @@ while [ $DWNLD_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 	add_guppy_mm2_update "Starting fast5 download" $LOG_FILE
 
-	time gsutil -m rsync -r -x ".*[1-6][B-H].*$" $FAST5_BUCKET/ $FAST5_FOLDER/
+	time gsutil -q -m rsync -r -x ".*[1-6][B-H].*$" $FAST5_BUCKET/ $FAST5_FOLDER/
 
 	DWNLD_EXIT=$?
 	NUM_ATTEMPT=$(((NUM_ATTEMPT)+1))
 
-	gsutil cp $FAST5_STATUS_BUCKET /data/
+	gsutil -q cp $FAST5_STATUS_BUCKET /data/
 done
 
 if [ $DWNLD_EXIT -gt 0 ]; then

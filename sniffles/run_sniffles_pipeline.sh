@@ -16,7 +16,7 @@ SNIFFLES_STATUS_FILE=/data/sniffles_status.txt
 SNIFFLES_STATUS=$(cat $SNIFFLES_STATUS_FILE)
 
 mkdir -p $STATUS_DIR 
-gsutil rsync ${BAM_STATUS_BUCKET}/ $STATUS_DIR
+gsutil -q rsync ${BAM_STATUS_BUCKET}/ $STATUS_DIR
 
 NUM_FILES=0
 for  i in $(ls $STATUS_DIR); do

@@ -9,7 +9,7 @@ PMDV_STATUS_FILE=/data/pmdv_status.txt
 PMDV_STATUS=$(cat $PMDV_STATUS_FILE)
 
 mkdir -p $STATUS_DIR 
-gsutil rsync ${GUPPY_MM2_STATUS_BUCKET}/ $STATUS_DIR
+gsutil -q rsync ${GUPPY_MM2_STATUS_BUCKET}/ $STATUS_DIR
 NUM_FILES=0
 for i in $(ls $STATUS_DIR); do
         if [ $(cat ${STATUS_DIR}/$i) == "1" ]; then

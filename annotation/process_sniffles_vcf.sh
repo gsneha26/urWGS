@@ -4,7 +4,7 @@ set -x
 
 source /data/sample.config
 GENE_LIST=/data/sample_gene_list.txt
-gsutil cp $GENE_LIST_URL $GENE_LIST
+gsutil -q cp $GENE_LIST_URL $GENE_LIST
 SNIFFLES_ANNOTATION_FOLDER=/data/sniffles_annotation
 VCF_FOLDER=${SNIFFLES_ANNOTATION_FOLDER}/sniffles_output
 BAM_FOLDER=${SNIFFLES_ANNOTATION_FOLDER}/chr_bam
@@ -19,7 +19,7 @@ rm -f bam.list.tsv
 rm -rf mosdepth.* benchmark_sv_annotation/ $FINAL_VCF 
 rm -f vcf/*.rn.vcf vcf/*.temp.txt
 
-gsutil -m rsync ${SV_VCF_BUCKET}/ ${VCF_FOLDER}/
+gsutil -q -m rsync ${SV_VCF_BUCKET}/ ${VCF_FOLDER}/
 
 ## make a file listing the sniffle VCFs, for example:
 ls -v sniffles_output/${SAMPLE}_sniffles_chr*.vcf > vcf.list.txt
@@ -60,5 +60,5 @@ sudo sudo docker run -it \
 ## upload files 
 for file in $FINAL_VCF chr-arm-karyotype.tsv sv-annotated.tsv sv-report.html; 
 do
-	gsutil cp $file ${FINAL_OUTPUT_BUCKET}/
+	gsutil -q cp $file ${FINAL_OUTPUT_BUCKET}/
 done

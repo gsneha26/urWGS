@@ -20,7 +20,7 @@ SNIFFLES_ANNOTATION_STATUS=$(cat $SNIFFLES_ANNOTATION_STATUS_FILE)
 if [ $DOWNLOAD_STATUS -eq 2 ]; then
 	STATUS_DIR=/data/bam_status
 	mkdir -p $STATUS_DIR
-	gsutil rsync ${BAM_STATUS_BUCKET}/ $STATUS_DIR
+	gsutil -q rsync ${BAM_STATUS_BUCKET}/ $STATUS_DIR
 
 	NUM_FILES=0
 	for file in ${STATUS_DIR}/*; do
@@ -48,7 +48,7 @@ fi
 if [ $SNIFFLES_ANNOTATION_STATUS -eq 2 ] && [ $DOWNLOAD_STATUS -eq 1 ]; then
 	STATUS_DIR=/data/sniffles_status
 	mkdir -p $STATUS_DIR
-	gsutil rsync ${SV_STATUS_BUCKET}/ $STATUS_DIR
+	gsutil -q rsync ${SV_STATUS_BUCKET}/ $STATUS_DIR
 
 	NUM_FILES=0
 	for file in ${STATUS_DIR}/*; do

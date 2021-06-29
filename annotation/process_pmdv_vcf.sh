@@ -10,7 +10,7 @@ INPUT_PREFIX=${INPUT_VCF%.vcf.gz}
 mkdir -p $PMD_ANNOTATION_FOLDER
 mkdir -p $VCF_FOLDER
 
-gsutil -m rsync -r ${PMD_VCF_BUCKET}/ $VCF_FOLDER/
+gsutil -q -m rsync -r ${PMD_VCF_BUCKET}/ $VCF_FOLDER/
 
 cd $PMD_ANNOTATION_FOLDER/
 bcftools concat \
@@ -70,5 +70,5 @@ bcftools concat -a \
 
 tabix -p vcf ${INPUT_PREFIX}.annotated.vcf.gz
 
-gsutil cp ${INPUT_PREFIX}.annotated.vcf.gz* ${FINAL_OUTPUT_BUCKET}/ 
-gsutil cp ${INPUT_VCF} ${FINAL_OUTPUT_BUCKET}/ 
+gsutil -q cp ${INPUT_PREFIX}.annotated.vcf.gz* ${FINAL_OUTPUT_BUCKET}/ 
+gsutil -q cp ${INPUT_VCF} ${FINAL_OUTPUT_BUCKET}/ 

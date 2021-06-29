@@ -9,7 +9,7 @@ PMD_ANNOTATION_STATUS=$(cat $PMD_ANNOTATION_STATUS_FILE)
 if [ $PMD_ANNOTATION_STATUS -eq 2 ]; then
 	STATUS_DIR=/data/pmdv_status
 	mkdir -p $STATUS_DIR
-	gsutil rsync ${PMD_STATUS_BUCKET}/ $STATUS_DIR
+	gsutil -q rsync ${PMD_STATUS_BUCKET}/ $STATUS_DIR
 
 	NUM_FILES=0
 	for file in ${STATUS_DIR}/*; do
