@@ -6,5 +6,5 @@ if pgrep -f "$SERVICE" >/dev/null
 then
 	1>&2 echo "$SERVICE is running"
 else
-	/data/scripts/run_sniffles_pipeline.sh 
+	$PROJECT_DIR/sniffles/run_sniffles_pipeline.sh 
 fi

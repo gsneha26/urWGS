@@ -30,7 +30,7 @@ done
 
 if [ $NUM_FILES -eq $num_chr ] && [ $SNIFFLES_STATUS -eq 2 ]; then
 
-	time parallel -j $num_chr /data/scripts/run_sniffles_chr.sh ::: \
+	time parallel -j $num_chr $PROJECT_DIR/sniffles/run_sniffles_chr.sh ::: \
 		${chr_args} :::+ \
 		${thread_args}
 
