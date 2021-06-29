@@ -10,28 +10,53 @@ mkdir -p $CHR_FOLDER/pepper_hp
 
 gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_$1.fa /data/
 
-if [ $2 == "YES" ]; then
+if [ $BAM_MERGE == "YES" ]; then
 
 	gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${GUPPY_MM2_OUTPUT_BUCKET}/$1/*.bam $CHR_FOLDER/ 
+	if [ $? -gt 0 ]; then
+		1>&2 echo "BAM download failed for chr"$1
+		exit 1
+	fi	
+
 	cd $CHR_FOLDER 
 	for bam_file in *.bam;
 	do
 		samtools index -@10 $bam_file
+		if [ $? -gt 0 ]; then
+			1>&2 echo "Error with indexing "$bam_file
+			exit 1
+		fi	
 		SAM_EXIT=$?
 		if [ $SAM_EXIT -gt 0 ]; then
 			rm $bam_file
 			email_vc_update "Removing $bam_file" $1 "PEPPER-Margin-DeepVariant"
 		fi
 	done
+
 	samtools merge -@10 ${SAMPLE}_$1.bam $CHR_FOLDER/*.bam
+	if [ $? -gt 0 ]; then
+		1>&2 echo "Error with merging bams for chr "$1
+		exit 1
+	fi	
+
 	samtools index -@10 ${SAMPLE}_$1.bam
+	if [ $? -gt 0 ]; then
+		1>&2 echo "Error with indexing merged bam for chr "$1
+		exit 1
+	fi	
+
 	gsutil -o "GSUtil:parallel_composite_upload_threshold=750M" -m cp ${SAMPLE}_$1.bam* ${CHR_BAM_BUCKET}/
 	echo "1" > $CHR_FOLDER/$1_status.txt
 	gsutil cp  $CHR_FOLDER/$1_status.txt ${BAM_STATUS_BUCKET}/
 
-elif [ $2 == "NO" ]; then
+elif [ $BAM_MERGE == "NO" ]; then
 
 	gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${CHR_BAM_BUCKET}/${SAMPLE}_$1.bam $CHR_FOLDER/ 
+	if [ $? -gt 0 ]; then
+		1>&2 echo "Error with downloading bam for chr "$1
+		exit 1
+	fi	
+
 	gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${CHR_BAM_BUCKET}/${SAMPLE}_$1.bam.bai $CHR_FOLDER/ 
 
 fi

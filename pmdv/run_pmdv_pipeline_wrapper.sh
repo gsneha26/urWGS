@@ -7,4 +7,9 @@ then
 	1>&2 echo "$SERVICE is running"
 else
 	$PROJECT_DIR/pmdv/run_pmdv_pipeline.sh 
+	if [ $? -eq 0 ]; then
+		echo "1" > $PMDV_STATUS_FILE
+	else
+		echo "3" > $PMDV_STATUS_FILE
+	fi
 fi

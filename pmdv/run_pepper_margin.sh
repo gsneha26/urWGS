@@ -19,6 +19,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_SNP stage1 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_SNP stage1 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -40,6 +41,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_SNP stage2 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_SNP stage2 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -59,6 +61,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_SNP stage3 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_SNP stage3 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -70,6 +73,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_SNP vcf processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_SNP vcf processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -88,6 +92,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "Margin completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "Margin failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -98,6 +103,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "Margin BAM processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "Margin BAM processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -115,6 +121,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_HP stage1 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_HP stage1 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -137,6 +144,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_HP stage2 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_HP stage2 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -157,6 +165,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_HP stage3 completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_HP stage3 failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 1>&2 echo "============================================================================"
@@ -169,5 +178,6 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "PEPPER_HP vcf processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "PEPPER_HP vcf processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 

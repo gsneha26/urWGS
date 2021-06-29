@@ -12,6 +12,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "Margin BAM processing completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "Margin BAM processing failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 time sudo pbrun deepvariant \
@@ -30,6 +31,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "Parabricks DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "Parabricks DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 cd $CHR_FOLDER/

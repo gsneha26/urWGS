@@ -24,6 +24,7 @@ if [ $VC_CODE -eq 0 ]; then
 	email_vc_update "Google DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant" 
 else
 	email_vc_update "Google DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error" 
+	exit 1
 fi
 
 cd $CHR_FOLDER/

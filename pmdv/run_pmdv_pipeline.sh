@@ -11,16 +11,22 @@ PMDV_STATUS=$(cat $PMDV_STATUS_FILE)
 mkdir -p $STATUS_DIR 
 gsutil rsync ${GUPPY_MM2_STATUS_BUCKET}/ $STATUS_DIR
 NUM_FILES=$(ls $STATUS_DIR | wc -l)
+TOTAL_STATUS=0
+for i in $(ls $STATUS_DIR);
+do
+	TOTAL_STATUS=$(( TOTAL_STATUS + $(cat ${STATUS_DIR}/$i) ))
+done
 
 1>&2 echo "NUM_FILES: $NUM_FILES"
 1>&2 echo "PMDV_STATUS: $PMDV_STATUS"
+1>&2 echo "SUM OF GUPPY_MINIMAP2 STATUS: $TOTAL_STATUS"
 
-if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
+if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $TOTAL_STATUS -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 	for ch in $chr_args; do
 		email_vc_update "Starting Preprocess for $ch" $ch "PEPPER-Margin-DeepVariant" 
 	done
 
-	time parallel -j 2 $PROJECT_DIR/pmdv/preprocess_chr.sh ::: ${chr_args} ::: $BAM_MERGE
+	time parallel -j 2 $PROJECT_DIR/pmdv/preprocess_chr.sh ::: ${chr_args}
 	EXIT_CODE=$?
 	if [ $EXIT_CODE -eq 0 ]; then
 		for ch in $chr_args; do
@@ -30,10 +36,23 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 		for ch in $chr_args; do
 			email_vc_update "Preprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		done
+		exit 1
 	fi
 
 	for ch in $chr_args; do
 		time $PROJECT_DIR/pmdv/run_pepper_margin.sh $ch 2> /data/${ch}_folder/run_$ch.log
+		EXIT_CODE=$?
+		if [ $EXIT_CODE -eq 0 ]; then
+			for ch in $chr_args; do
+				email_vc_update "PEPPER-Margin completed for $ch" $ch "PEPPER-Margin-DeepVariant"
+			done
+		else
+			for ch in $chr_args; do
+				email_vc_update "PEPPER-Margin failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
+			done
+			exit 1
+		fi
+
 		if [ $DV == "google" ]; then
 			if [ $DV_MODEL == "rows" ]; then
 				time $PROJECT_DIR/pmdv/run_google_dv_rows.sh $ch 2>> /data/${ch}_folder/run_$ch.log
@@ -53,6 +72,7 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 			email_vc_update "PEPPER-Margin-DeepVariant completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
 		else
 			email_vc_update "PEPPER-Margin-DeepVariant failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
+			exit 1
 		fi
 	done
 
@@ -62,13 +82,14 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 		for ch in $chr_args; do
 			email_vc_update "Postprocess completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
 		done
+		exit 0
 	else
 		for ch in $chr_args; do
 			email_vc_update "Postprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		done
+		exit 1
 	fi
 
-	echo "1" > $PMDV_STATUS_FILE
 else
 	echo "Not all status files found yet."
 fi
