@@ -38,9 +38,10 @@ $PROJECT_DIR/setup/mount_ssd_nvme.sh
 * Create the configuration file (e.g. `sample.config` in the $PROJECT_FOLDER) 
 * Create a Google Storage Bucket with a unique name and add the configuration file to it e.g.
 ```
+CONFIG_PATH=$PROJECT_FOLDER/sample.config
 BUCKET=gs://urwgs_hg002_test_$(date +%s)
 gsutil mb $BUCKET
-sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" /path/to/sample.config
-gsutil cp /path/to/sample.config ${BUCKET}/sample.config
-cp /path/to/sample.config /data/sample.config
+sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" $CONFIG_PATH
+gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
+cp $CONFIG_PATH /data/sample.config
 ```
