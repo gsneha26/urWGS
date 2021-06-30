@@ -49,7 +49,6 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 			for ch in $chr_args; do
 				email_vc_update "PEPPER-Margin failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 			done
-			exit 1
 		fi
 
 		if [ $DV == "google" ]; then
@@ -71,7 +70,6 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 			email_vc_update "PEPPER-Margin-DeepVariant completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
 		else
 			email_vc_update "PEPPER-Margin-DeepVariant failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
-			exit 1
 		fi
 	done
 
@@ -81,11 +79,24 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 		for ch in $chr_args; do
 			email_vc_update "Postprocess completed for $ch" $ch "PEPPER-Margin-DeepVariant" 
 		done
-		exit 0
 	else
 		for ch in $chr_args; do
 			email_vc_update "Postprocess failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		done
+	fi
+
+	TOTAL_STATUS=0
+	num_chr=0
+	for ch in $chr_args; do
+		if [ $(cat /data/${ch}_folder/${ch}_pmdv_status.txt) == "1" ]; then
+			TOTAL_STATUS=$((TOTAL_STATUS+1))
+		fi
+		num_chr=$((num_chr+1))
+	done
+
+	if [ $TOTAL_STATUS -eq $num_chr ]; then
+		exit 0
+	else
 		exit 1
 	fi
 

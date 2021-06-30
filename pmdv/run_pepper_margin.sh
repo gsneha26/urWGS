@@ -170,8 +170,7 @@ fi
 
 1>&2 echo "============================================================================"
 cd $CHR_FOLDER/pepper_hp/
-time (mv *.vcf PEPPER_VARIANT_HP_OUTPUT.vcf
-bgzip PEPPER_VARIANT_HP_OUTPUT.vcf
+time (bgzip PEPPER_VARIANT_HP_OUTPUT.vcf
 tabix -p vcf PEPPER_VARIANT_HP_OUTPUT.vcf.gz)
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then

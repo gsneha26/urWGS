@@ -34,7 +34,11 @@ if [ $NUM_FILES -eq $num_chr ] && [ $SNIFFLES_STATUS -eq 2 ]; then
 		${chr_args} :::+ \
 		${thread_args}
 
-	echo "1" > $SNIFFLES_STATUS_FILE
+	if [ $? -eq 0 ]; then
+		echo "1" > $SNIFFLES_STATUS_FILE
+	else
+		echo "3" > $SNIFFLES_STATUS_FILE
+	fi
 else
 	echo "Not all status files found yet."
 fi

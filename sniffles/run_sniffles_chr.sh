@@ -12,6 +12,7 @@ if [ $VC_CODE -eq 0 ]; then
         email_vc_update "Downloaded $BAM_FILE" $1 "Sniffles" 
 else
         email_vc_update "Download $BAM_FILE failed" $1 "Sniffles Error"
+	exit 1
 fi
 
 sniffles -n 60 -t $2 -m ${BAM_FILE} -v $VCF_FILE > sniffles_${1}.log 2> sniffles_${1}.err 
@@ -20,6 +21,7 @@ if [ $VC_CODE -eq 0 ]; then
         email_vc_update "Completed Sniffles for $1" $1 "Sniffles" 
 else
         email_vc_update "Sniffles failed for $1" $1 "Sniffles Error"
+	exit 1
 fi
 
 gsutil -q cp $VCF_FILE ${SV_VCF_BUCKET}/
@@ -29,7 +31,8 @@ if [ $VC_CODE -eq 0 ]; then
 	echo "1" > $1_sniffles_status.txt
 else
         email_vc_update "Upload $VCF_FILE failed" $1 "Sniffles Error"
-	echo "2" > $1_sniffles_status.txt
+	echo "3" > $1_sniffles_status.txt
+	exit 1
 fi
 
 gsutil -q cp $1_sniffles_status.txt ${SV_STATUS_BUCKET}/
