@@ -46,8 +46,8 @@ if [ $BAM_MERGE == "YES" ]; then
 	fi	
 
 	gsutil -q -o "GSUtil:parallel_composite_upload_threshold=750M" -m cp ${SAMPLE}_$1.bam* ${CHR_BAM_BUCKET}/
-	echo "1" > $CHR_FOLDER/$1_status.txt
-	gsutil -q cp  $CHR_FOLDER/$1_status.txt ${BAM_STATUS_BUCKET}/
+	echo "1" > $CHR_FOLDER/$1_bam_status.txt
+	gsutil -q cp  $CHR_FOLDER/$1_bam_status.txt ${BAM_STATUS_BUCKET}/
 
 else 
 
