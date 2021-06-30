@@ -24,7 +24,7 @@ else
 	exit 1
 fi
 
-gsutil -q cp $VCF_FILE ${SV_VCF_BUCKET}/
+gsutil -q cp $VCF_FILE ${SNIFFLES_VCF_BUCKET}/
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
         email_vc_update "Uploaded $VCF_FILE" $1 "Sniffles" 
@@ -35,4 +35,4 @@ else
 	exit 1
 fi
 
-gsutil -q cp ${1}_sniffles_status.txt ${SV_STATUS_BUCKET}/
+gsutil -q cp ${1}_sniffles_status.txt ${SNIFFLES_STATUS_BUCKET}/

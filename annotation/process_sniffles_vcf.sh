@@ -19,7 +19,7 @@ rm -f bam.list.tsv
 rm -rf mosdepth.* benchmark_sv_annotation/ $FINAL_VCF 
 rm -f vcf/*.rn.vcf vcf/*.temp.txt
 
-gsutil -q -m rsync ${SV_VCF_BUCKET}/ ${VCF_FOLDER}/
+gsutil -q -m rsync ${SNIFFLES_VCF_BUCKET}/ ${VCF_FOLDER}/
 
 ## make a file listing the sniffle VCFs, for example:
 ls -v sniffles_output/${SAMPLE}_sniffles_chr*.vcf > vcf.list.txt
