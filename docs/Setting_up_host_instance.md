@@ -35,10 +35,10 @@ export PROJECT_DIR=$(pwd)
 ```
 $PROJECT_DIR/setup/mount_ssd_nvme.sh
 ```
-* Create the configuration file (e.g. `sample.config` in the $PROJECT_FOLDER) 
+* Create the configuration file (e.g. `sample.config` in the $PROJECT_DIR) 
 * Create a Google Storage Bucket with a unique name and add the configuration file to it e.g.
 ```
-CONFIG_PATH=$PROJECT_FOLDER/sample.config
+CONFIG_PATH=$PROJECT_DIR/sample.config
 BUCKET=gs://urwgs_hg002_test_$(date +%s)
 gsutil mb $BUCKET
 sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" $CONFIG_PATH
