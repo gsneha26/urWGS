@@ -20,4 +20,5 @@ gcloud compute instances create $1 \
 		echo "2" > /data/pmdv_annotation_status.txt 
 		echo "2" > /data/sniffles_annotation_status.txt 
 		chmod a+w -R /data/
-		chmod +x $PROJECT_DIR/*/*.sh'
+		chmod +x $PROJECT_DIR/*/*.sh
+		echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_pmdv_wrapper.sh >> /data/pmdv_stdout.log 2>> /data/pmdv_stderr.log\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_sniffles_wrapper.sh >> /data/sniffles_stdout.log 2>> /data/sniffles_stderr.log" | crontab -'
