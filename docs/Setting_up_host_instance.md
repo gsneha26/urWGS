@@ -1,4 +1,4 @@
-### Setting up host instances required for all demonstrations
+### Setting up host instance required for all demonstrations
 
 * Start an instance with Ubuntu16.04 and SSD with NVME interface and permissions to create storage buckets and other instances:
 ```
