@@ -2,7 +2,7 @@
 * Set up the host instance using [these instructions](./Setting_up_host_instance.md) 
 * Transfer and Create the appropriate directory for testing
 ```
-$PROJECT_DIR/simulation/simulate_alignment_output.sh
+$PROJECT_DIR/simulation/simulate_variant_calling_output.sh
 ```
 * Start the annotation instance
 ```
