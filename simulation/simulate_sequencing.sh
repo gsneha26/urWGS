@@ -32,7 +32,7 @@ time parallel -j 6 \
 	$PERIOD
 
 # in case we want to simulate all 48 flow cells
-#time parallel -j 48 /data/scripts/prom_simulation/simulate_flowcell.sh ::: \
+#time parallel -j 48 $PROJECT_DIR/simulation/simulate_flowcell.sh ::: \
 #       $SRC_DIR ::: \
 #       $DST_DIR ::: \
 #       {1..6}{A..H} ::: \
