@@ -35,4 +35,4 @@ else
 	exit 1
 fi
 
-gsutil -q cp $1_sniffles_status.txt ${SV_STATUS_BUCKET}/
+gsutil -q cp ${1}_sniffles_status.txt ${SV_STATUS_BUCKET}/

@@ -31,11 +31,20 @@ if [ $NUM_FILES -eq $num_chr ] && [ $SNIFFLES_STATUS -eq 2 ]; then
 		${chr_args} :::+ \
 		${thread_args}
 
-	if [ $? -eq 0 ]; then
-		echo "1" > $SNIFFLES_STATUS_FILE
-	else
-		echo "3" > $SNIFFLES_STATUS_FILE
-	fi
+	        TOTAL_STATUS=0
+
+        for ch in $chr_args; do
+                if [ $(cat /data/${ch}_sniffles_status.txt) == "1" ]; then
+                        TOTAL_STATUS=$((TOTAL_STATUS+1))
+                fi
+        done
+
+        if [ $TOTAL_STATUS -eq $num_chr ]; then
+                echo "1" > $SNIFFLES_STATUS_FILE
+        else
+                echo "3" > $SNIFFLES_STATUS_FILE
+        fi
+
 else
 	echo "Not all status files found yet."
 fi

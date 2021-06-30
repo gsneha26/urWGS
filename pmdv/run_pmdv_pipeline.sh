@@ -91,9 +91,9 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 	done
 
 	if [ $TOTAL_STATUS -eq $num_chr ]; then
-		exit 0
+		echo "1" > $PMDV_STATUS_FILE
 	else
-		exit 1
+		echo "3" > $PMDV_STATUS_FILE
 	fi
 
 else
