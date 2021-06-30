@@ -42,13 +42,9 @@ if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
 		time $PROJECT_DIR/pmdv/run_pepper_margin.sh $ch 2> /data/${ch}_folder/run_$ch.log
 		EXIT_CODE=$?
 		if [ $EXIT_CODE -eq 0 ]; then
-			for ch in $chr_args; do
-				email_vc_update "PEPPER-Margin completed for $ch" $ch "PEPPER-Margin-DeepVariant"
-			done
+			email_vc_update "PEPPER-Margin completed for $ch" $ch "PEPPER-Margin-DeepVariant"
 		else
-			for ch in $chr_args; do
-				email_vc_update "PEPPER-Margin failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
-			done
+			email_vc_update "PEPPER-Margin failed for $ch" $ch "PEPPER-Margin-DeepVariant Error" 
 		fi
 
 		if [ $DV == "google" ]; then
