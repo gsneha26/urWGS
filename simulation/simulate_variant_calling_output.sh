@@ -1,7 +1,7 @@
 #! /bin/bash
 
 1>&2 echo "current "$(date)
-source /data/sample.config
+source /data/hg002_annotation/sample.config
 
 BAM_SRC_BUCKET=gs://ur_wgs_test_data/HG002_chr_bam
 PMDV_SRC_BUCKET=gs://ur_wgs_test_data/HG002_pmdv_google_rows_output
@@ -11,9 +11,9 @@ gsutil -m rsync -r ${BAM_SRC_BUCKET}/ ${CHR_BAM_BUCKET}/
 gsutil -m rsync -r ${PMDV_SRC_BUCKET}/ ${PMDV_VCF_BUCKET}/
 gsutil -m rsync -r ${SNIFFLES_SRC_BUCKET}/ ${SNIFFLES_VCF_BUCKET}/
 
-BAM_STATUS_DIR=/data/chr_bam_status
-SNIFFLES_STATUS_DIR=/data/sniffles_status
-PMDV_STATUS_DIR=/data/pmdv_status
+BAM_STATUS_DIR=/data/hg002_annotation/chr_bam_status
+SNIFFLES_STATUS_DIR=/data/hg002_annotation/sniffles_status
+PMDV_STATUS_DIR=/data/hg002_annotation/pmdv_status
 
 mkdir -p $BAM_STATUS_DIR/
 mkdir -p $SNIFFLES_STATUS_DIR/
