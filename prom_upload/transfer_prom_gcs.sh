@@ -1,7 +1,7 @@
 #!/bin/bash
 
 1>&2 echo "current "$(date)
-source /data/sample.config
+source /data/hg002_guppy_mm2/sample.config
 FAST5_FOLDER=/data/prom/HG002/
 UPLOAD_STATUS_FILE=/data/upload_status.txt
 
