@@ -12,7 +12,7 @@ mkdir -p $BAM_STATUS_DIR/
 
 for chr in 4 5 7 8 10 11 14 15 16 18 19 20 21;
 do
-	echo "1" > $STATUS_DIR/chr${chr}_bam_status.txt 
+	echo "1" > $BAM_STATUS_DIR/chr${chr}_bam_status.txt 
 done
 
-gsutil -m rsync -r $STATUS_DIR/ $BAM_STATUS_BUCKET/
+gsutil -m rsync -r $BAM_STATUS_DIR/ $BAM_STATUS_BUCKET/
