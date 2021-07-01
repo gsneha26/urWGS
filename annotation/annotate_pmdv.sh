@@ -24,26 +24,26 @@ if [ $PMDV_ANNOTATION_STATUS -eq 2 ]; then
 
 	        if [ $NUM_FILES -eq 25 ]; then
 
-                ${PROJECT_DIR}/annotation/process_pmd_vcf.sh
+                ${PROJECT_DIR}/annotation/process_pmdv_vcf.sh
 
 		if [ $? -eq 0 ]; then
 			email_annotation_update "PMD Annotation completed"
 			echo "PMD Annotation completed"
 
-			echo "1" > $PMD_ANNOTATION_STATUS_FILE
-			PMD_ANNOTATION_STATUS=1
+			echo "1" > $PMDV_ANNOTATION_STATUS_FILE
+			PMDV_ANNOTATION_STATUS=1
 		else
 			email_annotation_update "PMD Annotation Error"
 			echo "PMD Annotation error"
 
-			echo "3" > $PMD_ANNOTATION_STATUS_FILE
-			PMD_ANNOTATION_STATUS=3
+			echo "3" > $PMDV_ANNOTATION_STATUS_FILE
+			PMDV_ANNOTATION_STATUS=3
 		fi
         else
                 echo "Not all pmd vcfs available"
         fi
 
-elif [ $PMD_ANNOTATION_STATUS -eq 1 ]; then 
+elif [ $PMDV_ANNOTATION_STATUS -eq 1 ]; then 
         echo "Small variant call annotation completed"
 else
 	echo "Small variant call annotation Error"
