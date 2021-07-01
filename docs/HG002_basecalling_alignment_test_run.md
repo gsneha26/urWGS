@@ -1,5 +1,22 @@
 #### Demonstration for running an HG002 PromethION simulation on host instance and the corresponding base calling and alignment on instances with configuration specified above.
 * Set up the host instance using [these instructions](./Setting_up_host_instance.md)
+* Create a working directory
+```
+WORK_DIR=/data/hg002_annotation
+mkdir -p $WORK_DIR/
+```
+* Create the configuration file (e.g. `sample.config` in the $PROJECT_DIR)
+```
+cp $PROJECT_DIR/sample.config $WORK_DIR/
+CONFIG_PATH=$WORK_DIR/sample.config
+```
+* Create a Google Storage Bucket with a unique name and add the configuration file to it e.g.
+```
+BUCKET=gs://urwgs_hg002_test_$(date +%s)
+gsutil mb $BUCKET
+sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" $CONFIG_PATH
+gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
+```
 * Add cron job 
 ```
 echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> /data/logs/upload_stdout.log 2>> /data/logs/upload_stderr.log" | crontab -u $USER -

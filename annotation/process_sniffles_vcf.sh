@@ -31,20 +31,20 @@ echo -e "$CHR\tchr_bam/${SAMPLE}_chr$CHR.bam" >> bam.list.tsv
 done
 
 ## start docker container
-sudo sudo docker run -it \
-	-v /data:/data \
-	-w $SNIFFLES_ANNOTATION_FOLDER \
-	-u `id \
-	-u $USER` quay.io/jmonlong/svnicu:0.5 snakemake \
-	--snakefile /scripts/Snakefile \
-	--config ref=/data/GRCh37.fa \
-	gene_list=${GENE_LIST} \
-	bam_list=${SNIFFLES_ANNOTATION_FOLDER}/bam.list.tsv \
-	vcf_list=${SNIFFLES_ANNOTATION_FOLDER}/vcf.list.txt \
-	sample=${SAMPLE} \
-	--cores 90
+sudo docker run \
+   -v /data:/data \
+   -w $SNIFFLES_ANNOTATION_FOLDER \
+   -u `id \
+   -u $USER` quay.io/jmonlong/svnicu:0.5 snakemake \
+   --snakefile /scripts/Snakefile \
+   --config ref=/data/GRCh37.fa \
+   gene_list=${GENE_LIST} \
+   bam_list=${SNIFFLES_ANNOTATION_FOLDER}/bam.list.tsv \
+   vcf_list=${SNIFFLES_ANNOTATION_FOLDER}/vcf.list.txt \
+   sample=${SAMPLE} \
+   --cores 90
 
-sudo sudo docker run -it \
+sudo docker run \
 	-v /data:/data \
 	-w $SNIFFLES_ANNOTATION_FOLDER \
 	-u `id \
