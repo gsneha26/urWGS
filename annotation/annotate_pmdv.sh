@@ -10,7 +10,7 @@ STATUS_DIR=/data/pmdv_status
 mkdir -p $STATUS_DIR
 gsutil -m -q rsync -r ${PMDV_STATUS_BUCKET}/ ${STATUS_DIR}/
 
-if [ $PMD_ANNOTATION_STATUS -eq 2 ]; then
+if [ $PMDV_ANNOTATION_STATUS -eq 2 ]; then
 
         echo "Small variant call annotation started"
 	NUM_FILES=0

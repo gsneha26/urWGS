@@ -19,12 +19,16 @@ gsutil rsync ${BAM_STATUS_BUCKET}/ ${BAM_STATUS_DIR}/
 
 SNIFFLES_ANNOTATION_STATUS_FILE=/data/sniffles_annotation_status.txt
 SNIFFLES_ANNOTATION_STATUS=$(cat $SNIFFLES_ANNOTATION_STATUS_FILE)
+SNIFFLES_STATUS_DIR=/data/sniffles_status
+mkdir -p $SNIFFLES_STATUS_DIR
+gsutil rsync ${SNIFFLES_STATUS_BUCKET}/ $SNIFFLES_STATUS_DIR/
+
 
 if [ $DOWNLOAD_STATUS -eq 2 ]; then
 	if [ $(ls ${BAM_STATUS_DIR}/ | wc -l) -gt 0 ]; then
 
 		NUM_FILES=0
-		for file in ${STATUS_DIR}/*_bam_status.txt; do
+		for file in ${BAM_STATUS_DIR}/*_bam_status.txt; do
 			if [ $(cat $file) == "1" ]; then
 				NUM_FILES=$((NUM_FILES+1))
 			fi
@@ -58,12 +62,8 @@ else
 fi
 
 if [ $SNIFFLES_ANNOTATION_STATUS -eq 2 ] && [ $DOWNLOAD_STATUS -eq 1 ]; then
-        STATUS_DIR=/data/sniffles_status
-        mkdir -p $STATUS_DIR
-        gsutil rsync ${SNIFFLES_STATUS_BUCKET}/ $STATUS_DIR
-
         NUM_FILES=0
-        for file in ${STATUS_DIR}/*_sniffles_status.txt; do
+        for file in ${SNIFFLES_STATUS_DIR}/*_sniffles_status.txt; do
                 if [ $(cat $file) == "1" ]; then
                         NUM_FILES=$((NUM_FILES+1))
                 fi
