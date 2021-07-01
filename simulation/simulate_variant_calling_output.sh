@@ -15,6 +15,10 @@ BAM_STATUS_DIR=/data/chr_bam_status
 SNIFFLES_STATUS_DIR=/data/sniffles_status
 PMDV_STATUS_DIR=/data/pmdv_status
 
+mkdir -p $BAM_STATUS_DIR/
+mkdir -p $SNIFFLES_STATUS_DIR/
+mkdir -p $PMDV_STATUS_DIR/
+
 for chr in `seq 1 22` X Y MT;
 do
 	echo "1" > $BAM_STATUS_DIR/chr${chr}_bam_status.txt 
