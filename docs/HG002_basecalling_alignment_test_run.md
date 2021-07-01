@@ -2,7 +2,7 @@
 * Set up the host instance using [these instructions](./Setting_up_host_instance.md)
 * Create a working directory
 ```
-WORK_DIR=/data/hg002_annotation
+WORK_DIR=/data/hg002_guppy_mm2
 mkdir -p $WORK_DIR/
 ```
 * Create the configuration file (e.g. `sample.config` in the $PROJECT_DIR)
