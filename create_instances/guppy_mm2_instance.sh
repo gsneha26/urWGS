@@ -19,6 +19,7 @@ gcloud compute instances create $1 \
 		gsutil cp $CONFIG_FILE_URL /data/sample.config
 		echo "2" > /data/postprocess_status.txt
 		echo "2" > /data/basecalling_status.txt
+		echo "2" > /data/upload_status.txt
 		chmod a+w -R /data/
 		chmod +x $PROJECT_DIR/*/*.sh
                 $PROJECT_DIR/guppy_mm2/generate_scripts.sh

@@ -4,16 +4,17 @@ source /data/sample.config
 EMAIL_SUB="Alignment"
 ERROR_EMAIL_SUB="Alignment Error"
 
-OUTPUT_FOLDER=/data/output_folder
-CHR_BAM_FOLDER=/data/chr_bam/
 REF_FILE=/data/GRCh37.mmi
+OUTPUT_FOLDER=/data/output_folder
 TMP_FASTQ_FOLDER=/data/tmp_fastq
 BATCH_FASTQ_FOLDER=/data/batch_fastq
+CHR_BAM_FOLDER=/data/chr_bam/
 
 UPLOAD_STATUS_FILE=/data/upload_status.txt
 BASECALLING_STATUS_FILE=/data/basecalling_status.txt
 POSTPROCESS_STATUS_FILE=/data/postprocess_status.txt
 
+mkdir -p $TMP_FASTQ_FOLDER
 mkdir -p $BATCH_FASTQ_FOLDER
 mkdir -p $CHR_BAM_FOLDER
 
