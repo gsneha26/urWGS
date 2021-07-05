@@ -18,6 +18,7 @@ gcloud compute instances create $1 \
 		CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
 		gsutil cp $CONFIG_FILE_URL /data/sample.config
 		echo "2" > /data/postprocess_status.txt
+		echo "2" > /data/basecalling_status.txt
 		chmod a+w -R /data/
 		chmod +x $PROJECT_DIR/*/*.sh
                 $PROJECT_DIR/guppy_mm2/generate_scripts.sh

@@ -168,7 +168,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		fi
 		
 		add_guppy_mm2_update "No fast5 files to basecall; exiting job for batch $CURRTIME and deleting $BATCH_FOLDER" $LOG_FILE
-		echo "BASECALLING STATUS: No fast5 files to basecall" | cat - $LOG_FILE | sponge $LOG_FILE
+		echo "BASECALLING STATUS: No fast5 files to basecall" > $LOG_FILE 
 		rm -rf ${BATCH_FOLDER}
 		exit 0
 	fi
