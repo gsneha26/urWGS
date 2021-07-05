@@ -133,7 +133,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 		if [ ${BARCODE_DONE} == "YES" ]; then
 			time guppy_basecaller \
-				--config /opt/ont/guppy/data/dna_r9.4.1_450bps_hac_prom.cfg \
+				--config /usr/data/dna_r9.4.1_450bps_hac_prom.cfg \
 				--input_file_list $FAST5_LIST \
 				--barcode_kits "EXP-NBD104" \
 				--qscore_filtering \
@@ -143,7 +143,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 				--read_batch_size ${MAX_READS}
 		else
 			time guppy_basecaller \
-				--config /opt/ont/guppy/data/dna_r9.4.1_450bps_hac_prom.cfg \
+				--config /usr/data/dna_r9.4.1_450bps_hac_prom.cfg \
 				--input_file_list $FAST5_LIST \
 				--qscore_filtering \
 				-s $FASTQ_FOLDER \
