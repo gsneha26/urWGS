@@ -44,7 +44,7 @@ do
 
 			add_guppy_mm2_update "Starting alignment" $LOG_FILE
 			
-			minimap2 -ax map-ont --MD -t 37 $REF_FILE $FASTQ_FILES | samtools view -F 0x904 -hb -@6 | samtools sort -@6 | samtools view -hb -@6 > $BAM_FILE
+			minimap2 -ax map-ont --MD -t 40 $REF_FILE $FASTQ_FILES | samtools view -F 0x904 -hb -@6 | samtools sort -@6 | samtools view -hb -@6 > $BAM_FILE
 
 			ALIGN_EXIT=$?
 
