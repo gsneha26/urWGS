@@ -136,6 +136,7 @@ NUM_TMP_FASTQ_FILES=$(ls $TMP_FASTQ_FOLDER | wc -l)
 1>&2 echo "NUM_FASTQ_FILES: $NUM_FASTQ_FILES"
 1>&2 echo "NUM_TMP_FASTQ_FILES: $NUM_TMP_FASTQ_FILES"
 1>&2 echo "POSTPROCESS_STATUS: $POSTPROCESS_STATUS"
+LOG_FILE=/data/logs/postprocess.log
 
 if [ $UPLOAD_STATUS -eq 1 ] && [ $BASECALLING_STATUS -eq 1 ] && [ $NUM_TMP_FASTQ_FILES -eq 0 ] && [ $NUM_FASTQ_FILES -gt 0 ] && [ $POSTPROCESS_STATUS -eq 2 ]; then
         add_guppy_mm2_update "Starting post-processing job-wise chr-wise bam" $LOG_FILE
