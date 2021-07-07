@@ -12,5 +12,9 @@ if [ -f ${ANNOTATION_STATUS}/pmdv_annotation_complete_status.txt ] && [ -f ${ANN
 		gcloud -q compute instances delete annotation-1 \
 			--zone us-west1-a \
 			--delete-disks all
+		if [ $? -eq 0 ]; then
+			rm ${ANNOTATION_STATUS}/*
+			gsutil rm ${ANNOTATION_COMPLETE_STATUS_BUCKET}/*
+		fi
 	fi
 fi

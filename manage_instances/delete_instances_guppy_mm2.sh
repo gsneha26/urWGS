@@ -13,6 +13,9 @@ do
 		gcloud -q compute instances delete ${instance%_complete_status.txt} \
 			--zone us-west1-a \
 			--delete-disks all
-
+		if [ $? -eq 0 ]; then
+			rm ${GUPPY_MM2_STATUS}/$instance
+			gsutil rm ${GUPPY_MM2_COMPLETE_STATUS_BUCKET}/$instance
+		fi
 	fi
 done
