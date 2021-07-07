@@ -33,3 +33,4 @@ Instance `guppy-ch1` will base call and align the data from flow cells 1C, 2C, 3
 ```
 $PROJECT_DIR/simulation/simulate_sequencing.sh simulation_duration_in_seconds
 ```
+* The generated output is transferred to `$BUCKET/guppy_minimap2_output`. It consists of multiple chromosome folders, each folder consists of the BAM files for the chromosome for each chromosome. 

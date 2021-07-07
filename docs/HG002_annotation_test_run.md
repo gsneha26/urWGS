@@ -28,3 +28,4 @@ ${PROJECT_DIR}/manage_instances/annotation_instance.sh \
 	$NAME \
 	${BUCKET}/sample.config
 ```
+* The generated output is transferred to `$BUCKET/annotation_output`.

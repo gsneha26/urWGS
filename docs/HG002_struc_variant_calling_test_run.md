@@ -33,3 +33,4 @@ $PROJECT_DIR/manage_instances/sniffles_instance.sh \
 	30:20:15:6:6:5:5:2:2:1:1:1:1 \
 	${BUCKET}/sample.config
 ```
+* The generated output is transferred to `$BUCKET/sniffles_output`.

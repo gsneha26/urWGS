@@ -33,3 +33,4 @@ parallel -j 2 $PROJECT_DIR/manage_instances/pmdv_instance.sh ::: \
 	chr16:chr21 ::: \
 	${BUCKET}/sample.config
 ```
+* The generated output is transferred to `$BUCKET/pmdv_${DV}_${DV_MODEL}_output`.
