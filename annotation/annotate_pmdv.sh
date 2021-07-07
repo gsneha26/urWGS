@@ -39,7 +39,7 @@ if [ $PMDV_ANNOTATION_STATUS -eq 2 ]; then
 			echo "3" > $PMDV_ANNOTATION_STATUS_FILE
 			PMDV_ANNOTATION_STATUS=3
 		fi
-		gsutil cp $PMDV_ANNOTATION_STATUS_FILE ${ANNOTATION_COMPLETE_STATUS_BUCKET}/$(hostname)_pmdv_annotation_complete_status.txt
+		gsutil cp $PMDV_ANNOTATION_STATUS_FILE ${ANNOTATION_COMPLETE_STATUS_BUCKET}/pmdv_annotation_complete_status.txt
         else
                 echo "Not all pmd vcfs available"
         fi
