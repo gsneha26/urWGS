@@ -23,7 +23,7 @@ $PROJECT_DIR/simulation/simulate_merged_bam_output.sh
 ```
 * Add cron job for deleting instances based on the status from the instances
 ```     
-(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_sniffles.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER - 
+(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_sniffles_wrapper.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER - 
 ```
 * Start 1 instance to run Sniffles on 1 set of chromosomes (chr - 4 5 7 8 10 11 14 15 16 18 19 20 21)
 ```

@@ -23,7 +23,7 @@ $PROJECT_DIR/simulation/simulate_alignment_output.sh
 ```
 * Add cron job for deleting instances based on the status from the instances
 ```     
-(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_pmdv.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER - 
+(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_pmdv_wrapper.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER - 
 ```
 * Start 2 instances to run PEPPER-Margin-DeepVariant on chr2 and chr16,chr21
 ```

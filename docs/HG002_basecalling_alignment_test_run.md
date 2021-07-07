@@ -19,7 +19,7 @@ gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
 ```
 * Add cron job for periodic upload of fast5 files and deleting instances based on the status from the instances 
 ```
-(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> /data/logs/upload_stdout.log 2>> /data/logs/upload_stderr.log\n*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_guppy_mm2.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER -
+(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> /data/logs/upload_stdout.log 2>> /data/logs/upload_stderr.log\n*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_guppy_mm2_wrapper.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER -
 ```
 * The script below will simulate 6 flow cells which corresponds to computation (base calling and alignment) on 2 instances. The instances can be started as follows:
 ```
