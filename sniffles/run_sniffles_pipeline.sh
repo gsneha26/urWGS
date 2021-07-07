@@ -45,6 +45,8 @@ if [ $NUM_FILES -eq $num_chr ] && [ $SNIFFLES_STATUS -eq 2 ]; then
                 echo "3" > $SNIFFLES_STATUS_FILE
         fi
 
+	gsutil -q cp $SNIFFLES_STATUS_FILE ${SNIFFLES_COMPLETE_STATUS_BUCKET}/$(hostname)_complete_status.txt
+
 else
 	echo "Not all status files found yet."
 fi

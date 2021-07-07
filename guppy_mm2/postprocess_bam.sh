@@ -8,6 +8,7 @@ CHR_BAM_FOLDER=/data/chr_bam
 FINAL_BAM_FOLDER=/data/final_bam
 LOG_FILE=/data/logs/postprocess.log
 POSTPROCESS_STATUS_FILE=/data/postprocess_status.txt
+GUPPY_UPLOAD_STATUS_FILE=/data/complete_status.txt
 
 mkdir -p $FINAL_BAM_FOLDER
 
@@ -67,7 +68,12 @@ else
 	email_guppy_mm2_update "POSTPROCESS STATUS: Job successful" $LOG_FILE $EMAIL_SUB 
 	echo "1" > $POSTPROCESS_STATUS_FILE
 	gsutil -q cp $POSTPROCESS_STATUS_FILE ${GUPPY_MM2_STATUS_BUCKET}/postprocess_${FC}_status.txt
-	gsutil -q -m rsync -r /data/output_folder/ ${GUPPY_MM2_LOG_BUCKET}/$(hostname)/
-	echo "Upload completed" | sudo mail -t goenkasneha26@gmail.com -s $(hostname)' '${SAMPLE}' Upload Update' -aFrom:${EMAIL_SENDER}
+	gsutil -q -m rsync -r /data/output_folder/ ${GUPPY_MM2_LOG_BUCKET}/
+	if [ $? -eq 0 ]; then
+		echo "1" > $GUPPY_UPLOAD_STATUS_FILE
+	else
+		echo "3" > $GUPPY_UPLOAD_STATUS_FILE
+	fi
+	gsutil -q cp $GUPPY_UPLOAD_STATUS_FILE ${GUPPY_MM2_COMPLETE_STATUS_BUCKET}/$(hostname)_complete_status.txt
 
 fi

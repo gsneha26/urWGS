@@ -17,13 +17,13 @@ gsutil mb $BUCKET
 sed -i "s|^BUCKET=.*$|BUCKET=${BUCKET}|g" $CONFIG_PATH
 gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
 ```
-* Add cron job 
+* Add cron job for periodic upload of fast5 files and deleting instances based on the status from the instances 
 ```
-echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> /data/logs/upload_stdout.log 2>> /data/logs/upload_stderr.log" | crontab -u $USER -
+(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/prom_upload/upload_fast5.sh >> /data/logs/upload_stdout.log 2>> /data/logs/upload_stderr.log\n*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_guppy_mm2.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER -
 ```
 * The script below will simulate 6 flow cells which corresponds to computation (base calling and alignment) on 2 instances. The instances can be started as follows:
 ```
-parallel -j 2 $PROJECT_DIR/create_instances/guppy_mm2_instance.sh ::: \
+parallel -j 2 $PROJECT_DIR/manage_instances/guppy_mm2_instance.sh ::: \
 	guppy-ch{1..2} :::+ \
 	Ch{1..2} ::: \
 	${BUCKET}/sample.config

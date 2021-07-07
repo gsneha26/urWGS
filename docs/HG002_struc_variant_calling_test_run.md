@@ -21,9 +21,13 @@ gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
 ```
 $PROJECT_DIR/simulation/simulate_merged_bam_output.sh
 ```
+* Add cron job for deleting instances based on the status from the instances
+```     
+(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_sniffles.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER - 
+```
 * Start 1 instance to run Sniffles on 1 set of chromosomes (chr - 4 5 7 8 10 11 14 15 16 18 19 20 21)
 ```
-$PROJECT_DIR/create_instances/sniffles_instance.sh \
+$PROJECT_DIR/manage_instances/sniffles_instance.sh \
 	sniffles-1 \
 	chr16:chr4:chr5:chr7:chr8:chr10:chr11:chr14:chr15:chr18:chr19:chr20:chr21 \
 	30:20:15:6:6:5:5:2:2:1:1:1:1 \

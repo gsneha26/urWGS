@@ -12,7 +12,7 @@ if [ $# -eq 1 ]; then
 
 		gsutil cp $CONFIG_FILE ${BUCKET}/
 
-		${PROJECT_DIR}/create_instances/annotation_instance.sh \
+		${PROJECT_DIR}/manage_instances/annotation_instance.sh \
 			annotation-${SAMPLE_LOW}-1 \
 			${BUCKET}/sample.config
 		exit 0

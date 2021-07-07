@@ -2,11 +2,10 @@
 
 source /data/sample.config
 
-export FAST5_FOLDER=/data/input_folder/
-export FASTQ_FOLDER=/data/output_folder/
-export BAM_FOLDER=/data/chr_bam
-export LOG_FOLDER=/data/logs
-export LOG_BUCKET=${GUPPY_MM2_UPDATES_BUCKET}/$(hostname)/
+FAST5_FOLDER=/data/input_folder/
+FASTQ_FOLDER=/data/output_folder/
+BAM_FOLDER=/data/chr_bam
+LOG_FOLDER=/data/logs
 
 mkdir -p $LOG_FOLDER
 echo "current "$(TZ='America/Los_Angeles' date) >> $LOG_FOLDER/fast5_files.log
@@ -45,4 +44,4 @@ else
 	echo "Alignment is not running" >> $LOG_FOLDER/summary.log
 fi
 
-time gsutil -q -m cp -r $LOG_FOLDER/*.log $LOG_BUCKET
+time gsutil -q -m cp -r $LOG_FOLDER/*.log ${GUPPY_MM2_UPDATES_BUCKET}/

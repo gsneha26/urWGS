@@ -35,3 +35,7 @@ export PROJECT_DIR=$(pwd)
 ```
 $PROJECT_DIR/setup/mount_ssd_nvme.sh
 ```
+* Create environment for cron job 
+```
+echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR" | crontab -u $USER -
+```

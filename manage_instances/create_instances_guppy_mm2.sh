@@ -31,7 +31,7 @@ if [ $# -eq 1 ]; then
 			GUPPY_FC_LIST=$(echo {A..H}h{1..2})
 		fi
 
-		parallel -j ${NUM_GUPPY} ${PROJECT_DIR}/create_instances/guppy_mm2_instance.sh ::: \
+		parallel -j ${NUM_GUPPY} ${PROJECT_DIR}/manage_instances/guppy_mm2_instance.sh ::: \
 			${GUPPY_NAME_LIST} :::+ \
 			${GUPPY_FC_LIST} ::: \
 			${BUCKET}/sample.config

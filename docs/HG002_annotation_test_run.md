@@ -24,7 +24,7 @@ $PROJECT_DIR/simulation/simulate_variant_calling_output.sh
 * Start the annotation instance
 ```
 NAME=annotation-1
-${PROJECT_DIR}/create_instances/annotation_instance.sh \
+${PROJECT_DIR}/manage_instances/annotation_instance.sh \
 	$NAME \
 	${BUCKET}/sample.config
 ```
