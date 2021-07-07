@@ -88,7 +88,7 @@ if [ $SNIFFLES_ANNOTATION_STATUS -eq 2 ] && [ $DOWNLOAD_STATUS -eq 1 ]; then
 			echo "3" > $SNIFFLES_ANNOTATION_STATUS_FILE
 			SNIFFLES_ANNOTATION_STATUS=3
 		fi
-		gsutil cp $SNIFFLES_ANNOTATION_STATUS_FILE ${ANNOTATION_COMPLETE_STATUS_BUCKET}/$(hostname)_sniffles_annotation_complete_status.txt
+		gsutil cp $SNIFFLES_ANNOTATION_STATUS_FILE ${ANNOTATION_COMPLETE_STATUS_BUCKET}/sniffles_annotation_complete_status.txt
         else
                 echo "Not all sniffles vcfs generated"
         fi
