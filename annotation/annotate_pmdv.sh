@@ -27,18 +27,19 @@ if [ $PMDV_ANNOTATION_STATUS -eq 2 ]; then
                 ${PROJECT_DIR}/annotation/process_pmdv_vcf.sh
 
 		if [ $? -eq 0 ]; then
-			email_annotation_update "PMD Annotation completed"
-			echo "PMD Annotation completed"
+			email_annotation_update "PMDV Annotation completed"
+			echo "PMDV Annotation completed"
 
 			echo "1" > $PMDV_ANNOTATION_STATUS_FILE
 			PMDV_ANNOTATION_STATUS=1
 		else
-			email_annotation_update "PMD Annotation Error"
-			echo "PMD Annotation error"
+			email_annotation_update "PMDV Annotation Error"
+			echo "PMDV Annotation error"
 
 			echo "3" > $PMDV_ANNOTATION_STATUS_FILE
 			PMDV_ANNOTATION_STATUS=3
 		fi
+		gsutil cp $PMDV_ANNOTATION_STATUS_FILE ${ANNOTATION_COMPLETE_STATUS_BUCKET}/$(hostname)_pmdv_annotation_complete_status.txt
         else
                 echo "Not all pmd vcfs available"
         fi

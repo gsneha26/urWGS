@@ -75,11 +75,20 @@ if [ $SNIFFLES_ANNOTATION_STATUS -eq 2 ] && [ $DOWNLOAD_STATUS -eq 1 ]; then
 
                 $PROJECT_DIR/annotation/process_sniffles_vcf.sh
 
-                email_annotation_update "Sniffles Annotation completed"
-                echo "Sniffles Annotation completed"
+		if [ $? -eq 0 ]; then
+			email_annotation_update "Sniffles Annotation completed"
+			echo "Sniffles Annotation completed"
 
-                echo "1" > $SNIFFLES_ANNOTATION_STATUS_FILE
-                SNIFFLES_ANNOTATION_STATUS=1
+			echo "1" > $SNIFFLES_ANNOTATION_STATUS_FILE
+			SNIFFLES_ANNOTATION_STATUS=1
+		else
+			email_annotation_update "Sniffles Annotation Error"
+			echo "Sniffles Annotation error"
+
+			echo "3" > $SNIFFLES_ANNOTATION_STATUS_FILE
+			SNIFFLES_ANNOTATION_STATUS=3
+		fi
+		gsutil cp $SNIFFLES_ANNOTATION_STATUS_FILE ${ANNOTATION_COMPLETE_STATUS_BUCKET}/$(hostname)_sniffles_annotation_complete_status.txt
         else
                 echo "Not all sniffles vcfs generated"
         fi
