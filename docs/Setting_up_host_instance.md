@@ -31,9 +31,10 @@ git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40df
 cd urWGS/
 export PROJECT_DIR=$(pwd)
 ```
-* Mount the local ssd devices
+* Mount the local ssd devices and create log folder
 ```
 $PROJECT_DIR/setup/mount_ssd_nvme.sh
+mkdir -p /data/logs
 ```
 * Create environment for cron job 
 ```
