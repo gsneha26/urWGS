@@ -7,7 +7,7 @@ mkdir -p $ANNOTATION_STATUS
 
 gsutil -q -m rsync -r $ANNOTATION_COMPLETE_STATUS_BUCKET/ $ANNOTATION_STATUS/ 
 
-if [ -f ${ANNOTATION_STATUS}/pmdv_annotation_complete_status.txt ] && [ -f ${ANNOTATION_STATUS}/sniffles_annotation_complete_status.txt ]; then
+if [ -f "${ANNOTATION_STATUS}/pmdv_annotation_complete_status.txt" ] && [ -f "${ANNOTATION_STATUS}/sniffles_annotation_complete_status.txt" ]; then
 	if [ $(cat ${ANNOTATION_STATUS}/pmdv_annotation_complete_status.txt) == "1" ] && [ $(cat ${ANNOTATION_STATUS}/sniffles_annotation_complete_status.txt) == "1" ]; then
 		gcloud -q compute instances delete annotation-1 \
 			--zone us-west1-a \
