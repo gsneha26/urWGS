@@ -21,6 +21,10 @@ gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
 ```
 $PROJECT_DIR/simulation/simulate_variant_calling_output.sh
 ```
+* Add cron job for deleting instances based on the status from the instances
+```     
+(crontab -u $USER -l; echo -e "*/3 * * * * bash -c $PROJECT_DIR/manage_instances/delete_instances_annotation_wrapper.sh >> /data/logs/delete_instances_stdout.log 2>> /data/logs/delete_instances_stderr.log") | crontab -u $USER - 
+```
 * Start the annotation instance
 ```
 NAME=annotation-1
