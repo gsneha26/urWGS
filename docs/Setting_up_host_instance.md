@@ -12,12 +12,13 @@ gcloud compute instances create $NAME \
         --local-ssd=interface=NVME \
         --local-ssd=interface=NVME
 ```
-(It will take a minute or 2 to start)
+(It will take a minute or two to start)
 
 * Log into the instance
 ```
-gcloud beta compute ssh --zone $ZONE $NAME --project "som-ashley-rapid-nicu-seq"
+gcloud beta compute ssh --zone $ZONE $NAME --project $GCP_PROJECT_NAME
 ```
+($GCP_PROJECT_NAME - name of your project on Google Cloud Platform)
 Instructions on the host instance
 
 * Install pre-requisites:
@@ -27,7 +28,7 @@ sudo apt-get -y install git parallel rsync
 ```
 * Clone urWGS repository
 ```
-git clone https://gitfront.io/r/gsneha26/e351ab7e8a8eed487da76fbbc09fa73d7ab40dfb/urWGS.git
+git clone https://github.com/gsneha26/urWGS.git
 cd urWGS/
 export PROJECT_DIR=$(pwd)
 ```
