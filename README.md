@@ -1,5 +1,7 @@
 # Ultra-Rapid whole genome nanopore sequencing pipeline
 
+<img src="./img/methods_figure_1_v2.png" width="450">
+
 ## Base calling and Alignment
 ### Software:
 * Guppy v4.2.2 (Commercial software from Oxford Nanopore Technologies)
