@@ -43,6 +43,7 @@ gcloud init
 Set up the custom instance images and templates based on these [instructions](./docs/Setting_up_instance_templates.md). 
 
 There is 1 demo test set provided for each stage -- [guppy-minimap2](./docs/HG002_basecalling_alignment_test_run.md), [PEPPER-Margin-DeepVariant](./docs/HG002_small_variant_calling_test_run.md), [Sniffles](./docs/HG002_struc_variant_calling_test_run.md), [Annotation](./docs/HG002_annotation_test_run.md). Every demo requires a host instance, the instructions for which are provided [here](./docs/Setting_up_host_instance.md) 
+
 ---
 
 ### Citation
