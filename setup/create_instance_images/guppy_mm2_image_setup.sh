@@ -6,7 +6,13 @@ sudo apt install -y build-essential \
 	zlib1g-dev
 
 git clone https://github.com/gsneha26/macos_setup.git
-git clone https://github.com/gsneha26/urWGS.git
+
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/11.4.1/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.1-470.57.02-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.1-470.57.02-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
+sudo apt-get update
+sudo apt-get -y install cuda
 
 wget https://cdn.oxfordnanoportal.com/software/analysis/ont-guppy_6.1.5_linux64.tar.gz
 tar -xvf ont-guppy_6.1.5_linux64.tar.gz
