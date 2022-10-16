@@ -1,5 +1,6 @@
 #!/bin/bash
 
+CURR_DIR=$(pwd)
 sudo apt update
 sudo apt install -y build-essential \
         parallel \
@@ -9,7 +10,7 @@ git clone https://github.com/gsneha26/macos_setup.git
 cd macos_setup
 cp -r vim ~/.vim
 cp vimrc ~/.vimrc
-cd ..
+cd $CURR_DIR
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -32,7 +33,8 @@ git clone https://github.com/lh3/minimap2
 cd minimap2 && git checkout v2.24
 make -j
 cp minimap2 /usr/bin/
-cd .. && rm -rf minimap2
+cd $CURR_DIR
+rm -rf minimap2
 
 sudo apt-get -y install libncurses-dev \
      libbz2-dev \
@@ -44,3 +46,6 @@ cd samtools-1.16.1
 ./configure --prefix=/usr/
 make -j
 sudo make install
+cd $CURR_DIR
+rm samtools-1.16.1.tar.bz2
+rm -rf samtools-1.16.1

@@ -1,4 +1,4 @@
-gcloud compute instances create guppy-mm2-test1 \
+gcloud compute instances create guppy-mm2-test \
   --zone us-central1-c \
   --machine-type=a2-highgpu-4g \
   --maintenance-policy=TERMINATE \
