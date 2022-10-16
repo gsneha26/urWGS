@@ -29,6 +29,18 @@ cp -r ont-guppy/data /usr/
 rm -rf ont-guppy*
 
 git clone https://github.com/lh3/minimap2
-cd minimap2 && make
-cp minimap2 /usr/local/bin/
+cd minimap2 && git checkout v2.24
+make -j
+cp minimap2 /usr/bin/
 cd .. && rm -rf minimap2
+
+sudo apt-get -y install libncurses-dev \
+     libbz2-dev \
+     liblzma-dev
+
+wget https://github.com/samtools/samtools/releases/download/1.16.1/samtools-1.16.1.tar.bz2
+tar -xvf samtools-1.16.1.tar.bz2
+cd samtools-1.16.1
+./configure --prefix=/usr/
+make -j
+sudo make install
