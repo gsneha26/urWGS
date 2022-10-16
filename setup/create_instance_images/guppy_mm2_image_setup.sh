@@ -11,6 +11,7 @@ cd macos_setup
 cp -r vim ~/.vim
 cp vimrc ~/.vimrc
 cd $CURR_DIR
+rm -rf macos_setup
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -23,16 +24,16 @@ rm cuda-repo-ubuntu2004-11-6-local_11.6.2-510.47.03-1_amd64.deb
 
 wget https://cdn.oxfordnanoportal.com/software/analysis/ont-guppy_6.1.5_linux64.tar.gz
 tar -xvf ont-guppy_6.1.5_linux64.tar.gz
-cp -r ont-guppy /opt/ont-guppy
-cp ont-guppy/bin/* /usr/bin/
-cp ont-guppy/lib/* /usr/lib/
-cp -r ont-guppy/data /usr/
+sudo cp -r ont-guppy /opt/ont-guppy
+sudo cp ont-guppy/bin/* /usr/bin/
+sudo cp ont-guppy/lib/* /usr/lib/
+sudo cp -r ont-guppy/data /usr/
 rm -rf ont-guppy*
 
 git clone https://github.com/lh3/minimap2
 cd minimap2 && git checkout v2.24
 make -j
-cp minimap2 /usr/bin/
+sudo cp minimap2 /usr/bin/
 cd $CURR_DIR
 rm -rf minimap2
 
