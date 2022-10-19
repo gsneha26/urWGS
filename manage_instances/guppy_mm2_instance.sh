@@ -4,9 +4,10 @@ for z in $(gcloud compute accelerator-types list | grep nvidia-tesla-a100 | grep
 
   gcloud compute instances create $1 \
     --zone $z \
-    --source-instance-template guppy-mm2-template2 \
-  	--create-disk=boot=yes,image=guppy-mm2-image-v1,size=100GB,mode=rw,type=pd-standard \
+    --source-instance-template guppy-mm2-template-ph2 \
+  	--create-disk=boot=yes,image=guppy-mm2-image-ph2-v1,size=100GB,mode=rw,type=pd-balanced \
   	--scopes=storage-full,compute-rw,logging-write \
+  	--local-ssd=interface=NVME \
   	--local-ssd=interface=NVME \
   	--local-ssd=interface=NVME \
   	--local-ssd=interface=NVME \

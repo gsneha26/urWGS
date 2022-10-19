@@ -4,10 +4,6 @@ if [ $# -eq 1 ]; then
 	CONFIG_FILE=$1
 
 	if [ -f $CONFIG_FILE ]; then
-		1>&2 echo "Error: Provided file $CONFIG_FILE does not exist"
-		1>&2 echo "Usage: create_instances_guppy_mm2.sh CONFIG_FILE"
-		exit 1
-	else
 		source $CONFIG_FILE
 
 		gsutil cp $CONFIG_FILE ${BUCKET}/
@@ -36,6 +32,10 @@ if [ $# -eq 1 ]; then
 			${GUPPY_FC_LIST} ::: \
 			${BUCKET}/sample.config
 		exit 0
+	else
+		1>&2 echo "Error: Provided file $CONFIG_FILE does not exist"
+		1>&2 echo "Usage: create_instances_guppy_mm2.sh CONFIG_FILE"
+		exit 1
 	fi
 else
 	1>&2 echo "Error: Provided $# arguments" 
