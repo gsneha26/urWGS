@@ -1,8 +1,13 @@
-gcloud compute instances create guppy-mm2-test \
-  --zone us-central1-c \
+gcloud compute instance-templates create guppy-mm2-test2 \
   --machine-type=a2-highgpu-4g \
+  --network-interface=network=default,network-tier=PREMIUM \
   --maintenance-policy=TERMINATE \
+  --provisioning-model=STANDARD \
   --service-account=369092570559-compute@developer.gserviceaccount.com \
   --accelerator=count=4,type=nvidia-tesla-a100 \
-  --tags=http-server,https-server \
-  --create-disk=auto-delete=yes,boot=yes,device-name=guppy-mm2-test,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220927,mode=rw,size=100,type=projects/som-ashley-rapid-nicu-seq-dev/zones/us-central1-c/diskTypes/pd-balanced
+  --tags=http-server,https-server
+  --create-disk=auto-delete=yes,boot=yes,mode=rw,size=100GB,type=pd-ssd \
+  --no-shielded-secure-boot \
+  --shielded-vtpm \
+  --shielded-integrity-monitoring \
+  --reservation-affinity=any
