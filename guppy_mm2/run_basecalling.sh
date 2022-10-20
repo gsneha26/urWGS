@@ -136,7 +136,6 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 				--config /usr/data/dna_r9.4.1_450bps_${GUPPY_MODE}_prom.cfg \
 				--input_file_list $FAST5_LIST \
 				--barcode_kits "EXP-NBD104" \
-				--qscore_filtering \
 				-s $FASTQ_FOLDER \
 				-x cuda:all \
 				-q ${MAX_READS} \
@@ -145,7 +144,6 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 			time guppy_basecaller \
 				--config /usr/data/dna_r9.4.1_450bps_${GUPPY_MODE}_prom.cfg \
 				--input_file_list $FAST5_LIST \
-				--qscore_filtering \
 				-s $FASTQ_FOLDER \
 				-x cuda:all \
 				-q ${MAX_READS} \
