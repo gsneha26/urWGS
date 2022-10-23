@@ -1,9 +1,9 @@
 #!/bin/bash
 
 1>&2 echo "current "$(date)
-source /data/hg002_guppy_mm2/sample.config
-FAST5_FOLDER=/data/prom/HG002/
-UPLOAD_STATUS_FILE=/data/upload_status.txt
+source $WORK_DIR/sample.config
+FAST5_FOLDER=$WORK_DIR/
+UPLOAD_STATUS_FILE=$WORK_DIR/upload_status.txt
 
 MIN_BUFFER=180 #3 minutes
 MAX_BUFFER=540 #9 minutes
