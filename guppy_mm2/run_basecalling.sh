@@ -140,7 +140,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 				-x cuda:all \
 				-q ${MAX_READS} \
 				--read_batch_size ${MAX_READS} \
-                --chunks_per_runner 500 \
+                --chunks_per_runner 520 \
                 --min_qscore 7
 		else
 			time guppy_basecaller \
@@ -150,7 +150,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 				-x cuda:all \
 				-q ${MAX_READS} \
 				--read_batch_size ${MAX_READS} \
-                --chunks_per_runner 500 \
+                --chunks_per_runner 520 \
                 --min_qscore 7
 
 		fi
