@@ -140,7 +140,8 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 				-x cuda:all \
 				-q ${MAX_READS} \
 				--read_batch_size ${MAX_READS} \
-                --chunks_per_runner 500
+                --chunks_per_runner 500 \
+                --min_qscore 7
 		else
 			time guppy_basecaller \
 				--config /usr/data/dna_r9.4.1_450bps_${GUPPY_MODE}_prom.cfg \
@@ -149,7 +150,8 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 				-x cuda:all \
 				-q ${MAX_READS} \
 				--read_batch_size ${MAX_READS} \
-                --chunks_per_runner 500
+                --chunks_per_runner 500 \
+                --min_qscore 7
 
 		fi
 		GUPPY_EXIT=$?
