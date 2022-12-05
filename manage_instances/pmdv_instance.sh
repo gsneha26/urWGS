@@ -2,8 +2,8 @@
 
 gcloud compute instances create $1 \
     --zone us-west1-a \
-    --source-instance-template pmdv-template \
-    --create-disk=boot=yes,image=pmdv-image-v1,size=100GB \
+    --machine-type n1-standard-96 \
+    --create-disk=boot=yes,image=pmd-image-v7,size=100GB \
     --scopes=storage-full,compute-rw,logging-write \
     --local-ssd=interface=NVME \
     --metadata CHR=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
