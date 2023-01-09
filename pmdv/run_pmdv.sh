@@ -11,9 +11,11 @@ time sudo docker run --ipc=host \
         -b $CHR_FOLDER/${SAMPLE}_$1.bam \
         -f /data/GRCh37_$1.fa \
         -s ${SAMPLE} \
-        -o ${CHR_FOLDER}/${SAMPLE}_pmdv_$1 \
+        -o ${CHR_FOLDER} \
+        -p ${SAMPLE}_pmdv_$1 \
         -t 96 \
         --ont_r9_guppy5_sup \
+        --keep_intermediate_bam_files \
         -k
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
