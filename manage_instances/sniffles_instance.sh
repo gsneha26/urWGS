@@ -1,14 +1,15 @@
 #!/bin/bash
 
-for z in $(gcloud compute machine-types list | grep n1-standard-96 | grep 'us-' | sort -V | awk '{print $2}'); do
+for z in $(gcloud compute machine-types list | grep n1-standard-48 | grep 'us-' | sort -V | awk '{print $2}'); do
 
+  echo $z
   gcloud compute instances create $1 \
     --zone $z \
-    --source-instance-template sniffles-template \
+    --machine-type n1-standard-48 \
     --create-disk=boot=yes,image=variant-calling-image-ph2-v1,size=100GB,mode=rw,type=pd-balanced \
     --scopes=storage-full,compute-rw,logging-write \
     --local-ssd=interface=NVME \
-    --metadata CHR=$2,THREADS=$3,CONFIG_FILE_URL=$4,startup-script='#!/bin/bash
+    --metadata CHR=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
       rm -rf urWGS 
       git clone https://github.com/gsneha26/urWGS.git -b phase2 
       bash -c ./urWGS/setup/mount_ssd_nvme.sh
