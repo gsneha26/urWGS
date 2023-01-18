@@ -25,6 +25,9 @@ if [ $# -eq 1 ]; then
 		elif [ $NUM_GUPPY -eq 16 ]; then
 			GUPPY_NAME_LIST=$(echo guppy-${SAMPLE_LOW}-{a..h}h{1..2})
 			GUPPY_FC_LIST=$(echo {A..H}h{1..2})
+		elif [ $NUM_GUPPY -eq 24 ]; then
+			GUPPY_NAME_LIST=$(echo guppy-${SAMPLE_LOW}-{a..h}h{1..3})
+			GUPPY_FC_LIST=$(echo {A..H}h{1..3})
 		fi
 
 		parallel -j ${NUM_GUPPY} ${PROJECT_DIR}/manage_instances/guppy_mm2_instance.sh ::: \
