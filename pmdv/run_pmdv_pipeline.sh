@@ -1,8 +1,6 @@
 #!/bin/bash
 
 source /data/sample.config
-INST_CHR=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CHR])")
-chr_args=$( echo $INST_CHR | sed 's/:/ /g' )
 
 STATUS_DIR=/data/guppy_minimap2_status/
 PMDV_STATUS_FILE=/data/pmdv_status.txt
@@ -21,6 +19,8 @@ done
 1>&2 echo "SUM OF GUPPY_MINIMAP2 STATUS: $NUM_FILES"
 
 if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
+  INST_CHR=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CHR])")
+  chr_args=$( echo $INST_CHR | sed 's/:/ /g' )
 	for ch in $chr_args; do
 		email_vc_update "Starting Preprocess for $ch" $ch "PEPPER-Margin-DeepVariant" 
 	done

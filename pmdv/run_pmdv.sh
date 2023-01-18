@@ -19,14 +19,11 @@ time sudo docker run --ipc=host \
         -k
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
-        email_vc_update "Google DeepVariant completed for $1" $1 "PEPPER-Margin-DeepVariant"
+        email_vc_update "PMDV completed for $1" $1 
 else
-        email_vc_update "Google DeepVariant failed for $1" $1 "PEPPER-Margin-DeepVariant Error"
+        email_vc_update "PMDV failed for $1" $1
         exit 1
 fi
-
-cd $CHR_FOLDER/
-bgzip ${SAMPLE}_pmdv_$1.vcf
 
 1>&2 echo "============================================================================"
 1>&2 echo "current "$(TZ='America/Los_Angeles' date)

@@ -15,7 +15,12 @@ else
 	exit 1
 fi
 
-sniffles -n 60 -t $2 -m ${BAM_FILE} -v $VCF_FILE > sniffles_${1}.log 2> sniffles_${1}.err 
+sudo docker run -it -v /data:/data gsneha/sv_caller sniffles \
+   --input ${BAM_FILE} \
+   --reference /data/GRCh37.fa \
+   --vcf ${VCF_FILE} \
+   -t 96 --minsvlen 50  --mapq 20
+
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
         email_vc_update "Completed Sniffles for $1" $1 "Sniffles" 
