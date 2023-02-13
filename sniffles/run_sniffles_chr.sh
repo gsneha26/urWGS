@@ -8,7 +8,7 @@ SNIFFLES_STATUS=/data/sniffles_status/${1}_sniffles_status.txt
 BAM_FILE=${SAMPLE}_${1}.bam
 VCF_FILE=${SAMPLE}_sniffles_${1}.vcf
 
-if [ $(cat ${BAM_STATUS}) == "1" ] && [ $(cat ${SNIFFLES_STATUS}) == "2" ]; then
+if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SNIFFLES_STATUS}) -eq 2 ]; then
 
     gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${CHR_BAM_BUCKET}/${BAM_FILE} /data/ 
     VC_CODE=$?

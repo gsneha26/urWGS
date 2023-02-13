@@ -10,9 +10,13 @@ SNIFFLES_STATUS_FILE=/data/sniffles_status.txt
 SNIFFLES_STATUS=$(cat $SNIFFLES_STATUS_FILE)
 
 mkdir -p $BAM_STATUS_DIR 
+mkdir -p $SNIFFLES_STATUS_DIR
 gsutil -q -m rsync ${BAM_STATUS_BUCKET}/ $BAM_STATUS_DIR
 
-completed_chr=0
+num_chr=0
+for i in $chr_args; do
+        num_chr=$((num_chr+1))
+done
 
 while [ $SNIFFLES_STATUS -eq 2 ]; do
 
@@ -22,7 +26,7 @@ while [ $SNIFFLES_STATUS -eq 2 ]; do
     TOTAL_STATUS=0
 
     for ch in $chr_args; do
-        if [ $(cat /data/sniffles_status/${ch}_sniffles_status.txt) == "1" ]; then
+        if [ $(cat /data/sniffles_status/${ch}_sniffles_status.txt) -eq 1 ]; then
             TOTAL_STATUS=$((TOTAL_STATUS+1))
         fi
     done
@@ -32,6 +36,7 @@ while [ $SNIFFLES_STATUS -eq 2 ]; do
     fi
 
     gsutil -q cp $SNIFFLES_STATUS_FILE ${SNIFFLES_COMPLETE_STATUS_BUCKET}/$(hostname)_complete_status.txt
+    SNIFFLES_STATUS=$(cat $SNIFFLES_STATUS_FILE)
 
 done
 
