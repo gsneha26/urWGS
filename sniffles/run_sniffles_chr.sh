@@ -15,10 +15,10 @@ else
 	exit 1
 fi
 
-sudo docker run -it -v /data:/data gsneha/sv_caller sniffles \
-   --input ${BAM_FILE} \
+sudo docker run -i -v /data:/data gsneha/sv_caller sniffles \
+   --input /data/${BAM_FILE} \
    --reference /data/GRCh37.fa \
-   --vcf ${VCF_FILE} \
+   --vcf /data/${VCF_FILE} \
    -t 96 --minsvlen 50  --mapq 20
 
 VC_CODE=$?
