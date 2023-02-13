@@ -15,7 +15,8 @@ gsutil -q -m rsync ${BAM_STATUS_BUCKET}/ $BAM_STATUS_DIR
 
 num_chr=0
 for i in $chr_args; do
-        num_chr=$((num_chr+1))
+    num_chr=$((num_chr+1))
+    echo "2" > ${SNIFFLES_STATUS_DIR}/${i}_sniffles_status.txt
 done
 
 while [ $SNIFFLES_STATUS -eq 2 ]; do

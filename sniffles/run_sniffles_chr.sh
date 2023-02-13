@@ -46,15 +46,15 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SNIFFLES_STATUS}) -eq 2 ]; then
     VC_CODE=$?
     if [ $VC_CODE -eq 0 ]; then
         email_vc_update "Uploaded $VCF_FILE" $1 "Sniffles" 
-        echo "1" > ${1}_sniffles_status.txt
+        echo "1" > $SNIFFLES_STATUS
     else
         email_vc_update "Upload $VCF_FILE failed" $1 "Sniffles Error"
-        echo "3" > ${1}_sniffles_status.txt
+        echo "3" > $SNIFFLES_STATUS 
         exit 1
     fi
 
     gsutil -q cp ${SNIFFLES_STATUS} ${SNIFFLES_STATUS_BUCKET}/
 
-elif
+else
     echo "2" > ${SNIFFLES_STATUS}
 fi
