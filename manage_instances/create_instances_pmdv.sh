@@ -34,7 +34,7 @@ if [ $# -eq 1 ]; then
       chr16 \
       chr17:chrMT \
       chr18:chrY \
-      chr19:chr21 \
+      chr19:chrX \
       chr20:chr21 ::: \
       ${BUCKET}/sample.config	
 		exit 0

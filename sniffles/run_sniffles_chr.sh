@@ -15,6 +15,15 @@ else
 	exit 1
 fi
 
+gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${CHR_BAM_BUCKET}/${BAM_FILE}.bai /data/ 
+VC_CODE=$?
+if [ $VC_CODE -eq 0 ]; then
+        email_vc_update "Downloaded $BAM_FILE.bai" $1 "Sniffles" 
+else
+        email_vc_update "Download $BAM_FILE.bai failed" $1 "Sniffles Error"
+	exit 1
+fi
+
 sudo docker run -i -v /data:/data gsneha/sv_caller sniffles \
    --input /data/${BAM_FILE} \
    --reference /data/GRCh37.fa \
