@@ -11,13 +11,12 @@ SNIFFLES_STATUS=$(cat $SNIFFLES_STATUS_FILE)
 
 mkdir -p $BAM_STATUS_DIR 
 mkdir -p $SNIFFLES_STATUS_DIR
-gsutil -q -m rsync ${BAM_STATUS_BUCKET}/ $BAM_STATUS_DIR
 
 num_chr=0
 for i in $chr_args; do
     num_chr=$((num_chr+1))
-    echo "2" > ${SNIFFLES_STATUS_DIR}/${i}_sniffles_status.txt
 done
+gsutil -q -m rsync ${BAM_STATUS_BUCKET}/ $BAM_STATUS_DIR
 
 while [ $SNIFFLES_STATUS -eq 2 ]; do
 

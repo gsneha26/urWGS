@@ -55,6 +55,4 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SNIFFLES_STATUS}) -eq 2 ]; then
 
     gsutil -q cp ${SNIFFLES_STATUS} ${SNIFFLES_STATUS_BUCKET}/
 
-else
-    echo "2" > ${SNIFFLES_STATUS}
 fi
