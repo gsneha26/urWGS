@@ -18,7 +18,7 @@ for z in $(gcloud compute machine-types list | grep n1-standard-96 | grep 'us-' 
       export PROJECT_DIR=/data/urWGS
       CONFIG_FILE_URL=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CONFIG_FILE_URL])")
       gsutil cp $CONFIG_FILE_URL /data/sample.config
-      for i in $chr_args; do
+      for i in $( echo $CHR | sed s/:/ /g ); do
           echo "2" > /data/sniffles_status/${i}_sniffles_status.txt 
       done
       echo "2" > /data/sniffles_status.txt 
