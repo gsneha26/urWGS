@@ -1,4 +1,5 @@
-#!/bin/bash
+#
+#/bin/bash
 
 source /data/sample.config
 
@@ -10,8 +11,11 @@ VCF_FILE=${SAMPLE}_spectre_${1}.vcf
 REFERENCE=/data/GRCh37.fa
 BLACKLIST_GRCH37=/home/spectre/data/grch37_blacklist.bed  # Optional but recommended
 WINSIZE=1000
-COVERAGE_DIR=/data/coverage_dir
+COVERAGE_DIR=/data/coverage_dir/${1}
 OUTPUT_DIR=/data/cnv_output/${1}
+
+mkdir -p ${COVERAGE_DIR}
+mkdir -p ${OUTPUT_DIR}
 
 if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
 
@@ -33,19 +37,17 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         exit 1
     fi
 
-    mkdir -p ${COVERAGE_DIR}/${1}/
-
     sudo docker run -i -v /data:/data gsneha/sv_caller mosdepth \
         --by ${WINSIZE} \
         --threads 96 \
         --no-per-base \
         --mapq 20 \
-        ${COVERAGE_DIR}/${1}/${1} \
+        ${COVERAGE_DIR}/${1} \
         /data/${BAM_FILE}
 
     sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py CNVCaller \
         --bin-size 1000 \
-        --coverage ${COVERAGE_DIR}/${1} \
+        --coverage ${COVERAGE_DIR} \
         --output-dir ${OUTPUT_DIR} \
         --sample-id ${SAMPLE} \
         --reference  ${REFERENCE} \
