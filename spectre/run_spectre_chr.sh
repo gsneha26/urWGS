@@ -13,6 +13,7 @@ BLACKLIST_GRCH37=/home/spectre/data/grch37_blacklist.bed  # Optional but recomme
 WINSIZE=1000
 COVERAGE_DIR=/data/coverage_dir/${1}
 OUTPUT_DIR=/data/cnv_output/${1}
+CHR_NUM=$(echo $1 | sed 's/chr//g')
 
 mkdir -p ${COVERAGE_DIR}
 mkdir -p ${OUTPUT_DIR}
@@ -45,20 +46,22 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         ${COVERAGE_DIR}/${1} \
         /data/${BAM_FILE}
 
+    sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py removeNs \
+        --reference  ${REFERENCE} \
+        --output-dir ${OUTPUT_DIR} \
+        --output-file /data/${1}_genome.mdr \
+        --bin-size 1000 \
+        --only-chr $CHR_NUM \
+        --save-only
+
     sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py CNVCaller \
         --bin-size 1000 \
         --coverage ${COVERAGE_DIR} \
         --output-dir ${OUTPUT_DIR} \
         --sample-id ${SAMPLE} \
         --reference  ${REFERENCE} \
+        --metadata /data/${1}_genome.mdr \
         --black_list ${BLACKLIST_GRCH37}
-
-    sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py removeNs \
-        --reference  ${REFERENCE} \
-        --output-dir ${OUTPUT_DIR} \
-        --output-file /data/${1}_genome.mdr \
-        --bin-size 1000 \
-        --save-only
 
     VC_CODE=$?
     if [ $VC_CODE -eq 0 ]; then
