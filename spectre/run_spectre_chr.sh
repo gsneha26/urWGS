@@ -8,7 +8,8 @@ BAM_STATUS=/data/bam_status/${1}_bam_status.txt
 SPECTRE_STATUS=/data/spectre_status/${1}_spectre_status.txt
 BAM_FILE=${SAMPLE}_${1}.bam
 VCF_FILE=${SAMPLE}_spectre_${1}.vcf
-REFERENCE=/data/GRCh37.fa
+REFERENCE=/data/GRCh37_${1}.fa
+REFERENCE1=/data/GRCh37.fa
 BLACKLIST_GRCH37=/home/spectre/data/grch37_blacklist.bed  # Optional but recommended
 WINSIZE=1000
 COVERAGE_DIR=/data/coverage_dir/${1}
@@ -19,6 +20,15 @@ mkdir -p ${COVERAGE_DIR}
 mkdir -p ${OUTPUT_DIR}
 
 if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
+
+    gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ultra_rapid_data/GRCh37_chr_fasta/GRCh37_${1}.fa /data/ 
+    VC_CODE=$?
+    if [ $VC_CODE -eq 0 ]; then
+        email_vc_update "Downloaded chr_fasta" $1 "Spectre" 
+    else
+        email_vc_update "Download chr_fasta failed" $1 "Spectre Error"
+        exit 1
+    fi
 
     gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${CHR_BAM_BUCKET}/${BAM_FILE} /data/ 
     VC_CODE=$?
@@ -51,7 +61,6 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         --output-dir ${OUTPUT_DIR} \
         --output-file /data/${1}_genome.mdr \
         --bin-size 1000 \
-        --only-chr $CHR_NUM \
         --save-only
 
     sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py CNVCaller \
@@ -61,6 +70,7 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         --sample-id ${SAMPLE} \
         --reference  ${REFERENCE} \
         --metadata /data/${1}_genome.mdr \
+        --only-chr $CHR_NUM \
         --black_list ${BLACKLIST_GRCH37}
 
     VC_CODE=$?
