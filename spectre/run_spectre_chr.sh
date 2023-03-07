@@ -1,4 +1,3 @@
-#
 #/bin/bash
 
 source /data/sample.config
@@ -70,7 +69,7 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         --sample-id ${SAMPLE} \
         --reference  ${REFERENCE} \
         --metadata /data/${1}_genome.mdr \
-        --only-chr $CHR_NUM \
+        --only_chr $CHR_NUM \
         --black_list ${BLACKLIST_GRCH37}
 
     VC_CODE=$?
