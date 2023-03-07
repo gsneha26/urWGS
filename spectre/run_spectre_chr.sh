@@ -5,8 +5,8 @@ source /data/sample.config
 cd /data
 BAM_STATUS=/data/bam_status/${1}_bam_status.txt
 SPECTRE_STATUS=/data/spectre_status/${1}_spectre_status.txt
-BAM_FILE=${SAMPLE}_${1}.bam
-VCF_FILE=${SAMPLE}_spectre_${1}.vcf
+BAM_FILE=/data/${SAMPLE}_${1}.bam
+VCF_FILE=/data/${SAMPLE}_spectre_${1}.vcf
 REFERENCE=/data/GRCh37_${1}.fa
 REFERENCE1=/data/GRCh37.fa
 BLACKLIST_GRCH37=/home/spectre/data/grch37_blacklist.bed  # Optional but recommended
@@ -53,7 +53,7 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         --no-per-base \
         --mapq 20 \
         ${COVERAGE_DIR}/${1} \
-        /data/${BAM_FILE}
+        ${BAM_FILE}
 
     sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py removeNs \
         --reference  ${REFERENCE} \
@@ -71,6 +71,8 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         --metadata ${OUTPUT_DIR}/${1}_genome.mdr \
         --only_chr $CHR_NUM \
         --black_list ${BLACKLIST_GRCH37}
+
+    mv ${OUTPUT_DIR}/${SAMPLE}.vcf ${VCF_FILE} 
 
     VC_CODE=$?
     if [ $VC_CODE -eq 0 ]; then
