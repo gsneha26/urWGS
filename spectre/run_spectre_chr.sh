@@ -58,7 +58,7 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
     sudo docker run -i -v /data:/data gsneha/sv_caller python3 /home/spectre/spectre.py removeNs \
         --reference  ${REFERENCE} \
         --output-dir ${OUTPUT_DIR} \
-        --output-file /data/${1}_genome.mdr \
+        --output-file ${1}_genome.mdr \
         --bin-size 1000 \
         --save-only
 
@@ -68,7 +68,7 @@ if [ $(cat ${BAM_STATUS}) -eq 1 ] && [ $(cat ${SPECTRE_STATUS}) -eq 2 ]; then
         --output-dir ${OUTPUT_DIR} \
         --sample-id ${SAMPLE} \
         --reference  ${REFERENCE} \
-        --metadata /data/${1}_genome.mdr \
+        --metadata ${OUTPUT_DIR}/${1}_genome.mdr \
         --only_chr $CHR_NUM \
         --black_list ${BLACKLIST_GRCH37}
 
