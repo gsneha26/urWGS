@@ -12,7 +12,6 @@ for z in $(gcloud compute accelerator-types list | grep nvidia-tesla-a100 | grep
   	--local-ssd=interface=NVME \
   	--local-ssd=interface=NVME \
     --no-restart-on-failure \
-    --maintenance-policy=MIGRATE \
     --metadata FC=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
   		nvidia-smi -pm 1
         rm -rf urWGS

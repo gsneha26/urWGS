@@ -23,9 +23,10 @@ for z in $(gcloud compute machine-types list | grep n1-standard-96 | grep 'us-' 
       echo "2" > /data/download_status.txt 
       echo "2" > /data/pmdv_annotation_status.txt 
       echo "2" > /data/sniffles_annotation_status.txt 
+      echo "2" > /data/spectre_annotation_status.txt 
       chmod a+w -R /data/
       chmod +x $PROJECT_DIR/*/*.sh
-      echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_pmdv_wrapper.sh >> /data/pmdv_stdout.log 2>> /data/pmdv_stderr.log\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_sniffles_wrapper.sh >> /data/sniffles_stdout.log 2>> /data/sniffles_stderr.log" | crontab -'
+      echo -e "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\nPROJECT_DIR=$PROJECT_DIR\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_pmdv_wrapper.sh >> /data/pmdv_stdout.log 2>> /data/pmdv_stderr.log\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_sniffles_wrapper.sh >> /data/sniffles_stdout.log 2>> /data/sniffles_stderr.log\n*/1 * * * * bash -c $PROJECT_DIR/annotation/annotate_spectre_wrapper.sh >> /data/spectre_stdout.log 2>> /data/spectre_stderr.log" | crontab -'
 
   EXIT_CODE=$?
   if [[ $EXIT_CODE -eq 0 ]]; then
