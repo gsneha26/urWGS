@@ -18,9 +18,10 @@ num_chr=0
 for i in $chr_args; do
     num_chr=$((num_chr+1))
 done
-gsutil -q -m rsync ${BAM_STATUS_BUCKET}/ $BAM_STATUS_DIR
 
 while [ $SPECTRE_STATUS -eq 2 ]; do
+
+    gsutil -q -m rsync ${BAM_STATUS_BUCKET}/ $BAM_STATUS_DIR
 
     time parallel -j $num_chr $PROJECT_DIR/spectre/run_spectre_chr.sh ::: \
         ${chr_args}
