@@ -11,7 +11,7 @@ mkdir -p $ANNOTATION_FOLDER
 mkdir -p $VCF_FOLDER
 mkdir -p $BAM_FOLDER 
 
-DOWNLOAD_STATUS_FILE=/data/download_status.txt
+DOWNLOAD_STATUS_FILE=/data/sniffles_download_status.txt
 DOWNLOAD_STATUS=$(cat $DOWNLOAD_STATUS_FILE)
 BAM_STATUS_DIR=/data/bam_status
 mkdir -p $BAM_STATUS_DIR
