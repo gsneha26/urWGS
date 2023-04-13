@@ -42,6 +42,21 @@ if [ $BAM_MERGE == "YES" ]; then
 		exit 1
 	fi	
 
+    if [ $1 == "chrMT" ]; then
+        DEPTH=$(samtools depth -r MT ${SAMPLE}_$1.bam | awk '{sum+=$3} END {print int(sum/NR)}')
+
+        if [ $DEPTH -gt 700 ]; then
+
+            samtools view -s 0.20 -b -@16 ${SAMPLE}_$1.bam > ${SAMPLE}_$1.bam.700x.bam
+            cp ${SAMPLE}_$1.bam.700x.bam ${SAMPLE}_$1.bam
+            samtools index -@10 ${SAMPLE}_$1.bam
+            if [ $? -gt 0 ]; then
+                1>&2 echo "Error with indexing merged bam for chr "$1
+                exit 1
+            fi	
+        fi
+    fi
+
 	gsutil -q -o "GSUtil:parallel_composite_upload_threshold=750M" -m cp ${SAMPLE}_$1.bam* ${CHR_BAM_BUCKET}/
 	echo "1" > $CHR_FOLDER/$1_bam_status.txt
 	gsutil -q cp  $CHR_FOLDER/$1_bam_status.txt ${BAM_STATUS_BUCKET}/
