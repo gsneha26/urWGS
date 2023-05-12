@@ -38,7 +38,7 @@ if [ $DOWNLOAD_STATUS -eq 2 ]; then
 
 		if [ $NUM_FILES -eq 25 ]; then
 
-			$PROJECT_DIR/annotation/download_data.sh
+			$PROJECT_DIR/annotation/download_data_spectre.sh
 			if [ $? -eq 0 ]; then
 				email_annotation_update "Data download completed"
 				echo "1" > $DOWNLOAD_STATUS_FILE
