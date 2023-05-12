@@ -3,63 +3,46 @@
 set -x
 
 source /data/sample.config
-GENE_LIST=/data/sample_gene_list.txt
-gsutil -q cp $GENE_LIST_URL $GENE_LIST
 SPECTRE_ANNOTATION_FOLDER=/data/spectre_annotation
 VCF_FOLDER=${SPECTRE_ANNOTATION_FOLDER}/spectre_output
-BAM_FOLDER=${SPECTRE_ANNOTATION_FOLDER}/chr_bam
 FINAL_VCF=${SAMPLE}.spectre.merged.vcf
+INPUT_VCF=${SAMPLE}_spectre.vcf.gz
+INPUT_PREFIX=${INPUT_VCF%.vcf}
 
 mkdir -p $SPECTRE_ANNOTATION_FOLDER
 mkdir -p $VCF_FOLDER
 
 cd $SPECTRE_ANNOTATION_FOLDER
-rm -f vcf.list.txt
-rm -f bam.list.tsv
-rm -rf mosdepth.* benchmark_sv_annotation/ $FINAL_VCF 
-rm -f vcf/*.rn.vcf vcf/*.temp.txt
 
 gsutil -q -m rsync ${SPECTRE_VCF_BUCKET}/ ${VCF_FOLDER}/
 
-## make a file listing the sniffle VCFs, for example:
-ls -v spectre_output/${SAMPLE}_spectre_chr*.vcf > vcf.list.txt
+cd $SPECTRE_ANNOTATION_FOLDER
+bcftools concat \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr1.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr2.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr3.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr4.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr5.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr6.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr7.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr8.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr9.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr10.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr11.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr12.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr13.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr14.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr15.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr16.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr17.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr18.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr19.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr20.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr21.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chr22.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chrX.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chrY.vcf \
+	${VCF_FOLDER}/${INPUT_PREFIX}_chrMT.vcf | bgzip > ${INPUT_VCF}
 
-## make a file listing the BAMs (1st column is chr name), for example:
-for CHR in $(seq 1 22) X Y MT;
-do
-echo -e "$CHR\tchr_bam/${SAMPLE}_chr$CHR.bam" >> bam.list.tsv
-done
+gsutil -q cp ${INPUT_VCF} ${FINAL_OUTPUT_BUCKET}/
 
-## start docker container
-sudo docker run \
-   -v /data:/data \
-   -w $SPECTRE_ANNOTATION_FOLDER \
-   -u `id \
-   -u $USER` quay.io/jmonlong/svnicu:0.5 snakemake \
-   --snakefile /scripts/Snakefile \
-   --config ref=/data/GRCh37.fa \
-   gene_list=${GENE_LIST} \
-   bam_list=${SPECTRE_ANNOTATION_FOLDER}/bam.list.tsv \
-   vcf_list=${SPECTRE_ANNOTATION_FOLDER}/vcf.list.txt \
-   sample=${SAMPLE} \
-   --cores 90
-
-sudo docker run \
-	-v /data:/data \
-	-w $SPECTRE_ANNOTATION_FOLDER \
-	-u `id \
-	-u $USER` quay.io/jmonlong/svnicu:0.5 snakemake \
-	--snakefile /scripts/Snakefile \
-	--config ref=/data/GRCh37.fa \
-	gene_list=${GENE_LIST} \
-	bam_list=${SPECTRE_ANNOTATION_FOLDER}/bam.list.tsv \
-	vcf_list=${SPECTRE_ANNOTATION_FOLDER}/vcf.list.txt \
-	sample=${SAMPLE} \
-	--cores 90
-
-## upload files 
-for file in $FINAL_VCF chr-arm-karyotype.tsv sv-annotated.tsv sv-report.html; 
-do
-	gsutil -q cp $file ${FINAL_OUTPUT_BUCKET}/
-	gsutil -q cp ${FINAL_OUTPUT_BUCKET}/$file ${FINAL_OUTPUT_BUCKET_GC}/CNV/
-done
