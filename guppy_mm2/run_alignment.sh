@@ -20,7 +20,7 @@ mkdir -p $CHR_BAM_FOLDER
 
 for i in `ls ${TMP_FASTQ_FOLDER}/`;
 do
-	ORIG_FASTQ_FOLDER=${OUTPUT_FOLDER}/$i/guppy_output/pass
+	ORIG_FASTQ_FOLDER=${OUTPUT_FOLDER}/$i/guppy_output/
 	if [ ${BARCODE_DONE} == "YES" ]; then
 		ORIG_FASTQ_FOLDER=${ORIG_FASTQ_FOLDER}/${BARCODE_NUM}
 	fi
