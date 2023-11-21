@@ -28,11 +28,9 @@ echo "=========== Basecalling logs for batch_$CURRTIME ============" >> $LOG_FIL
 add_guppy_mm2_update "Created batch folder: $BATCH_FOLDER" $LOG_FILE
 
 FAST5_LIST=${BATCH_FOLDER}/${BATCH}_fast5.lst
+POD5_FOLDER=${BATCH_FOLDER}/pod5
 FASTQ_FOLDER=${BATCH_FOLDER}/guppy_output/
-PASS_FASTQ_FOLDER=${BATCH_FOLDER}/guppy_output/pass
-if [ ${BARCODE_DONE} == "YES" ]; then
-	PASS_FASTQ_FOLDER=${PASS_FASTQ_FOLDER}/${BARCODE_NUM}
-fi
+PASS_FASTQ_FOLDER=${BATCH_FOLDER}/guppy_output
 TMP_FASTQ_FOLDER=/data/tmp_fastq
 
 mkdir -p $TMP_FASTQ_FOLDER
@@ -81,12 +79,13 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 	add_guppy_mm2_update "Starting fast5 file list generation" $LOG_FILE
 
-	for i in `find ${FAST5_FOLDER} -name "*.fast5"`;
+	for i in `find ${FAST5_FOLDER} -name "*.pod5"`;
 	do
 		FILE=$(readlink -f $i)
 		FILETIME=$(stat $i -c %X)
 		if [ $FILETIME -gt $CURRTIME ]; then
 			echo $FILE >> $FAST5_LIST
+            ln -s $FILE ${POD5_FOLDER}/$i
 			NUM_FAST5=$(((NUM_FAST5)+1))
 		fi
 	done
@@ -131,29 +130,12 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		mkdir -p $FASTQ_FOLDER
 		MAX_READS=$((NUM_FAST5*READS_PER_FAST5))
 
-		if [ ${BARCODE_DONE} == "YES" ]; then
-			time guppy_basecaller \
-				--config /usr/data/dna_r9.4.1_450bps_${GUPPY_MODE}_prom.cfg \
-				--input_file_list $FAST5_LIST \
-				--barcode_kits "EXP-NBD104" \
-				-s $FASTQ_FOLDER \
-				-x cuda:all \
-				-q ${MAX_READS} \
-				--read_batch_size ${MAX_READS} \
-                --chunks_per_runner 507 \
-                --min_qscore 7
-		else
-			time guppy_basecaller \
-				--config /usr/data/dna_r9.4.1_450bps_${GUPPY_MODE}_prom.cfg \
-				--input_file_list $FAST5_LIST \
-				-s $FASTQ_FOLDER \
-				-x cuda:all \
-				-q ${MAX_READS} \
-				--read_batch_size ${MAX_READS} \
-                --chunks_per_runner 507 \
-                --min_qscore 7
+        time dorado basecaller \
+            -x cuda:all \
+            --emit-fastq \
+            /opt/dorado-0.4.3-linux-x64/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 \
+            ${POD5_FOLDER}/ > ${FASTQ_FOLDER}/${BATCH}.fastq 
 
-		fi
 		GUPPY_EXIT=$?
 
 		add_guppy_mm2_update "Guppy basecalling completed with exit code ${GUPPY_EXIT}" $LOG_FILE

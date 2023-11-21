@@ -13,7 +13,7 @@ MIN_TIME=$(expr $CURTIME - $MAX_BUFFER)
 
 NFAST5=0
 INCLUDE=\(
-for i in $(find ${FAST5_FOLDER} -name "*.fast5");
+for i in $(find ${FAST5_FOLDER} -name "*.pod5");
 do
 	FILE=${i#"${FAST5_FOLDER}"}
 	FILETIME=$(stat $i -c %Y)

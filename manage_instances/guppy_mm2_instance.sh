@@ -17,8 +17,9 @@ if [ "$INSTANCE_FOUND" = false ]; then
 
         gcloud compute instances create $1 \
             --zone $z \
-            --source-instance-template guppy-mm2-template-ph2 \
-            --create-disk=boot=yes,image=guppy-mm2-image-ph2-v1,size=100GB,mode=rw,type=pd-balanced \
+            --machine-type=custom-48-196608 \
+            --accelerator=count=4,type=nvidia-tesla-v100 \
+            --create-disk=boot=yes,image=dorado-guppy-v2,size=500GB,mode=rw,type=pd-balanced \
             --scopes=storage-full,compute-rw,logging-write \
             --local-ssd=interface=NVME \
             --local-ssd=interface=NVME \
@@ -27,8 +28,7 @@ if [ "$INSTANCE_FOUND" = false ]; then
             --no-restart-on-failure \
             --metadata FC=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
                     nvidia-smi -pm 1
-                    rm -rf urWGS
-                    git clone https://github.com/gsneha26/urWGS.git -b phase2
+                    git clone https://github.com/gsneha26/urWGS.git -b dorado_dev
                     bash -c ./urWGS/setup/mount_ssd_nvme.sh
                     mv urWGS /data/
                     export PROJECT_DIR=/data/urWGS
