@@ -33,6 +33,7 @@ FASTQ_FOLDER=${BATCH_FOLDER}/guppy_output/
 PASS_FASTQ_FOLDER=${BATCH_FOLDER}/guppy_output
 TMP_FASTQ_FOLDER=/data/tmp_fastq
 
+mkdir -p $POD5_FOLDER
 mkdir -p $TMP_FASTQ_FOLDER
 
 #################### Download fast5 files ###########################
@@ -85,7 +86,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		FILETIME=$(stat $i -c %X)
 		if [ $FILETIME -gt $CURRTIME ]; then
 			echo $FILE >> $FAST5_LIST
-            ln -s $FILE ${POD5_FOLDER}/$i
+            ln -s "${FILE}" "${POD5_FOLDER}/$(basename "${i}")"
 			NUM_FAST5=$(((NUM_FAST5)+1))
 		fi
 	done
