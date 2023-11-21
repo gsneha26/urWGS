@@ -13,7 +13,7 @@ fi
 # Create a new VM instance if it doesn't exist
 if [ "$INSTANCE_FOUND" = false ]; then
 
-    for z in $(gcloud compute accelerator-types list | grep nvidia-tesla-a100 | grep 'us' | sort -V | awk '{print $2}'); do
+    for z in $(gcloud compute accelerator-types list | grep nvidia-tesla-v100 | grep 'us' | sort -V | awk '{print $2}'); do
 
         gcloud compute instances create $1 \
             --zone $z \
@@ -26,6 +26,7 @@ if [ "$INSTANCE_FOUND" = false ]; then
             --local-ssd=interface=NVME \
             --local-ssd=interface=NVME \
             --no-restart-on-failure \
+            --maintenance-policy TERMINATE \
             --metadata FC=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
                     nvidia-smi -pm 1
                     git clone https://github.com/gsneha26/urWGS.git -b dorado_dev
