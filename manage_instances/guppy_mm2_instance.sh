@@ -19,7 +19,7 @@ if [ "$INSTANCE_FOUND" = false ]; then
             --zone $z \
             --machine-type=custom-48-196608 \
             --accelerator=count=4,type=nvidia-tesla-v100 \
-            --create-disk=boot=yes,image=dorado-guppy-v2,size=500GB,mode=rw,type=pd-balanced \
+            --create-disk=boot=yes,image=dorado-v1,size=500GB,mode=rw,type=pd-balanced \
             --scopes=storage-full,compute-rw,logging-write \
             --local-ssd=interface=NVME \
             --local-ssd=interface=NVME \
