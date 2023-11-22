@@ -20,10 +20,7 @@ mkdir -p $CHR_BAM_FOLDER
 
 for i in `ls ${TMP_FASTQ_FOLDER}/`;
 do
-	ORIG_FASTQ_FOLDER=${OUTPUT_FOLDER}/$i/guppy_output/
-	if [ ${BARCODE_DONE} == "YES" ]; then
-		ORIG_FASTQ_FOLDER=${ORIG_FASTQ_FOLDER}/${BARCODE_NUM}
-	fi
+	ORIG_FASTQ_FOLDER=${OUTPUT_FOLDER}/$i/basecall_output/
 	if [ $(ls ${TMP_FASTQ_FOLDER}/$i/*.fastq | wc -l) -eq $(ls ${ORIG_FASTQ_FOLDER}/*.fastq | wc -l) ]; then
 		BATCH=$i
 		BATCH_FOLDER=${OUTPUT_FOLDER}/$BATCH
@@ -40,9 +37,9 @@ do
 		
 		while [ $ALIGN_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		
-			add_guppy_mm2_update "Starting attempt $NUM_ATTEMPT" $LOG_FILE
+			add_basecall_align_update "Starting attempt $NUM_ATTEMPT" $LOG_FILE
 
-			add_guppy_mm2_update "Starting alignment" $LOG_FILE
+			add_basecall_align_update "Starting alignment" $LOG_FILE
 			
 			minimap2 -ax map-ont \
           --MD \
@@ -58,13 +55,13 @@ do
 		
 		if [ ${ALIGN_EXIT} -gt 0 ]; then
 
-			add_guppy_mm2_update "Minimap2 job exited with non-zero code $ALIGN_EXIT even after 5 attempts, exiting job for ${BATCH}" $LOG_FILE
-                        email_guppy_mm2_update "ALIGNMENT STATUS: Minimap2 job unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
+			add_basecall_align_update "Minimap2 job exited with non-zero code $ALIGN_EXIT even after 5 attempts, exiting job for ${BATCH}" $LOG_FILE
+                        email_basecall_align_update "ALIGNMENT STATUS: Minimap2 job unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 			break
 
                 else
 
-			add_guppy_mm2_update "Minimap2 job exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
+			add_basecall_align_update "Minimap2 job exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
 
                 fi		
 
@@ -85,13 +82,13 @@ do
 
 		if [ ${SAM_EXIT} -gt 0 ]; then
 
-			add_guppy_mm2_update "samtools index exited with non-zero code $SAM_EXIT even after 5 attempts, exiting job for ${BATCH}" $LOG_FILE
-                        email_guppy_mm2_update "ALIGNMENT STATUS: samtools index unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
+			add_basecall_align_update "samtools index exited with non-zero code $SAM_EXIT even after 5 attempts, exiting job for ${BATCH}" $LOG_FILE
+                        email_basecall_align_update "ALIGNMENT STATUS: samtools index unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 			break
 
 		else
 
-			add_guppy_mm2_update "samtools index exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
+			add_basecall_align_update "samtools index exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
 
 		fi
 
@@ -114,18 +111,18 @@ do
 
 			if [ ${SAM_EXIT} -gt 0 ]; then
 
-				add_guppy_mm2_update "samtools view (split for chr$i) exited with non-zero code $SAM_EXIT even after 5 attempts, exiting job for ${BATCH}" $LOG_FILE 
-                	        email_guppy_mm2_update "ALIGNMENT STATUS: samtools view (split for chr$i) unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
+				add_basecall_align_update "samtools view (split for chr$i) exited with non-zero code $SAM_EXIT even after 5 attempts, exiting job for ${BATCH}" $LOG_FILE 
+                	        email_basecall_align_update "ALIGNMENT STATUS: samtools view (split for chr$i) unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 				break
 
 			else
 				
-				add_guppy_mm2_update "samtools view (split for chr$i) exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE 
+				add_basecall_align_update "samtools view (split for chr$i) exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE 
 
 			fi
 		done
 
-		email_guppy_mm2_update "ALIGNMENT STATUS: minimap2, merge, index, chr-wise bam split successful" $LOG_FILE $EMAIL_SUB 
+		email_basecall_align_update "ALIGNMENT STATUS: minimap2, merge, index, chr-wise bam split successful" $LOG_FILE $EMAIL_SUB 
 	fi
 done
 
@@ -143,9 +140,9 @@ NUM_TMP_FASTQ_FILES=$(ls $TMP_FASTQ_FOLDER | wc -l)
 LOG_FILE=/data/logs/postprocess.log
 
 if [ $UPLOAD_STATUS -eq 1 ] && [ $BASECALLING_STATUS -eq 1 ] && [ $NUM_TMP_FASTQ_FILES -eq 0 ] && [ $NUM_FASTQ_FILES -gt 0 ] && [ $POSTPROCESS_STATUS -eq 2 ]; then
-        add_guppy_mm2_update "Starting post-processing job-wise chr-wise bam" $LOG_FILE
-        $PROJECT_DIR/guppy_mm2/postprocess_bam.sh
+        add_basecall_align_update "Starting post-processing job-wise chr-wise bam" $LOG_FILE
+        $PROJECT_DIR/ba/postprocess_bam.sh
 else
-        add_guppy_mm2_update "Not starting post-processing job-wise chr-wise bam" $LOG_FILE
+        add_basecall_align_update "Not starting post-processing job-wise chr-wise bam" $LOG_FILE
 fi
 

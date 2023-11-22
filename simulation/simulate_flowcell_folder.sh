@@ -4,8 +4,8 @@ INPUT_FOLDER=$1/no_sample/*_${3}_*
 OUTPUT_FOLDER=$2/no_sample/*_${3}_*
 RUNTIME=$4
 
-NUM_FAST5=$(find $INPUT_FOLDER/ -name '*.pod5' | wc -l)
-PERIOD=$(python3 -c "print (abs(int(${RUNTIME}/${NUM_FAST5})))")
+NUM_POD5=$(find $INPUT_FOLDER/ -name '*.pod5' | wc -l)
+PERIOD=$(python3 -c "print (abs(int(${RUNTIME}/${NUM_POD5})))")
 
 cd $INPUT_FOLDER
 echo $INPUT_FOLDER

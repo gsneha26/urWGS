@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source $PROJECT_DIR/sample.config
-GUPPY_MM2_STATUS=$WORK_DIR/guppy_mm2_status
+GUPPY_MM2_STATUS=$WORK_DIR/basecall_align_status
 mkdir -p $GUPPY_MM2_STATUS
 
 gsutil -q -m rsync -r $GUPPY_MM2_COMPLETE_STATUS_BUCKET/ $GUPPY_MM2_STATUS/ 

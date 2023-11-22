@@ -5,7 +5,7 @@ if [ $# -eq 1 ]; then
 
 	if [ ! -f $CONFIG_FILE ]; then
 		1>&2 echo "Error: Provided file $CONFIG_FILE does not exist"
-		1>&2 echo "Usage: create_instances_guppy_mm2.sh CONFIG_FILE"
+        1>&2 echo "Usage: create_instances_annotation.sh CONFIG_FILE"
 		exit 1
 	else
 		source $CONFIG_FILE

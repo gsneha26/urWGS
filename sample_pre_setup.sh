@@ -12,4 +12,4 @@ CONFIG_PATH=$WORK_DIR/sample.config
 
 gsutil cp $CONFIG_PATH ${BUCKET}/sample.config
 
-$PROJECT_DIR/manage_instances/create_instances_guppy_mm2.sh $CONFIG_PATH
+$PROJECT_DIR/manage_instances/create_instances_basecall_align.sh $CONFIG_PATH
