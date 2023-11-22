@@ -29,7 +29,6 @@ add_basecall_align_update "Created batch folder: $BATCH_FOLDER" $LOG_FILE
 
 POD5_FOLDER=${BATCH_FOLDER}/pod5
 FASTQ_FOLDER=${BATCH_FOLDER}/basecall_output/
-PASS_FASTQ_FOLDER=${BATCH_FOLDER}/basecall_output
 TMP_FASTQ_FOLDER=/data/tmp_fastq
 
 mkdir -p $POD5_FOLDER
@@ -129,9 +128,10 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		MAX_READS=$((NUM_POD5*READS_PER_POD5))
 
         time dorado basecaller \
+            --min-qscore ${BASECALL_QUALITY} \
             -x cuda:all \
             --emit-fastq \
-            /opt/dorado-0.4.3-linux-x64/${BA_MODEL} \
+            /opt/dorado-0.4.3-linux-x64/${BASECALL_MODEL} \
             ${POD5_FOLDER}/ > ${FASTQ_FOLDER}/${BATCH}.fastq 
 
 		GUPPY_EXIT=$?
@@ -173,21 +173,11 @@ else
 
 fi
 
-#################### Check if pass fastq folder exists ###########################
-
-if [ ! -d ${PASS_FASTQ_FOLDER} ]; then
-
-	add_basecall_align_update "No pass folder; no alignment required" $LOG_FILE 
-	email_basecall_align_update "BASECALLING STATUS: Basecalling successful and no minimap2 job to be started" $LOG_FILE $EMAIL_SUB 
-	exit 0
-
-fi
-
 #################### Generate list of minimap2 jobs ###########################
 
 add_basecall_align_update "Starting minimap2 command list generation" $LOG_FILE
 
-if [ $(ls ${PASS_FASTQ_FOLDER}/*.fastq | wc -l) -eq 0 ]; then
+if [ $(ls ${FASTQ_FOLDER}/*.fastq | wc -l) -eq 0 ]; then
 
 	add_basecall_align_update "No fastq files in pass folder; no alignment required" $LOG_FILE
 	email_basecall_align_update "BASECALLING STATUS: Basecalling successful and no minimap2 job to be started" $LOG_FILE $EMAIL_SUB 
@@ -196,7 +186,7 @@ if [ $(ls ${PASS_FASTQ_FOLDER}/*.fastq | wc -l) -eq 0 ]; then
 else
 
 	mkdir -p ${TMP_FASTQ_FOLDER}/${BATCH}
-	rsync -r ${PASS_FASTQ_FOLDER}/ ${TMP_FASTQ_FOLDER}/${BATCH}/
+	rsync -r ${FASTQ_FOLDER}/ ${TMP_FASTQ_FOLDER}/${BATCH}/
 
 	add_basecall_align_update "Minimap2 task added to the queue" $LOG_FILE 
 	email_basecall_align_update "BASECALLING STATUS: Basecalling successful and minimap2 job added to the queue" $LOG_FILE $EMAIL_SUB
