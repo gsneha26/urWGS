@@ -14,8 +14,7 @@ fi
 if [ "$INSTANCE_FOUND" = false ]; then
 
     for z in $(gcloud compute accelerator-types list | grep nvidia-tesla-v100 | grep 'us' | sort -V | awk '{print $2}'); do
-
-        if [ $4 -q 4 ]; then
+        if [ $4 = 4 ]; then
             gcloud compute instances create $1 \
                 --zone $z \
                 --machine-type=custom-48-319488 \
@@ -49,7 +48,7 @@ if [ "$INSTANCE_FOUND" = false ]; then
             if [[ $EXIT_CODE -eq 0 ]]; then
                 break
             fi
-        elif [ $4 -q 8 ]; then
+        elif [ $4 = 8 ]; then
             gcloud compute instances create $1 \
                 --zone $z \
                 --machine-type=custom-96-638976 \
