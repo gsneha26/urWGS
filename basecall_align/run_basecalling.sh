@@ -27,11 +27,11 @@ echo "=========== Basecalling logs for batch_$CURRTIME ============" >> $LOG_FIL
 
 add_basecall_align_update "Created batch folder: $BATCH_FOLDER" $LOG_FILE
 
-POD5_FOLDER=${BATCH_FOLDER}/pod5
+POD5_BATCH_FOLDER=${BATCH_FOLDER}/pod5
 FASTQ_FOLDER=${BATCH_FOLDER}/basecall_output/
 TMP_FASTQ_FOLDER=/data/tmp_fastq
 
-mkdir -p $POD5_FOLDER
+mkdir -p $POD5_BATCH_FOLDER
 mkdir -p $TMP_FASTQ_FOLDER
 
 #################### Download fast5 files ###########################
@@ -82,7 +82,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 		FILE=$(readlink -f $i)
 		FILETIME=$(stat $i -c %X)
 		if [ $FILETIME -gt $CURRTIME ]; then
-            ln -s "${FILE}" "${POD5_FOLDER}/$(basename "${i}")"
+            ln -s "${FILE}" "${POD5_BATCH_FOLDER}/$(basename "${i}")"
 			NUM_POD5=$(((NUM_POD5)+1))
 		fi
 	done
@@ -132,7 +132,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
             -x cuda:all \
             --emit-fastq \
             /opt/dorado-0.4.3-linux-x64/${BASECALL_MODEL} \
-            ${POD5_FOLDER}/ > ${FASTQ_FOLDER}/${BATCH}.fastq 
+            ${POD5_BATCH_FOLDER}/ > ${FASTQ_FOLDER}/${BATCH}.fastq 
 
 		GUPPY_EXIT=$?
 
