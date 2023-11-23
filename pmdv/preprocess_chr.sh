@@ -9,7 +9,7 @@ gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_
 
 if [ $BAM_MERGE == "YES" ]; then
 
-	gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${GUPPY_MM2_OUTPUT_BUCKET}/$1/*.bam $CHR_FOLDER/ 
+	gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${BASECALL_ALIGN_OUTPUT_BUCKET}/$1/*.bam $CHR_FOLDER/ 
 	if [ $? -gt 0 ]; then
 		1>&2 echo "BAM download failed for chr"$1
 		exit 1

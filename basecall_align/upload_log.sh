@@ -46,4 +46,4 @@ else
 	echo "Alignment is not running" >> $LOG_FOLDER/summary.log
 fi
 
-time gsutil -q -m cp -r $LOG_FOLDER/*.log ${GUPPY_MM2_UPDATES_BUCKET}/
+time gsutil -q -m cp -r $LOG_FOLDER/*.log ${BASECALL_ALIGN_UPDATES_BUCKET}/
