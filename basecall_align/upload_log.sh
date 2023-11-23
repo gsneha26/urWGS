@@ -8,8 +8,8 @@ BAM_FOLDER=/data/chr_bam
 LOG_FOLDER=/data/logs
 
 mkdir -p $LOG_FOLDER
-echo "current "$(TZ='America/Los_Angeles' date) >> $LOG_FOLDER/fast5_files.log
-ls -lRh $POD5_FOLDER >> $LOG_FOLDER/fast5_files.log
+echo "current "$(TZ='America/Los_Angeles' date) >> $LOG_FOLDER/pod5_files.log
+ls -lRh $POD5_FOLDER >> $LOG_FOLDER/pod5_files.log
 echo "current "$(TZ='America/Los_Angeles' date) >> $LOG_FOLDER/fastq_files.log
 ls -lRh $FASTQ_FOLDER >> $LOG_FOLDER/fastq_files.log
 echo "current "$(TZ='America/Los_Angeles' date) >> $LOG_FOLDER/bam_files.log

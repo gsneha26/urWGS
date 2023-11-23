@@ -34,14 +34,14 @@ TMP_FASTQ_FOLDER=/data/tmp_fastq
 mkdir -p $POD5_BATCH_FOLDER
 mkdir -p $TMP_FASTQ_FOLDER
 
-#################### Download fast5 files ###########################
+#################### Download pod5 files ###########################
 
 NUM_ATTEMPT=0
 DWNLD_EXIT=1
 
 while [ $DWNLD_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
-	add_basecall_align_update "Starting fast5 download" $LOG_FILE
+	add_basecall_align_update "Starting pod5 download" $LOG_FILE
 
 	time gsutil -q -m rsync -r -x ".*[1-6][B-H].*$" $POD5_BUCKET/ $POD5_FOLDER/
 
@@ -54,16 +54,16 @@ done
 if [ $DWNLD_EXIT -gt 0 ]; then
 
 	add_basecall_align_update "Download failed more than 5 times, exiting job for batch $CURRTIME" $LOG_FILE
-	email_basecall_align_update "BASECALLING STATUS: Download fast5 unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
+	email_basecall_align_update "BASECALLING STATUS: Download pod5 unsuccessful" $LOG_FILE $ERROR_EMAIL_SUB 
 	exit 10
 
 else
 
-	add_basecall_align_update "Downloaded fast5 files in $NUM_ATTEMPT attempt/s" $LOG_FILE
+	add_basecall_align_update "Downloaded pod5 files in $NUM_ATTEMPT attempt/s" $LOG_FILE
 
 fi
 
-#################### Start generating fast5 file list and basecalling ###########################
+#################### Start generating pod5 file list and basecalling ###########################
 
 NUM_ATTEMPT=0
 GUPPY_EXIT=1
@@ -75,7 +75,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 	add_basecall_align_update "Starting attempt $NUM_ATTEMPT" $LOG_FILE
 
-	add_basecall_align_update "Starting fast5 file list generation" $LOG_FILE
+	add_basecall_align_update "Starting pod5 file list generation" $LOG_FILE
 
 	for i in `find ${POD5_FOLDER} -name "*.pod5"`;
 	do
@@ -122,7 +122,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 		#################### Basecalling ###########################
 
-		add_basecall_align_update "Starting basecalling job for ${NUM_POD5} fast5 file/s" $LOG_FILE
+		add_basecall_align_update "Starting basecalling job for ${NUM_POD5} pod5 file/s" $LOG_FILE
 
 		mkdir -p $FASTQ_FOLDER
 		MAX_READS=$((NUM_POD5*READS_PER_POD5))
@@ -149,8 +149,8 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 			echo "1" > $BASECALLING_STATUS_FILE
 		fi
 		
-		add_basecall_align_update "No fast5 files to basecall; exiting job for batch $CURRTIME and deleting $BATCH_FOLDER" $LOG_FILE
-		echo "BASECALLING STATUS: No fast5 files to basecall" > $LOG_FILE 
+		add_basecall_align_update "No pod5 files to basecall; exiting job for batch $CURRTIME and deleting $BATCH_FOLDER" $LOG_FILE
+		echo "BASECALLING STATUS: No pod5 files to basecall" > $LOG_FILE 
 		rm -rf ${BATCH_FOLDER}
 		exit 0
 	fi

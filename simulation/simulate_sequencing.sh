@@ -4,13 +4,13 @@ if [ $# -eq 3 ] && [ -n ${1//[0-9]/} ]; then
 	PERIOD=$1
 	SRC_DIR=$2  #/data/sneha/HG002_RK/
 	DST_DIR=$3  #/data/prom_ph2/HG002_RK/
-	#SRC_BUCKET=gs://ur_wgs_test_data/HG002_fast5
+	#SRC_BUCKET=gs://ur_wgs_test_data/HG002_pod5
 	
 	mkdir -p $SRC_DIR
 	mkdir -p $DST_DIR
 	mkdir -p /data/logs
 	
-	# download fast5 files for row C of promethION
+	# download pod5 files for row C of promethION
 	#time gsutil -m rsync -r \
 	#	-x ".*[1-6][A-B].*$|.*[1-6][D-H].*$" \
 	#	$SRC_BUCKET/ \
