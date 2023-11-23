@@ -49,7 +49,7 @@ while [ $PP_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
 
 	add_basecall_align_update "Starting chr-wise bam upload using parallel utility" $LOG_FILE
 
-	parallel --verbose -k -j 9 gsutil -q -o "GSUtil:parallel_composite_upload_threshold=250M" cp /data/final_bam/chr{1}_*.bam ${GUPPY_MM2_OUTPUT_BUCKET}/chr{1}/ ::: {1..22} X Y MT
+	parallel --verbose -k -j 9 gsutil -q -o "GSUtil:parallel_composite_upload_threshold=250M" cp /data/final_bam/chr{1}_*.bam ${BASECALL_ALIGN_OUTPUT_BUCKET}/chr{1}/ ::: {1..22} X Y MT
 	PP_EXIT=$?
 
 	NUM_ATTEMPT=$(((NUM_ATTEMPT)+1))
@@ -67,13 +67,13 @@ else
 	add_basecall_align_update "Parallel chr-wise bam upload jobs exited successfully in $NUM_ATTEMPT attempt/s" $LOG_FILE
 	email_basecall_align_update "POSTPROCESS STATUS: Job successful" $LOG_FILE $EMAIL_SUB 
 	echo "1" > $POSTPROCESS_STATUS_FILE
-	gsutil -q cp $POSTPROCESS_STATUS_FILE ${GUPPY_MM2_STATUS_BUCKET}/postprocess_${FC}_status.txt
-	gsutil -q -m rsync -r /data/output_folder/ ${GUPPY_MM2_LOG_BUCKET}/
+	gsutil -q cp $POSTPROCESS_STATUS_FILE ${BASECALL_ALIGN_STATUS_BUCKET}/postprocess_${FC}_status.txt
+	gsutil -q -m rsync -r /data/output_folder/ ${BASECALL_ALIGN_LOG_BUCKET}/
 	if [ $? -eq 0 ]; then
 		echo "1" > $GUPPY_UPLOAD_STATUS_FILE
 	else
 		echo "3" > $GUPPY_UPLOAD_STATUS_FILE
 	fi
-	gsutil -q cp $GUPPY_UPLOAD_STATUS_FILE ${GUPPY_MM2_COMPLETE_STATUS_BUCKET}/$(hostname)_complete_status.txt
+	gsutil -q cp $GUPPY_UPLOAD_STATUS_FILE ${BASECALL_ALIGN_COMPLETE_STATUS_BUCKET}/$(hostname)_complete_status.txt
 
 fi
