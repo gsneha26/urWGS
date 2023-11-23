@@ -141,7 +141,7 @@ LOG_FILE=/data/logs/postprocess.log
 
 if [ $UPLOAD_STATUS -eq 1 ] && [ $BASECALLING_STATUS -eq 1 ] && [ $NUM_TMP_FASTQ_FILES -eq 0 ] && [ $NUM_FASTQ_FILES -gt 0 ] && [ $POSTPROCESS_STATUS -eq 2 ]; then
         add_basecall_align_update "Starting post-processing job-wise chr-wise bam" $LOG_FILE
-        $PROJECT_DIR/ba/postprocess_bam.sh
+        $PROJECT_DIR/basecall_align/postprocess_bam.sh
 else
         add_basecall_align_update "Not starting post-processing job-wise chr-wise bam" $LOG_FILE
 fi
