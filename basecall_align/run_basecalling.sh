@@ -131,7 +131,7 @@ while [ $GUPPY_EXIT -gt 0 ] && [ $NUM_ATTEMPT -lt 5 ] ; do
             --min-qscore ${BASECALL_QUALITY} \
             -x cuda:all \
             --emit-fastq \
-            /opt/dorado-0.4.3-linux-x64/${BASECALL_MODEL} \
+            /opt/dorado-0.5.2-linux-x64/${BASECALL_MODEL} \
             ${POD5_BATCH_FOLDER}/ > ${FASTQ_FOLDER}/${BATCH}.fastq 
 
 		GUPPY_EXIT=$?
