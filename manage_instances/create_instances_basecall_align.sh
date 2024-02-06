@@ -30,7 +30,7 @@ if [ $# -eq 1 ]; then
 			BA_FC_LIST=$(echo {A..H}t{1..3})
 		fi
 
-		parallel -j 24 ${PROJECT_DIR}/manage_instances/basecall_align_instance.sh ::: \
+		parallel -j ${NUM_BA_INSTANCE} ${PROJECT_DIR}/manage_instances/basecall_align_instance.sh ::: \
 			${BA_NAME_LIST} :::+ \
 			${BA_FC_LIST} ::: \
 			${BUCKET}/sample.config ::: \
