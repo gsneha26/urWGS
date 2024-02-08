@@ -2,21 +2,25 @@
 
 source /data/sample.config
 CHR_FOLDER=/data/$1_folder
+INTERMEDIATE_DIRECTORY="intermediate_results_dir"
+
+mkdir -p ${CHR_FOLDER}
+mkdir -p /data/"${INTERMEDIATE_DIRECTORY}"
 
 1>&2 echo "============================================================================"
+BIN_VERSION="1.6.0"
 time sudo docker run --ipc=host \
         -v /data:/data \
-        kishwars/pepper_deepvariant:r0.8 \
-        run_pepper_margin_deepvariant call_variant \
-        -b $CHR_FOLDER/${SAMPLE}_$1.bam \
-        -f /data/GRCh37_$1.fa \
-        -s ${SAMPLE} \
-        -o ${CHR_FOLDER} \
-        -p ${SAMPLE}_pmdv_$1 \
-        -t 96 \
-        --ont_r9_guppy5_sup \
-        --keep_intermediate_bam_files \
-        -k
+        google/deepvariant:"${BIN_VERSION}" \
+        /opt/deepvariant/bin/run_deepvariant \
+        --model_type ONT_R104 \
+        --ref /data/GRCh37_$1.fa \
+        --reads $CHR_FOLDER/${SAMPLE}_$1.bam \
+        --output_vcf /data/${SAMPLE}_pmdv_$1.vcf.gz \
+        --output_gvcf /data/${SAMPLE}_pmdv_$1.g.vcf.gz \
+        --num_shards 96 \
+        --regions "$1" \
+        --keep_intermediate_bam_files /data/"${INTERMEDIATE_DIRECTORY}" 
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
         email_vc_update "PMDV completed for $1" $1 
