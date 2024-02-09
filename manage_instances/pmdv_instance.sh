@@ -6,7 +6,7 @@ for z in $(gcloud compute machine-types list | grep n1-standard-96 | grep 'us-' 
   gcloud compute instances create $1 \
     --zone $z \
     --machine-type n1-standard-96 \
-    --create-disk=boot=yes,image=variant-calling-image-ph2-v1,size=100GB,mode=rw,type=pd-balanced \
+    --create-disk=boot=yes,image=variant-calling-v1,size=100GB,mode=rw,type=pd-balanced \
     --scopes=storage-full,compute-rw,logging-write \
     --local-ssd=interface=NVME \
     --metadata CHR=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
