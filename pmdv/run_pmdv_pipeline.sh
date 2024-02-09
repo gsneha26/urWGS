@@ -16,9 +16,9 @@ for i in $(ls $STATUS_DIR); do
 done
 
 1>&2 echo "PMDV_STATUS: $PMDV_STATUS"
-1>&2 echo "SUM OF GUPPY_MINIMAP2 STATUS: $NUM_FILES"
+1>&2 echo "SUM OF BASECALL_ALIGN_STATUS: $NUM_FILES"
 
-if [ $NUM_FILES -eq $NUM_GUPPY ] && [ $PMDV_STATUS -eq 2 ]; then
+if [ $NUM_FILES -eq $NUM_BA_INSTANCE ] && [ $PMDV_STATUS -eq 2 ]; then
   INST_CHR=$(gcloud compute instances describe $(hostname) --zone=$(gcloud compute instances list --filter="name=($(hostname))" --format "value(zone)") --format=value"(metadata[CHR])")
   chr_args=$( echo $INST_CHR | sed 's/:/ /g' )
 	for ch in $chr_args; do
