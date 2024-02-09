@@ -2,7 +2,7 @@
 
 source /data/sample.config
 
-STATUS_DIR=/data/guppy_minimap2_status/
+STATUS_DIR=/data/basecall_align_status/
 PMDV_STATUS_FILE=/data/pmdv_status.txt
 PMDV_STATUS=$(cat $PMDV_STATUS_FILE)
 
