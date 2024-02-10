@@ -6,6 +6,7 @@ CHR_FOLDER=/data/$1_folder
 mkdir -p $CHR_FOLDER
 
 gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_$1.fa /data/
+gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_$1.fa.fai /data/
 
 if [ $BAM_MERGE == "YES" ]; then
 
