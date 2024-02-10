@@ -8,7 +8,7 @@ mkdir -p ${CHR_FOLDER}
 mkdir -p /data/"${INTERMEDIATE_DIRECTORY}"
 
 1>&2 echo "============================================================================"
-BIN_VERSION="1.6.0"
+BIN_VERSION=$DV_VERSION
 time sudo docker run --ipc=host \
         -v /data:/data \
         google/deepvariant:"${BIN_VERSION}" \

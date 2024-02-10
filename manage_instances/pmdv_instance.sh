@@ -11,7 +11,7 @@ for z in $(gcloud compute machine-types list | grep n1-standard-96 | grep 'us-' 
     --local-ssd=interface=NVME \
     --metadata CHR=$2,CONFIG_FILE_URL=$3,startup-script='#!/bin/bash
       rm -rf urWGS 
-      git clone https://github.com/gsneha26/urWGS.git -b phase2 
+      git clone https://github.com/gsneha26/urWGS.git -b dorado_dev 
       bash -c ./urWGS/setup/mount_ssd_nvme.sh
       mv urWGS /data/
       gsutil -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37.fa /data/
