@@ -5,12 +5,12 @@ source /data/sample.config
 CHR_FOLDER=/data/$1_folder
 mkdir -p $CHR_FOLDER
 
-gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_$1.fa /data/
-gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_$1.fa.fai /data/
+gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_chr$1.fa /data/
+gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp gs://ur_wgs_test_data/GRCh37_chr_fasta/GRCh37_chr$1.fa.fai /data/
 
 if [ $BAM_MERGE == "YES" ]; then
 
-	gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${BASECALL_ALIGN_OUTPUT_BUCKET}/$1/*.bam $CHR_FOLDER/ 
+	gsutil -q -o "GSUtil:parallel_thread_count=1" -o "GSUtil:sliced_object_download_max_components=8" cp ${BASECALL_ALIGN_OUTPUT_BUCKET}/chr$1/*.bam $CHR_FOLDER/ 
 	if [ $? -gt 0 ]; then
 		1>&2 echo "BAM download failed for chr"$1
 		exit 1
