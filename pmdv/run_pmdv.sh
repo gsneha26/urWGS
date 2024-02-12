@@ -3,6 +3,7 @@
 source /data/sample.config
 CHR_FOLDER=/data/$1_folder
 INTERMEDIATE_DIRECTORY="intermediate_results_dir"
+REGION="${1#chr}"
 
 mkdir -p ${CHR_FOLDER}
 mkdir -p /data/"${INTERMEDIATE_DIRECTORY}"
@@ -19,7 +20,7 @@ time sudo docker run --ipc=host \
         --output_vcf /data/${SAMPLE}_pmdv_$1.vcf.gz \
         --output_gvcf /data/${SAMPLE}_pmdv_$1.g.vcf.gz \
         --num_shards 96 \
-        --regions "$1" \
+        --regions "$REGION" \
         --intermediate_results_dir /data/"${INTERMEDIATE_DIRECTORY}" 
 VC_CODE=$?
 if [ $VC_CODE -eq 0 ]; then
