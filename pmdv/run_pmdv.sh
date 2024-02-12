@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source /data/sample.config
-CHR_FOLDER=/data/chr$1_folder
+CHR_FOLDER=/data/$1_folder
 INTERMEDIATE_DIRECTORY="intermediate_results_dir"
 
 mkdir -p ${CHR_FOLDER}
@@ -14,10 +14,10 @@ time sudo docker run --ipc=host \
         google/deepvariant:"${BIN_VERSION}" \
         /opt/deepvariant/bin/run_deepvariant \
         --model_type ONT_R104 \
-        --ref /data/GRCh37_chr$1.fa \
-        --reads $CHR_FOLDER/${SAMPLE}_chr$1.bam \
-        --output_vcf /data/${SAMPLE}_pmdv_chr$1.vcf.gz \
-        --output_gvcf /data/${SAMPLE}_pmdv_chr$1.g.vcf.gz \
+        --ref /data/GRCh37_$1.fa \
+        --reads $CHR_FOLDER/${SAMPLE}_$1.bam \
+        --output_vcf /data/${SAMPLE}_pmdv_$1.vcf.gz \
+        --output_gvcf /data/${SAMPLE}_pmdv_$1.g.vcf.gz \
         --num_shards 96 \
         --regions "$1" \
         --intermediate_results_dir /data/"${INTERMEDIATE_DIRECTORY}" 
