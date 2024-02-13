@@ -17,8 +17,8 @@ time sudo docker run --ipc=host \
         --model_type ONT_R104 \
         --ref /data/GRCh37_$1.fa \
         --reads $CHR_FOLDER/${SAMPLE}_$1.bam \
-        --output_vcf /data/${SAMPLE}_pmdv_$1.vcf.gz \
-        --output_gvcf /data/${SAMPLE}_pmdv_$1.g.vcf.gz \
+        --output_vcf $CHR_FOLDER/${SAMPLE}_pmdv_$1.vcf.gz \
+        --output_gvcf $CHR_FOLDER/${SAMPLE}_pmdv_$1.g.vcf.gz \
         --num_shards 96 \
         --regions "$REGION" \
         --intermediate_results_dir /data/"${INTERMEDIATE_DIRECTORY}" 
