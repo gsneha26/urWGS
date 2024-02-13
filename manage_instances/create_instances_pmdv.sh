@@ -16,7 +16,7 @@ if [ $# -eq 1 ]; then
             ${PROJECT_DIR}/manage_instances/pmdv_instance.sh ::: \
             pmdv-${SAMPLE_LOW}-{1..20} :::+ \
             chr1 \
-            2 \
+            chr2 \
             chr3 \
             chr4 \
             chr5 \
